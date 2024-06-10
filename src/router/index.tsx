@@ -1,7 +1,14 @@
-import React from "react";
+import {
+  Route,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
+import Layout from "../components/Layout";
 
-function index() {
-  return <div>index</div>;
-}
-
-export default index;
+const router = (
+  <Route path="/" element={<Layout />}>
+    <Route />
+  </Route>
+);
+const rootRouter = createBrowserRouter(createRoutesFromElements(router));
+export default rootRouter;

@@ -1,7 +1,16 @@
 import React from "react";
+import Header from "./Header";
+import { Outlet } from "react-router-dom";
 
-function index() {
-  return <div>index</div>;
-}
+const Layout = () => {
+  return (
+    <main>
+      <Header />
+      <section>
+        <Outlet />
+      </section>
+    </main>
+  );
+};
 
-export default index;
+export default Layout;
