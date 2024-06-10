@@ -17,7 +17,7 @@ const Input: React.FC<InputProps> = ({
   // onKeyPress,
   style,
 }) => {
-  console.log("input is rendering...");
+  // console.log("input is rendering...");
   return (
     <div className="p-4">
       <input
