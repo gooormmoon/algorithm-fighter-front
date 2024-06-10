@@ -4,9 +4,9 @@ import { Outlet } from "react-router-dom";
 
 const Layout = () => {
   return (
-    <main>
+    <main >
       <Header />
-      <section>
+      <section className="w-full h-[calc(100vh-70px)] flex flex-col justify-center items-center">
         <Outlet />
       </section>
     </main>
