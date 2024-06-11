@@ -118,12 +118,18 @@ const MyPage: React.FC = () => {
                 className="w-6 h-6 object-contain"
               />
             </div>
-            <input
-              type="file"
-              ref={fileInputRef}
-              className="hidden"
-              accept="image/*"
-              onChange={handleFileChange}
+          </div>
+          {/* 닉네임 */}
+          <div className="flex items-center mb-4">
+            <label className="block text-gray-700 w-32">닉네임</label>
+            <Input
+              type="text"
+              placeholder="닉네임"
+              value={nickname}
+              name={nickname}
+              onChange={handleNicknameChange}
+              size={"10"}
+
             />
           </div>
         </div>
@@ -171,6 +177,7 @@ const MyPage: React.FC = () => {
             <label className="block text-gray-700 w-32">비밀번호 확인</label>
             <Input
               type="password"
+
               placeholder="비밀번호 확인"
               value={password_check}
               onChange={handlepassword_checkChange}
