@@ -119,6 +119,7 @@ const MyPage: React.FC = () => {
           errorText={validatedCheckPassword}
         />
 
+
         <div className="flex justify-center p-3">
           <button
             type="submit"
