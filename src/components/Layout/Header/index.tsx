@@ -36,7 +36,7 @@ const Header = () => {
           <Link to="/myRepository">내 저장소</Link>
         </li>
         <li>
-          <Link to="/setting">설정</Link>
+          <Link to="/mypage">마이 페이지</Link>
         </li>
       </ul>
       <ul className="h-full flex gap-4 items-center">

@@ -25,7 +25,7 @@ const Profile = () => {
           <p>프론트엔드 웹 풀스택</p>
         </li>
         <li className="w-full h-12 flex items-center text-lg  border-b-2 border-gray-400 text-left ">
-          <Link to="/setting">설정</Link>
+          <Link to="/setting">마이 페이지</Link>
         </li>
         <li className="w-full  h-12 flex items-center text-lg  border-b-2 border-gray-400 text-left">
           <Link to="/logout">로그아웃</Link>
