@@ -1,0 +1,20 @@
+$primary: var(--primary-color, #FFBB5C);
+$secondary: var(--secondary-color, #213363);
+$bg-light:var(--bg-light-color,#fff);
+$bg-dark:var(--bg-dark-color,#213363);
+$text-color-white:var(--text-color-white,#fff);
+
+$config: (
+  default: (
+    // primary: $primary,
+    // secondary: $secondary,
+    bg-color: $bg-light,
+    text-color: $secondary,
+    
+  ),
+  dark: (
+    bg-color: $bg-dark,
+    text-color: $text-color-white,
+
+  )
+);
