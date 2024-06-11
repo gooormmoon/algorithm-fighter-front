@@ -5,11 +5,14 @@ import {
 } from "react-router-dom";
 import Layout from "../components/Layout";
 import MyPage from "../pages/mypage";
-import {RegisterPage} from "../pages";
+
+import {LoginPage,RegisterPage} from "../pages";
+
 
 const router = (
-      <Route path="/" element={<Layout />}>
-        <Route path="/mypage" element={<MyPage />} />
+    <Route path="/" element={<Layout />}>
+      <Route path="/login" element={<LoginPage/>}/>
+      <Route path="/mypage" element={<MyPage />} />
       <Route path="/register" element={<RegisterPage/>}/>
     </Route>
 
