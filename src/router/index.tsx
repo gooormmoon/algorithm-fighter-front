@@ -4,9 +4,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Layout from "../components/Layout";
-import MyPage from "../pages/MyPage";
-
-import { LoginPage, RegisterPage } from "../pages";
+import { LoginPage, RegisterPage, MyPage } from "../pages";
 
 const router = (
   <Route path="/" element={<Layout />}>
