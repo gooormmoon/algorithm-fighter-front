@@ -4,18 +4,12 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Layout from "../components/Layout";
+import MyPage from "../pages/mypage";
 import {RegisterPage} from "../pages";
 
 const router = (
-  // <Route>
-  //   <Route path="/" element={<Layout />}>
-  //     <Route />
-  //   </Route>
-  //   <Route path="/register" element={<Register/>}/>
-  // </Route>
-
       <Route path="/" element={<Layout />}>
-      <Route />
+        <Route path="/mypage" element={<MyPage />} />
       <Route path="/register" element={<RegisterPage/>}/>
     </Route>
 
