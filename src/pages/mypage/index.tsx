@@ -126,8 +126,9 @@ const MyPage: React.FC = () => {
               type="text"
               placeholder="닉네임"
               value={nickname}
+              name={nickname}
               onChange={handleNicknameChange}
-              style="w-full p-2 border border-gray-300 rounded"
+              size={"10"}
             />
           </div>
 
@@ -150,9 +151,8 @@ const MyPage: React.FC = () => {
               placeholder="비밀번호"
               value={password}
               onChange={handlePasswordChange}
-              style={`border p-2 flex-1 rounded ${
-                passwordMismatch ? "border-red-500" : "border-gray-300"
-              }`}
+              name={nickname}
+              size={"10"}
             />
           </div>
 
@@ -165,9 +165,8 @@ const MyPage: React.FC = () => {
                 placeholder="비밀번호 확인"
                 value={confirmPassword}
                 onChange={handleConfirmPasswordChange}
-                style={`border p-2 flex-1 rounded ${
-                  passwordMismatch ? "border-red-500" : "border-gray-300"
-                }`}
+                name={nickname}
+                size={"10"}
               />
             </div>
             {passwordMismatch && (
