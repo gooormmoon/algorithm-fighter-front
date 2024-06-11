@@ -1,19 +1,22 @@
 import { emailRegEx, passwordRegEx } from  "../../utils/"
-export const validateForm = ({form}:any) => {
-    if (validateNickname(form.nickname) || validateEmail(form.email) || validatePassword(form.password) || validateCheckpassword(form.password_check, form.password)) {
-      return false;
-    }
-    return true;
-};
-// export const validateForm = () => {};
+// export const validateForm = ({form}:any) => {
+//     if (validateNickname(form.nickname) || validateEmail(form.email) || validatePassword(form.password) || validateCheckpassword(form.password_check, form.password)) {
+//       return false;
+//     }
+//     return true;
+// };
+// // export const validateForm = () => {};
 //NOTE: utils.js 혹은 constants.js
 
 
 
 //메시지 지정
-export const validateNickname = (nickname:string) => {
-  if (nickname === '') {
+export const validateName = (name:string) => {
+  if (name === '') {
     return '입력하세요.';
+  }
+  if(name.length > 10){
+    return '이름은 최대 10자까지 입력 가능'
   }
   return false;
 };
