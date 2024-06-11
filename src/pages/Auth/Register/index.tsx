@@ -2,19 +2,19 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../components/Common/button/Button";
 import Input from "../../../components/Common/input/Input";
 import React, { useState } from 'react'
-import {validateNickname,validateEmail, validatePassword, validateCheckpassword} from "../utils"
+import {validateName,validateEmail, validatePassword, validateCheckpassword} from "../utils"
 
 
 const Register = () => {
     const navigate = useNavigate();
     const [form, setForm] = useState({
-        nickname:"",
+        name:"",
         email:"",
         password:"",
         password_check:"",
     })
     const [touched, setTouched] = useState({
-        nickname: false,
+        name: false,
         email: false,
         password: false,
         password_check: false,
@@ -37,12 +37,12 @@ const Register = () => {
         });    
     }
             //유효성 검사 -> 조건 충족 X ? 메시지 리턴
-    const validatedNickname = validateNickname(form.nickname);
+    const validatedName = validateName(form.name);
     const validatedEmail = validateEmail(form.email);
     const validatedPassword = validatePassword(form.password);
     const validatedCheckpassword = validateCheckpassword(form.password_check, form.password);
     
-    const validatedForm = !validatedNickname && !validatedEmail && !validatedPassword && !validatedCheckpassword;
+    const validatedForm = !validatedName && !validatedEmail && !validatedPassword && !validatedCheckpassword;
     const onSubmit = (e:any) => {
         e.preventDefault();
         
@@ -61,13 +61,13 @@ const Register = () => {
         <h1 className="text-[#213363] text-3xl font-semibold">REGISTER</h1>
         
             <Input type = "text"
-                placeholder = "닉네임"
-                value={form?.nickname}
+                placeholder = "이름"
+                value={form?.name}
                 onChange={onChange}
                 onBlur={onBlur}
-                name="nickname"
+                name="name"
                 size="large"
-                errorText={touched.nickname && validatedNickname}
+                errorText={touched.name && validatedName}
                 />
                 <Input type = "email"
                 placeholder = "이메일"
