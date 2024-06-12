@@ -64,7 +64,6 @@ const MyPage: React.FC = () => {
     };
 
     if (!validatedCheckPassword && !validatedPassword) {
-      console.log(formData);
       alert("Changes saved!");
       setPassword(""); // 비밀번호 필드 비우기
       setPasswordCheck(""); // 비밀번호 확인 필드 비우기
@@ -79,7 +78,7 @@ const MyPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+    <div className="bg-white p-6 rounded-lg shadow-lg w-[full] max-w-2xl ">
       <form onSubmit={handleSubmit}>
         <ImageUpload
           profileImage={profileImage}
@@ -87,7 +86,6 @@ const MyPage: React.FC = () => {
           handleFileChange={handleFileChange}
           fileInputRef={fileInputRef}
         />
-
         <InputField
           label="닉네임"
           type="text"
@@ -95,7 +93,6 @@ const MyPage: React.FC = () => {
           value={nickname}
           onChange={handleNicknameChange}
         />
-
         <TextAreaField
           label="소개"
           placeholder="소개"
@@ -119,21 +116,26 @@ const MyPage: React.FC = () => {
           errorText={validatedCheckPassword}
         />
 
-        <div className="flex justify-center p-3">
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mx-5"
-          >
-            저장
-          </button>
-
-          <button
-            type="button"
-            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 mx-5"
-            onClick={handleCancel}
-          >
-            취소
-          </button>
+        <div className="flex justify-center p-3 ">
+          <div className="mx-3">
+            <Button
+              type="submit"
+              size="medium_big_radius"
+              color="secondary"
+              textColor="primary_font"
+              name="저장"
+            />
+          </div>
+          <div className="mx-3">
+            <Button
+              type="button"
+              size="medium_big_radius"
+              color="secondary_border"
+              textColor="secondary_color_font"
+              name="취소"
+              onClick={handleCancel}
+            />
+          </div>
         </div>
       </form>
     </div>

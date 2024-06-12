@@ -18,7 +18,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      className="w-[195px] h-[73.6px] ml-[111px] border border-gray-300 rounded"
+      className="w-[360px] h-[73.6px] ml-[111px] border border-gray-300 rounded"
     />
   </div>
 );
