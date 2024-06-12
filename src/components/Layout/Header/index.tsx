@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ForumIcon from "@mui/icons-material/Forum";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -8,6 +8,7 @@ import Profile from "./Profile";
 import Button from "../../Common/button/Button";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
   const [theme, setTheme] = useState("light");
   const toggleTheme = () => {
@@ -58,6 +59,8 @@ const Header = () => {
         </li>
         <li>
           <Button
+            type="button"
+            onClick={() => navigate("/login")}
             size="medium_small_radius"
             color="secondary_border"
             textColor="secondary_color_font"
