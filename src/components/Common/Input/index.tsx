@@ -33,7 +33,7 @@ const Input: React.FC<InputProps> = ({
         onBlur={onBlur}
         name={name}
         // onKeyPress={onKeyPress}
-        className={`shadow-lg outline-none p-4 rounded-md text-[#213363]  bg-white border-solid border-2 border-[#213363] ${
+        className={`shadow-lg outline-none p-4 rounded-md text-secondary  bg-white border-solid border-2 border-secondary ${
           size === "large"
             ? "w-[360px] h-[56px] text-lg "
             : "w-[200px] h-[32px] text-sm"

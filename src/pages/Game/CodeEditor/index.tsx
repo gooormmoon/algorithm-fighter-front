@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { Editor, OnMount } from "@monaco-editor/react";
 import { useState } from "react";
 import { CODE_SNIPPETS } from "../Constants";
-import Button from "../../components/Common/button/Button";
+import { Button } from "../../../components/Common";
 import LanguageSelector from "./LanguageSelector";
 // import Output from "./Output";
 // import LanguageSelector from "./LanguageSelector";

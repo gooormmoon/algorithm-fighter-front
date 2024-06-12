@@ -1,7 +1,7 @@
 import React from "react";
 import { LANGUAGE_VERSIONS } from "../Constants";
-import Button from "../../components/Common/button/Button";
-import "../../styles/tailwind.scss";
+import { Button } from "../../../components/Common";
+import "../../../styles/tailwind.scss";
 
 const languages = Object.entries(LANGUAGE_VERSIONS);
 const ACTIVE_COLOR = "text-primary";
