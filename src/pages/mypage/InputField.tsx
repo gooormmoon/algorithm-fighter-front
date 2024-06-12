@@ -26,7 +26,7 @@ const InputField: React.FC<InputFieldProps> = ({
       value={value}
       onChange={onChange}
       name="test"
-      size="small"
+      size="large"
       errorText={errorText}
     />
   </div>

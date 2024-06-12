@@ -1,9 +1,9 @@
-import React from 'react';
-import styles from './button.module.scss';
-import cx from 'classnames';
+import React from "react";
+import styles from "./button.module.scss";
+import cx from "classnames";
 
 interface ButtonProps {
-  type?: 'button' | 'submit' | 'reset';
+  type?: "button" | "submit" | "reset";
   size: string;
   color: string;
   textColor: string;
@@ -14,7 +14,7 @@ interface ButtonProps {
 }
 
 const Button: React.FC<ButtonProps> = ({
-  type = 'submit',
+  type = "submit",
   size,
   color,
   textColor,
