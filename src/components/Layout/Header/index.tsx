@@ -5,6 +5,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
+import Button from "../../Common/button/Button";
 
 const Header = () => {
   const [showProfile, setShowProfile] = useState(false);
@@ -54,6 +55,14 @@ const Header = () => {
         </li>
         <li>
           <ForumIcon />
+        </li>
+        <li>
+          <Button
+            size="medium_small_radius"
+            color="secondary_border"
+            textColor="secondary_color_font"
+            name="로그인"
+          />
         </li>
       </ul>
     </header>
