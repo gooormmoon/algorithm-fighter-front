@@ -26,7 +26,12 @@ const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type={type}
-      className={cx(styles[color], styles[size], styles[textColor])}
+      className={cx(
+        styles[color],
+        styles[size],
+        styles[textColor],
+        "cursor-pointer"
+      )}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}

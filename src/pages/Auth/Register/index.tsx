@@ -67,7 +67,7 @@ const Register = () => {
   };
   return (
     <form
-      className="w-[520px] h-[520px] flex flex-col justify-center items-center shadow-2xl"
+      className="w-[540px] h-[540px] p-8 flex flex-col justify-center items-center shadow-2xl"
       onSubmit={onSubmit}
     >
       <h1 className="text-[#213363] text-3xl font-semibold">REGISTER</h1>
@@ -112,11 +112,22 @@ const Register = () => {
         size="large"
         errorText={touched.password_check && validatedCheckpassword}
       />
-      <div className="flex flex-col">
-        <button type="submit">회원가입</button>
-        <button type="button" onClick={() => navigate("/login")}>
-          취소
-        </button>
+      <div className="mt-2 flex flex-col gap-2">
+        <Button
+          type="button"
+          size="medium_big_radius"
+          color="secondary"
+          textColor="primary_font"
+          name="회원 가입"
+        />
+        <Button
+          type="button"
+          onClick={() => navigate("/login")}
+          size="medium_big_radius"
+          color="secondary_border"
+          textColor="secondary_color_font"
+          name="취소"
+        />
       </div>
     </form>
   );
