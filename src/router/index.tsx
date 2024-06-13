@@ -4,7 +4,6 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Layout from "../components/Layout";
-
 import {
   LoginPage,
   RegisterPage,
