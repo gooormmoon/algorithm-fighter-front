@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import InputField from "./InputField";
 import TextAreaField from "./TextAreaField";
 import ImageUpload from "./ImageUpload";
-import Button from "../../components/Common/button/Button";
+import { Button } from "../../components/Common";
 import useInputChange from "../../hooks/useInputChange";
 import { validatePassword, validateCheckpassword } from "../Auth/utils";
 

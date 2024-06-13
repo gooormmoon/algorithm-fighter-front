@@ -11,8 +11,8 @@ const Profile = () => {
     <section
       className={`w-[300px] h-[360px] absolute top-16 right-4  p-4 shadow-md  ${
         localStorage.getItem("theme") === "dark"
-          ? "bg-[#213363] text-white border-white"
-          : "bg-white text-[#213363] border-[#213363]"
+          ? "bg-secondary text-white border-white"
+          : "bg-white text-secondary border-secondary"
       } `}
     >
       <ul className="flex flex-col   w-full h-full items-center ">

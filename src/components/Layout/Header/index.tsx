@@ -32,8 +32,8 @@ const Header = () => {
     <header
       className={`w-full h-[70px] flex justify-between items-center gap-12 p-4 shadow-xl ${
         theme === "dark"
-          ? "bg-[#213363] text-white border-white"
-          : "bg-white text-[#213363] border-[#213363]"
+          ? "bg-secondary text-white border-white"
+          : "bg-white text-secondary border-secondary"
       }`}
     >
       <ul className="w-4/5 h-full flex gap-12 items-center">

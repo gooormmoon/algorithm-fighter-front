@@ -1,5 +1,5 @@
 import React from "react";
-import Input from "../../components/Common/input/Input";
+import Input from "../../components/Common/Input";
 
 interface InputFieldProps {
   label: string;
