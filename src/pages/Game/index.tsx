@@ -144,7 +144,7 @@ const Game = () => {
           </section>
         </div>
       </div>
-      <footer className="bg-white h-[60px]">
+      <footer className="bg-white h-[60px] flex justify-end items-center pr-4">
         <Button
           type="button"
           size={"medium_small_radius"}
