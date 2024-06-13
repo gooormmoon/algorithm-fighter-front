@@ -5,7 +5,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
-import { Button } from "../../Common";
+import { Button, ProfileIcon } from "../../Common";
 // import { CreateModal } from "../../../pages/Game/GameModal";
 
 const Header = () => {
@@ -51,20 +51,22 @@ const Header = () => {
           <Link to="/mypage">마이 페이지</Link>
         </li>
       </ul>
-      <ul className="h-full flex gap-4 items-center">
-        <li>구름달님(예시)</li>
-        <li>
+      <ul className="h-full flex gap-4 justify-center items-center">
+        <li className="w-[100px] h-[32px] flex justify-center items-center">
+          구름달님(예시)
+        </li>
+        <li className="w-[32px] h-[32px] flex justify-center items-center">
           <button onClick={() => toggleTheme()}>
             {theme === "light" ? <LightModeIcon /> : <DarkModeIcon />}
           </button>
         </li>
-        <li>
+        <li className="w-[32px] h-[32px] flex justify-center items-center">
           <button onClick={() => setShowProfile((prev) => !prev)}>
-            <AccountCircleIcon />
+            <ProfileIcon size="small" />
           </button>
           {showProfile && <Profile />}
         </li>
-        <li>
+        <li className="w-[32px] h-[32px] flex justify-center items-center">
           <ForumIcon />
         </li>
         <li>
