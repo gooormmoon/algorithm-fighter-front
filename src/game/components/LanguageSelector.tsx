@@ -10,6 +10,7 @@ interface LanguageSelectorProps {
   language: string;
   onSelect: (language: string) => void;
 }
+
 const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   language,
   onSelect,

@@ -8,6 +8,7 @@ interface ButtonProps {
   color: string;
   textColor: string;
   name: string;
+  isLoading?: boolean;
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   onClick?: () => void;
@@ -22,6 +23,7 @@ const Button: React.FC<ButtonProps> = ({
   onMouseEnter,
   onMouseLeave,
   onClick,
+  isLoading,
 }) => {
   return (
     <button
@@ -30,13 +32,14 @@ const Button: React.FC<ButtonProps> = ({
         styles[color],
         styles[size],
         styles[textColor],
-        "cursor-pointer"
+        `cursor-pointer ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`
       )}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
+      disabled={isLoading}
     >
-      {name}
+      {isLoading ? "Running..." : name}
     </button>
   );
 };
