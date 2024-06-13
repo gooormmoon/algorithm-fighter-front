@@ -84,16 +84,12 @@ const Game = () => {
           <section className="w-full h-full bg-orange-300"></section>
         </div>
         <div
-          className="flex justify-center items-center w-[20px] bg-blue-300 cursor-col-resize hover:bg-blue-500"
+          className="flex justify-center items-center w-[24px] bg-blue-300 cursor-col-resize hover:bg-blue-500"
           onMouseDown={onMouseDownX}
         >
           ||
         </div>
-        <div
-          className="
-        // flex-1 
-        h-full flex flex-col overflow-hidden"
-        >
+        <div className="w-full h-full flex flex-col overflow-hidden">
           <section
             className="w-full bg-yellow-300 overflow-hidden"
             style={{ height }}
@@ -114,11 +110,7 @@ const Game = () => {
           >
             ||
           </div>
-          <section
-            className="w-full 
-          // flex-1
-           bg-green-300"
-          >
+          <section className="w-full bg-green-300">
             <Output editorRef={editorRef} language={language} />
           </section>
         </div>
