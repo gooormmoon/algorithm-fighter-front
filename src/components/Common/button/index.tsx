@@ -32,7 +32,9 @@ const Button: React.FC<ButtonProps> = ({
         styles[color],
         styles[size],
         styles[textColor],
-        `cursor-pointer ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`
+        `cursor-pointer ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`,
+        "shadow-lg",
+        "drop-shadow-lg"
       )}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}

@@ -32,7 +32,7 @@ const Login = () => {
   };
   return (
     <form
-      className="w-[540px] h-[480px] p-8 flex flex-col justify-center items-center shadow-2xl"
+      className="w-[540px] h-[480px] gap-2 p-8 flex flex-col justify-center items-center shadow-2xl"
       onSubmit={onSubmit}
     >
       <h1 className="text-secondary text-3xl font-semibold">LOGIN</h1>

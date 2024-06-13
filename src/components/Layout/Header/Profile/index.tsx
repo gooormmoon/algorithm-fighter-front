@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { sizing } from "@mui/system";
 import { Link } from "react-router-dom";
+import { ProfileIcon } from "../../../Common";
 const Profile = () => {
   //   const [theme, setTheme] = useState(localStorage.getItem("theme"));
   //   useEffect(() => {
@@ -9,7 +10,7 @@ const Profile = () => {
   //   }, [localStorage.getItem("theme")]);
   return (
     <section
-      className={`w-[300px] h-[360px] absolute top-16 right-4  p-4 shadow-md  ${
+      className={`w-[300px] h-[360px] z-10 absolute top-16 right-4  p-4 shadow-md  ${
         localStorage.getItem("theme") === "dark"
           ? "bg-secondary text-white border-white"
           : "bg-white text-secondary border-secondary"
@@ -18,9 +19,10 @@ const Profile = () => {
       <ul className="flex flex-col   w-full h-full items-center ">
         {/* <img/> */}
         <li className="w-full h-2/3 flex flex-col gap-4 border-b-2 border-gray-400 text-left">
-          <div>
+          {/* <div>
             <AccountCircleIcon fontSize="large" />
-          </div>
+          </div> */}
+          <ProfileIcon size="large" />
           <p className="text-xl">구름달님</p>
           <p>프론트엔드 웹 풀스택</p>
         </li>

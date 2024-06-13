@@ -42,7 +42,10 @@ const Header = () => {
           <Link to="/">홈</Link>
         </li>
         <li>
-          <button onClick={openModalHandler}>게임</button>
+          <button>게임 참가</button>
+        </li>
+        <li>
+          <button onClick={openModalHandler}>게임 생성</button>
         </li>
         <li>
           <Link to="/myRepository">내 저장소</Link>

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LANGUAGE_VERSIONS } from "../Constants";
-import { Button } from "../../../components/Common";
+import { Button, Dropdown } from "../../../components/Common";
 import "../../../styles/tailwind.scss";
 
-const languages = Object.entries(LANGUAGE_VERSIONS);
+// const languages = Object.entries(LANGUAGE_VERSIONS);
+const languages = Object.keys(LANGUAGE_VERSIONS);
 const ACTIVE_COLOR = "text-primary";
 
 interface LanguageSelectorProps {
@@ -15,6 +16,9 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
   language,
   onSelect,
 }) => {
+  const langOptions = [...languages];
+  const [lang, setLang] = useState<string>(langOptions[0]);
+
   const [isOpen, setIsOpen] = React.useState(false);
 
   const toggleMenu = () => {
@@ -26,9 +30,12 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    onSelect(lang);
+  }, [lang]);
   return (
     <div className="ml-2 mb-4">
-      <div className="relative inline-block">
+      {/* <div className="relative inline-block">
         <Button
           type="button"
           size={"medium_small_radius"}
@@ -53,8 +60,17 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
               </li>
             ))}
           </ul>
+
         )}
-      </div>
+      </div> */}
+      <Dropdown
+        options={langOptions}
+        selectedValue={lang}
+        onChange={(value) => {
+          setLang(value);
+        }}
+        showMinutes={true}
+      />
     </div>
   );
 };
