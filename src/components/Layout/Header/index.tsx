@@ -6,7 +6,7 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
 import { Button } from "../../Common";
-// import { CreateModal } from "../../../pages/Game/GameModal";
+import { CreateModal } from "../../../pages/Game/GameModal";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -78,9 +78,9 @@ const Header = () => {
           />
         </li>
       </ul>
-      {/* {isModalOpen && (
+      {isModalOpen && (
         <CreateModal isOpen={isModalOpen} onClose={closeModalHandler} />
-      )} */}
+      )}
     </header>
   );
 };
