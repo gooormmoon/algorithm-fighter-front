@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 export function RadioButton() {
-  const [selectedValue, setSelectedValue] = useState("");
+  const [selectedValue, setSelectedValue] = useState("lv0");
   const levels = ["lv0", "lv1", "lv2", "lv3", "lv4"];
   const handleChange = (e: {
     target: { value: React.SetStateAction<string> };

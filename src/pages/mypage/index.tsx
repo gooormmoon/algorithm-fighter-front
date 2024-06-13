@@ -119,21 +119,21 @@ const MyPage: React.FC = () => {
         <div className="flex justify-center p-3 ">
           <div className="mx-3">
             <Button
-              type="submit"
-              size="medium_big_radius"
-              color="secondary"
-              textColor="primary_font"
-              name="저장"
-            />
-          </div>
-          <div className="mx-3">
-            <Button
               type="button"
               size="medium_big_radius"
               color="secondary_border"
               textColor="secondary_color_font"
               name="취소"
               onClick={handleCancel}
+            />
+          </div>
+          <div className="mx-3">
+            <Button
+              type="submit"
+              size="medium_big_radius"
+              color="secondary"
+              textColor="primary_font"
+              name="저장"
             />
           </div>
         </div>

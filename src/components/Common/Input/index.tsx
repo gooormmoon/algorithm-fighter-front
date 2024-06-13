@@ -24,7 +24,7 @@ const Input: React.FC<InputProps> = ({
   errorText,
 }) => {
   return (
-    <div className="p-4">
+    <div className="py-2">
       <input
         type={type}
         placeholder={placeholder}
@@ -33,10 +33,12 @@ const Input: React.FC<InputProps> = ({
         onBlur={onBlur}
         name={name}
         // onKeyPress={onKeyPress}
-        className={`shadow-lg outline-none p-4 rounded-md text-secondary  bg-white border-solid border-2 border-secondary ${
+        className={`shadow-lg outline-none p-4 rounded-md text-secondary  bg-white border-solid border-2 border-secondary 
+        drop-shadow-lg shadow-lg
+        ${
           size === "large"
             ? "w-[360px] h-[56px] text-lg "
-            : "w-[200px] h-[32px] text-sm"
+            : "w-[320px] h-[48px] text-sm"
         } ${errorText && " border-red-500"}`}
       />
       {errorText && (

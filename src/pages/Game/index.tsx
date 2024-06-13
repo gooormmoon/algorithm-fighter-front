@@ -46,7 +46,7 @@ const Game = () => {
     if (isResizingX) {
       const newWidth = width + e.clientX - initialX;
       setInitialX(e.clientX);
-      if (newWidth >= 360 && newWidth <= 1600) {
+      if (newWidth >= 440 && newWidth <= 1600) {
         setWidth(newWidth);
       }
     }
@@ -77,7 +77,7 @@ const Game = () => {
     <main className="w-full h-full flex flex-col ">
       <div className="w-full h-full flex overflow-hidden">
         <div className="h-full" style={{ width }}>
-          <section className="w-[340px] h-[140px]  bg-gray-400 ">
+          <section className="top-20 left-4 absolute w-[340px] h-[140px]  bg-transparent ">
             {/* top-20 left-4 absolute  */}
             <CompetitorProfile />
           </section>
