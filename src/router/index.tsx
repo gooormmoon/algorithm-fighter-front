@@ -12,6 +12,7 @@ import {
   GamePage,
   MyReposPage,
 } from "../pages";
+import CodeEditor from "../pages/Game/CodeEditor";
 
 const router = (
   <Route path="/" element={<Layout />}>
@@ -20,6 +21,7 @@ const router = (
     <Route path="/login" element={<LoginPage />} />
     <Route path="/mypage" element={<MyPage />} />
     <Route path="/register" element={<RegisterPage />} />
+    <Route path="/codeeditor" element={<CodeEditor />} />
   </Route>
 );
 const rootRouter = createBrowserRouter(createRoutesFromElements(router));

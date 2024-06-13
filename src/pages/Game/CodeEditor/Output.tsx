@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { executeCode } from "../temporary_api";
 import { Button } from "../../../components/Common";
-import "../../styles/tailwind.scss";
+import "../../../styles/tailwind.scss";
 interface OutputProps {
   editorRef: React.RefObject<any>;
   language: string;
