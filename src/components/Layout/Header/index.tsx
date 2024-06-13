@@ -6,17 +6,28 @@ import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
 import Button from "../../Common/button/Button";
+import CreateModal from "../../../GameModal/CreateModal/CreateModal";
 
 const Header = () => {
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
   const [theme, setTheme] = useState("light");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  const openModalHandler = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModalHandler = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <header
       className={`w-full h-[70px] flex justify-between items-center gap-12 p-4 shadow-xl ${
@@ -31,8 +42,7 @@ const Header = () => {
           <Link to="/">홈</Link>
         </li>
         <li>
-          <Link to="/">게임</Link>
-          {/* 클릭하면 모달창나오게 */}
+          <button onClick={openModalHandler}>게임</button>
         </li>
         <li>
           <Link to="/myRepository">내 저장소</Link>
@@ -68,6 +78,7 @@ const Header = () => {
           />
         </li>
       </ul>
+      {isModalOpen && <CreateModal isOpen={isModalOpen} onClose={closeModalHandler} />}
     </header>
   );
 };

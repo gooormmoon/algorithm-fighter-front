@@ -1,41 +1,46 @@
-import { useState } from 'react';
+// Modal.tsx
+import React from 'react';
 
-export const Modal = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface ModalProps {
+  buttonText: string;
+  modalTitle: string;
+  children: React.ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
+}
 
-  const openModalHandler = () => {
-    setIsOpen(!isOpen);
-  };
-
+export const Modal: React.FC<ModalProps> = ({ buttonText, modalTitle, children, isOpen, onClose }) => {
   return (
     <div className="flex">
       <button
-        onClick={openModalHandler}
-        className=" py-3 px-6 rounded-lg cursor-pointer"
+        onClick={onClose}
+        className="py-3 px-6 rounded-lg cursor-pointer"
       >
-        {isOpen ? 'Opened!' : 'event'}
+        {isOpen ? '' : buttonText}
       </button>
 
       {isOpen && (
         <div
           className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50"
-          onClick={openModalHandler}
+          onClick={onClose}
         >
-          <div className="relative p-4 w-full max-w-md max-h-full">
-
+          <div className="relative p-4 w-full max-w-xl max-h-full">
             <div
-              className="bg-white p-6 rounded-lg w-96"
+              className="bg-white p-6 rounded-lg w-full relative"
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                type='button'
-                onClick={openModalHandler}
-                className="absolute top-4 end-12 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                type="button"
+                onClick={onClose}
+                className="absolute top-4 right-4 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               >
-              x
+                x
               </button>
-              <div className="mt-6 text-lg text-[#213363]">
-                Goormdal
+              <div className="mt-6 text-lg text-[#213363] font-semibold">
+                {modalTitle}
+              </div>
+              <div className="mt-4">
+                {children}
               </div>
             </div>
           </div>
@@ -44,3 +49,5 @@ export const Modal = () => {
     </div>
   );
 };
+
+export default Modal;

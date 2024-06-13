@@ -82,7 +82,6 @@ function App() {
 //     </form>
 // =======
     <div className="text-3xl font-bold underline">
-      <Modal />
     </div>
   );
 }
