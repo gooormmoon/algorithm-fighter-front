@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import Input from "../../../components/Common/input/Input";
 import { useNavigate } from "react-router-dom";
-import Button from "../../../components/Common/button/Button";
+import { Button, Input } from "../../../components/Common";
 
 const Login = () => {
   const REST_API_KEY = "백엔드한테 달라하자1";
@@ -36,7 +35,7 @@ const Login = () => {
       className="w-[540px] h-[480px] p-8 flex flex-col justify-center items-center shadow-2xl"
       onSubmit={onSubmit}
     >
-      <h1 className="text-[#213363] text-3xl font-semibold">LOGIN</h1>
+      <h1 className="text-secondary text-3xl font-semibold">LOGIN</h1>
 
       <Input
         type="email"
@@ -66,7 +65,7 @@ const Login = () => {
         textColor="primary_font"
         name="로그인"
       />
-      <ul className="mt-4 flex gap-2 text-[#213363] text-sm">
+      <ul className="mt-4 flex gap-2 text-secondary text-sm">
         <li className="cursor-pointer">아이디 찾기</li>
         <li>|</li>
         <li className="cursor-pointer">비밀번호 찾기</li>

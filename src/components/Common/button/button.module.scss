@@ -1,41 +1,41 @@
+@use "../../../styles/constants/" as c;
 .primary {
-  background-color: #ffbb5c;
+  background-color: c.$C_PRIMARY;
 }
 
 .primary:hover {
-  background-color: #f3a941;
+  background-color: c.$C_PRIMARY_HOVER;
   transition: all 0.5s;
 }
 
 .secondary {
-  background-color: #213363;
+  background-color: c.$C_SECONDARY;
 }
 
 .secondary:hover {
-  background-color: #3c5393;
+  background-color: c.$C_SECONDARY_HOVER;
   transition: all 0.5s;
 }
 
 .secondary_border {
-  background-color: #ffffff;
+  background-color: c.$C_WHITE;
   border: 2px solid;
-  border-color: #213363;
+  border-color: c.$C_SECONDARY;
 }
 
 .secondary_border:hover {
-  color: #ffffff;
-  background-color: #213363;
+  color: c.$C_WHITE;
+  background-color: c.$C_SECONDARY;
   transition: all 0.5s;
 }
 .wait_border {
-  background-color: #ffffff;
+  background-color: c.$C_WHITE;
   border: 2px solid;
-  border-color: #ff0000;
+  border-color: c.$C_RED;
 }
 
 .wait_border:hover {
-  background-color: #00aa77;
-  background-color: #00aa77;
+  background-color: c.$C_GREEN;
   border: 2px solid;
   transition: all 0.5s;
 }
@@ -101,16 +101,16 @@
 // 회원가입 밑에 있는 취소 버튼에 쓸 폰트 색
 // 다른 폰트 색들은 다 하얀색임
 .secondary_color_font {
-  color: #213363;
+  color: c.$C_SECONDARY;
   font-weight: bold;
 }
 
 .wait_color_font {
-  color: #ff0000;
+  color: c.$C_RED;
   font-weight: bold;
 }
 
 .wait_color_font:hover {
-  color: #ffffff;
+  color: c.$C_WHITE;
   font-weight: bold;
 }

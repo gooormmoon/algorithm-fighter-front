@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 export function RadioButton() {
-  const [selectedValue, setSelectedValue] = useState('');
-  const levels = ['lv0', 'lv1', 'lv2', 'lv3', 'lv4'];
-  const handleChange = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+  const [selectedValue, setSelectedValue] = useState("");
+  const levels = ["lv0", "lv1", "lv2", "lv3", "lv4"];
+  const handleChange = (e: {
+    target: { value: React.SetStateAction<string> };
+  }) => {
     setSelectedValue(e.target.value);
   };
 
@@ -22,7 +24,7 @@ export function RadioButton() {
             />
             <label
               htmlFor={option}
-              className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-[#213363] peer-checked:font-bold peer-checked:text-white duration-200 ease-out"
+              className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-secondary peer-checked:font-bold peer-checked:text-white duration-200 ease-out"
             >
               {option}
             </label>
@@ -32,4 +34,4 @@ export function RadioButton() {
     </main>
   );
 }
-export default RadioButton
+export default RadioButton;
