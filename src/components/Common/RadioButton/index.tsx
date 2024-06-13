@@ -9,8 +9,8 @@ export function RadioButton() {
   };
 
   return (
-    <main className="min-h-screen place-items-center">
-      <div className="grid w-[40rem] grid-cols-5 gap-2 rounded-xl bg-gray-200 p-2">
+    <div className="w-full flex justify-center">
+      <div className="grid w-full grid-cols-5 gap-2 rounded-xl bg-gray-200 p-2">
         {levels.map((option) => (
           <div key={option}>
             <input
@@ -31,7 +31,7 @@ export function RadioButton() {
           </div>
         ))}
       </div>
-    </main>
+    </div>
   );
 }
 export default RadioButton;
