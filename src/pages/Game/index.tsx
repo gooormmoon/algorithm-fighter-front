@@ -134,12 +134,12 @@ const Game = () => {
             />
           </section>
           <div
-            className="flex flex-col justify-center items-center w-full h-[24px]text-center bg-blue-300 cursor-row-resize hover:bg-blue-500"
+            className="flex flex-col justify-center items-center w-full h-[24px] text-center bg-blue-300 cursor-row-resize hover:bg-blue-500"
             onMouseDown={onMouseDownY}
           >
             ||
           </div>
-          <section className="w-full bg-green-300">
+          <section className="w-full flex-1 bg-green-300 flex overflow-hidden">
             <Output isError={isError} output={output} />
           </section>
         </div>
