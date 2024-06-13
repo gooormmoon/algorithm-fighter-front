@@ -5,7 +5,8 @@ import Output from "./Output";
 import { OnMount } from "@monaco-editor/react";
 import LanguageSelector from "./LanguageSelector";
 import { CODE_SNIPPETS } from "./Constants";
-
+import { executeCode } from "./temporary_api";
+import { Button } from "../../components/Common";
 const Game = () => {
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
@@ -16,6 +17,34 @@ const Game = () => {
   const editorRef = useRef<any>(null);
   const [language, setLanguage] = useState<string>("javascript");
   const [value, setValue] = useState<string>("");
+
+  //Runcode
+  const [output, setOutput] = useState<string[] | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  const runCode = async () => {
+    const sourceCode = editorRef.current.getValue();
+    if (!sourceCode) return;
+    try {
+      setIsLoading(true);
+      const { run: result } = await executeCode(language, sourceCode);
+      if (!!result.stderr) {
+        throw new Error(result.stderr);
+      }
+      setOutput(result.output.split("\n"));
+      setIsError(!!result.stderr);
+      console.log(result);
+    } catch (error) {
+      if (error instanceof Error) {
+        setIsError(true);
+        console.log(error.message);
+        alert(error.message || "Unable to run code");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const onMount: OnMount = (editor) => {
     editorRef.current = editor;
     editor.focus();
@@ -111,11 +140,21 @@ const Game = () => {
             ||
           </div>
           <section className="w-full bg-green-300">
-            <Output editorRef={editorRef} language={language} />
+            <Output isError={isError} output={output} />
           </section>
         </div>
       </div>
-      <footer className="bg-white h-[60px]">hihi</footer>
+      <footer className="bg-white h-[60px]">
+        <Button
+          type="button"
+          size={"medium_small_radius"}
+          onClick={runCode}
+          color="secondary"
+          textColor="primary_font"
+          name={"Run Code"}
+          isLoading={isLoading}
+        ></Button>
+      </footer>
     </main>
   );
 };
