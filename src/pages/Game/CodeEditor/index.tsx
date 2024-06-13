@@ -1,10 +1,11 @@
 import React, { useRef } from "react";
 import { Editor, OnMount } from "@monaco-editor/react";
 import { useState } from "react";
-import { Button } from "../../components/Common";
-import LanguageSelector from "../../pages/Game/CodeEditor/LanguageSelector";
-import Output from "../../pages/Game/CodeEditor/Output";
-import { CODE_SNIPPETS } from "../../pages/Game/Constants";
+import { CODE_SNIPPETS } from "../Constants";
+import { Button } from "../../../components/Common";
+import LanguageSelector from "./LanguageSelector";
+import Output from "./Output";
+
 interface CodeEditorProps {}
 
 const CodeEditor: React.FC<CodeEditorProps> = () => {

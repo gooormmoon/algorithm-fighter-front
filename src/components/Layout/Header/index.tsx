@@ -5,24 +5,35 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
-import Button from "../../Common/button/Button";
+import { Button } from "../../Common";
+// import { CreateModal } from "../../../pages/Game/GameModal";
 
 const Header = () => {
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
   const [theme, setTheme] = useState("light");
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
   useEffect(() => {
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  const openModalHandler = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModalHandler = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <header
       className={`w-full h-[70px] flex justify-between items-center gap-12 p-4 shadow-xl ${
         theme === "dark"
-          ? "bg-[#213363] text-white border-white"
-          : "bg-white text-[#213363] border-[#213363]"
+          ? "bg-secondary text-white border-white"
+          : "bg-white text-secondary border-secondary"
       }`}
     >
       <ul className="w-4/5 h-full flex gap-12 items-center">
@@ -31,8 +42,7 @@ const Header = () => {
           <Link to="/">홈</Link>
         </li>
         <li>
-          <Link to="/">게임</Link>
-          {/* 클릭하면 모달창나오게 */}
+          <button onClick={openModalHandler}>게임</button>
         </li>
         <li>
           <Link to="/myRepository">내 저장소</Link>
@@ -68,6 +78,9 @@ const Header = () => {
           />
         </li>
       </ul>
+      {/* {isModalOpen && (
+        <CreateModal isOpen={isModalOpen} onClose={closeModalHandler} />
+      )} */}
     </header>
   );
 };
