@@ -1,4 +1,3 @@
-import { Button } from "../../../components/Common";
 import "../../../styles/tailwind.scss";
 interface OutputProps {
   isError: boolean;

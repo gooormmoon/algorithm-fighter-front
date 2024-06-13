@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface DropdownProps<T> {
   options: T[];
@@ -35,7 +35,8 @@ const Dropdown = <T extends string | number>({
             <div
               key={index}
               onClick={() => handleChange(option)}
-              className="w-[120px] block px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer flex justify-center"
+              //class name: block 삭제
+              className="w-[120px]  px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer flex justify-center"
             >
               {showMinutes ? `${option} ` : option}
             </div>
