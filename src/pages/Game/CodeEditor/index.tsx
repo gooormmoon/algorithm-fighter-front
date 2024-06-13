@@ -4,8 +4,7 @@ import { useState } from "react";
 import { CODE_SNIPPETS } from "../Constants";
 import { Button } from "../../../components/Common";
 import LanguageSelector from "./LanguageSelector";
-// import Output from "./Output";
-// import LanguageSelector from "./LanguageSelector";
+import Output from "./Output";
 
 interface CodeEditorProps {}
 
@@ -43,6 +42,7 @@ const CodeEditor: React.FC<CodeEditorProps> = () => {
         textColor="primary_font"
         name={"테마 바꾸기"}
       ></Button>
+      <div className="flex"></div>
       <Editor
         width={"60%"}
         height="75vh"
@@ -53,6 +53,7 @@ const CodeEditor: React.FC<CodeEditorProps> = () => {
         value={value}
         onChange={(value) => setValue(value || "")}
       ></Editor>
+      <Output editorRef={editorRef} language={language} />
     </>
   );
 };
