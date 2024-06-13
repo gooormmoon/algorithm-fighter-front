@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CodeEditor from "./CodeEditor";
+import CompetitorProfile from "./CompetitorProfile";
 
 const Game = () => {
   const [isResizingX, setIsResizingX] = useState(false);
@@ -60,9 +61,9 @@ const Game = () => {
   return (
     <main className="w-full h-full flex overflow-hidden">
       <div className="h-full" style={{ width }}>
-        <section className="w-[340px] h-[140px] rounded-xl bg-gray-800 ">
+        <section className="w-[340px] h-[140px]  bg-gray-400 ">
           {/* top-20 left-4 absolute  */}
-          프로필영역
+          <CompetitorProfile />
         </section>
         <section className="w-full h-full bg-orange-300"></section>
       </div>
