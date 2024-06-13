@@ -5,7 +5,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
-import Button from "../../Common/button/Button";
+import {Button} from "../../Common";
 import CreateModal from "../../../GameModal/CreateModal/CreateModal";
 
 const Header = () => {
