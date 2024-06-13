@@ -3,26 +3,36 @@ import { Editor, OnMount } from "@monaco-editor/react";
 import { useState } from "react";
 import { CODE_SNIPPETS } from "../Constants";
 import { Button } from "../../../components/Common";
-import LanguageSelector from "./LanguageSelector";
+// import LanguageSelector from "./LanguageSelector";
 import Output from "./Output";
 
-interface CodeEditorProps {}
+interface CodeEditorProps {
+  language: string;
+  onMount: OnMount;
+  setValue: (value: string) => void;
+  value: string;
+}
 
-const CodeEditor: React.FC<CodeEditorProps> = () => {
-  const editorRef = useRef<any>(null);
-  const [value, setValue] = useState<string>("");
-  const [language, setLanguage] = useState<string>("javascript");
+const CodeEditor: React.FC<CodeEditorProps> = ({
+  language,
+  onMount,
+  setValue,
+  value,
+}) => {
+  // const editorRef = useRef<any>(null);
+  // const [value, setValue] = useState<string>("");
+  // const [language, setLanguage] = useState<string>("javascript");
   const [theme, setTheme] = useState<string>("vs-light");
 
-  const onMount: OnMount = (editor) => {
-    editorRef.current = editor;
-    editor.focus();
-  };
+  // const onMount: OnMount = (editor) => {
+  //   editorRef.current = editor;
+  //   editor.focus();
+  // };
 
-  const onSelect = (language: string) => {
-    setLanguage(language);
-    setValue(CODE_SNIPPETS[language]);
-  };
+  // const onSelect = (language: string) => {
+  //   setLanguage(language);
+  //   setValue(CODE_SNIPPETS[language]);
+  // };
 
   //테마 전역 설정 전 테스트
   const themeClick = () => {
@@ -33,7 +43,7 @@ const CodeEditor: React.FC<CodeEditorProps> = () => {
 
   return (
     <>
-      <LanguageSelector language={language} onSelect={onSelect} />
+      {/* <LanguageSelector language={language} onSelect={onSelect} /> */}
       <Button
         type="button"
         size={"medium_small_radius"}
@@ -44,8 +54,8 @@ const CodeEditor: React.FC<CodeEditorProps> = () => {
       ></Button>
       <div className="flex"></div>
       <Editor
-        width={"60%"}
-        height="75vh"
+        width={"100%"}
+        // height="75vh"
         theme={theme}
         language={language}
         defaultValue={CODE_SNIPPETS[language]}
@@ -53,7 +63,7 @@ const CodeEditor: React.FC<CodeEditorProps> = () => {
         value={value}
         onChange={(value) => setValue(value || "")}
       ></Editor>
-      <Output editorRef={editorRef} language={language} />
+      {/* <Output editorRef={editorRef} language={language} /> */}
     </>
   );
 };
