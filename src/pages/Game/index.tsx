@@ -118,14 +118,12 @@ const Game = () => {
           </section>
         </div>
         <div
-          className="flex justify-center items-center w-[24px] bg-blue-300 cursor-col-resize hover:bg-blue-500"
+          className="flex justify-center items-center w-3 border-4 border-transparent bg-gray-100 cursor-col-resize hover:bg-gray-200 "
           onMouseDown={onMouseDownX}
-        >
-          ||
-        </div>
+        ></div>
         <div className="w-full h-full flex flex-col overflow-hidden">
           <section className="w-full overflow-hidden" style={{ height }}>
-            <div className="w-full h-12 bg-white flex justify-end ">
+            <div className="w-full h-12 bg-white flex justify-end p-4">
               <LanguageSelector language={language} onSelect={onSelect} />
             </div>
             <CodeEditor
@@ -136,11 +134,11 @@ const Game = () => {
             />
           </section>
           <div
-            className="flex flex-col justify-center items-center w-full h-[24px] text-center bg-blue-300 cursor-row-resize hover:bg-blue-500"
+            className="flex flex-col justify-center items-center w-full h-3
+           border-4 border-transparent bg-gray-100  hover:bg-gray-200
+            cursor-row-resize "
             onMouseDown={onMouseDownY}
-          >
-            ||
-          </div>
+          ></div>
           <section className="w-full flex-1  flex overflow-hidden">
             <Output isError={isError} output={output} />
           </section>

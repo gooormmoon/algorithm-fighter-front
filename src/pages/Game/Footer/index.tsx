@@ -34,7 +34,7 @@ const Footer = ({
         color="primary"
         textColor="secondary_color_font"
         name={"submit"}
-        isLoading={isLoading}
+        // isLoading={isLoading}
         icon={<PublishIcon />}
       />
     </div>

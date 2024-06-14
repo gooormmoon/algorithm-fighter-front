@@ -2,7 +2,7 @@ import React, { memo } from "react";
 
 const GameProblem = () => {
   return (
-    <div className="p-6 pt-[50px] bg-white rounded-lg shadow-md max-h-[100%] overflow-auto ">
+    <div className="p-6 pt-[50px] bg-white  shadow-md max-h-[100%] overflow-auto ">
       <h2 className="text-xl font-semibold mb-4">문제 설명</h2>
       {/* This is a Sample Problem text */}
       <>

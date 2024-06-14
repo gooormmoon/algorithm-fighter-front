@@ -30,7 +30,7 @@ const Header = () => {
 
   return (
     <header
-      className={`w-full h-[70px] flex justify-between items-center gap-12 p-4 shadow-xl ${
+      className={`w-full h-[70px] z-40 flex justify-between items-center gap-12 p-4 shadow-xl ${
         theme === "dark"
           ? "bg-secondary text-white border-white"
           : "bg-white text-secondary border-secondary"
