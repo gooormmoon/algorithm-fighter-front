@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../../components/Common";
+import { validateEmail } from "../utils";
+import { saveTokens } from "../../../utils";
+import { login } from "../../../api/Auth";
 
 const Login = () => {
-  const REST_API_KEY = "백엔드한테 달라하자1";
-  const REDIRECT_URI = "백엔드한테 달라하자2";
-  const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  // const REST_API_KEY = "백엔드한테 달라하자1";
+  // const REDIRECT_URI = "백엔드한테 달라하자2";
+  // const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
-  const onClickSocialLogin = () => {
-    window.location.href = link;
-  };
+  // const onClickSocialLogin = () => {
+  //   window.location.href = link;
+  // };
 
   const navigate = useNavigate();
 
@@ -25,14 +28,33 @@ const Login = () => {
       [name]: value,
     });
   };
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
-    console.log("onSubmit");
     console.log(form);
+
+    const loginData = {
+      id: form.email,
+      password: form.password,
+    };
+
+    try {
+      const response = await login(loginData);
+      if (response.status === 200) {
+        const data = response.data;
+        saveTokens(data);
+        navigate("/");
+        //전역변수 내정보 설정
+      }
+      // else if(response.status ===)
+      //로그인 실패시 toast 알람을 추가할지 아니면 그냥 에러메세지만 태그로 넣어줄지 고민해봐야할듯!
+    } catch (err) {
+      alert("로그인 실패");
+      //임시로 alert로 해놓음
+    }
   };
   return (
     <form
-      className="w-[540px] h-[480px] gap-2 p-8 flex flex-col justify-center items-center shadow-2xl"
+      className="w-[540px] h-[480px] gap-4 p-8 flex flex-col justify-center items-center shadow-2xl"
       onSubmit={onSubmit}
     >
       <h1 className="text-secondary text-3xl font-semibold">LOGIN</h1>
@@ -53,11 +75,12 @@ const Login = () => {
         name="password"
         size="large"
       />
-      <div className="w-[360px] h-[56px] flex justify-center">
+
+      {/* <div className="w-[360px] h-[56px] flex justify-center">
         <button type="button" onClick={onClickSocialLogin}>
           TEST-카카오 소셜로그인
         </button>
-      </div>
+      </div> */}
       <Button
         type="submit"
         size="large_radius"

@@ -1,5 +1,8 @@
 //NOTE: 토큰을 저장하는 함수
-export const saveTokens = (token: string) => {
+export const saveTokens = (token: {
+  accessToken: string;
+  refreshToken: string;
+}) => {
   localStorage.setItem("ACCESS_TOKEN", token.accessToken);
   localStorage.setItem("REFRESH_TOKEN", token.refreshToken);
 };

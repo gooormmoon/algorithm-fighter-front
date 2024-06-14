@@ -7,6 +7,8 @@ import {
   validatePassword,
   validateCheckpassword,
 } from "../utils";
+import { saveTokens } from "../../../utils";
+import { register } from "../../../api/Auth";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -53,15 +55,33 @@ const Register = () => {
     !validatedEmail &&
     !validatedPassword &&
     !validatedCheckpassword;
-  const onSubmit = (e: any) => {
+  const onSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (validatedForm) {
+    if (!validatedForm) {
       //유효성 검사 통과 - 회원가입진행
-      console.log("onSubmit");
+      alert("invalid form");
+      return;
+    }
+    try {
       console.log(form);
-    } else {
-      //유효성 검사 실패 - 메시지 리턴
+      const registerData = {
+        id: form.email,
+        password: form.password,
+        name: form.name,
+      };
+
+      const response = await register(registerData);
+      if (response.status === 200) {
+        const data = response.data;
+        saveTokens(data);
+        navigate("/");
+        //전역변수 내정보 설정
+      }
+      // else if(response.status ===)
+    } catch (err) {
+      alert("회원가입 실패");
+      //임시로 alert로 해놓음
     }
   };
   return (
@@ -113,7 +133,7 @@ const Register = () => {
       />
       <div className="mt-2 flex flex-col gap-2">
         <Button
-          type="button"
+          type="submit"
           size="medium_big_radius"
           color="secondary"
           textColor="primary_font"
