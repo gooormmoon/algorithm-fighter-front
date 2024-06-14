@@ -12,6 +12,7 @@ interface ButtonProps {
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
   onClick?: () => void;
+  icon?: React.ReactNode;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -24,6 +25,7 @@ const Button: React.FC<ButtonProps> = ({
   onMouseLeave,
   onClick,
   isLoading,
+  icon,
 }) => {
   return (
     <button
@@ -41,7 +43,13 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       disabled={isLoading}
     >
-      {isLoading ? "Running..." : name}
+      {icon
+        ? isLoading
+          ? "Running..."
+          : icon
+        : isLoading
+        ? "Running..."
+        : name}
     </button>
   );
 };
