@@ -7,7 +7,9 @@ import LanguageSelector from "./LanguageSelector";
 import { CODE_SNIPPETS } from "./Constants";
 import { executeCode } from "./temporary_api";
 import { Button } from "../../components/Common";
+import GameProblem from "./GameProblem";
 import Footer from "./Footer";
+
 const Game = () => {
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
@@ -111,7 +113,9 @@ const Game = () => {
             {/* top-20 left-4 absolute  */}
             <CompetitorProfile />
           </section>
-          <section className="w-full h-full bg-orange-300"></section>
+          <section className="w-full h-full">
+            <GameProblem />
+          </section>
         </div>
         <div
           className="flex justify-center items-center w-[24px] bg-blue-300 cursor-col-resize hover:bg-blue-500"
@@ -120,10 +124,7 @@ const Game = () => {
           ||
         </div>
         <div className="w-full h-full flex flex-col overflow-hidden">
-          <section
-            className="w-full bg-yellow-300 overflow-hidden"
-            style={{ height }}
-          >
+          <section className="w-full overflow-hidden" style={{ height }}>
             <div className="w-full h-12 bg-white flex justify-end ">
               <LanguageSelector language={language} onSelect={onSelect} />
             </div>
@@ -140,7 +141,7 @@ const Game = () => {
           >
             ||
           </div>
-          <section className="w-full flex-1 bg-green-300 flex overflow-hidden">
+          <section className="w-full flex-1  flex overflow-hidden">
             <Output isError={isError} output={output} />
           </section>
         </div>
