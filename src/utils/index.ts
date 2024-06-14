@@ -1,1 +1,2 @@
-export {emailRegEx, passwordRegEx} from './regex';
+export { emailRegEx, passwordRegEx } from "./regex";
+export * from "./jwt";
