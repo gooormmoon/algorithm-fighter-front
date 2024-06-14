@@ -7,6 +7,7 @@ import LanguageSelector from "./LanguageSelector";
 import { CODE_SNIPPETS } from "./Constants";
 import { executeCode } from "./temporary_api";
 import { Button } from "../../components/Common";
+import Footer from "./Footer";
 const Game = () => {
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
@@ -144,17 +145,8 @@ const Game = () => {
           </section>
         </div>
       </div>
-      <footer className="bg-white h-[60px] flex justify-end items-center pr-4">
-        <Button
-          type="button"
-          size={"medium_small_radius"}
-          onClick={runCode}
-          color="secondary"
-          textColor="primary_font"
-          name={"Run Code"}
-          isLoading={isLoading}
-        ></Button>
-      </footer>
+
+      <Footer runCode={runCode} isLoading={isLoading} />
     </main>
   );
 };
