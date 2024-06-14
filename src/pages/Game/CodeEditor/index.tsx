@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Editor, OnMount } from "@monaco-editor/react";
 import { useState } from "react";
 import { CODE_SNIPPETS } from "../Constants";
