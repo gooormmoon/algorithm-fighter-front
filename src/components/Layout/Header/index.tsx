@@ -11,21 +11,9 @@ import { useTheme } from "../../../store/store";
 const Header = () => {
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
-  // const [theme, setTheme] = useState(
-  //   localStorage.getItem("theme") || "vs-light"
-  // );
   const { theme, changeTheme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hover, setHover] = useState(false);
-
-  // const toggleTheme = () => {
-  //   // setTheme((prev) => (prev === "vs-light" ? "vs-dark" : "vs-light"));
-  //   changeTheme();
-  //   // localStorage.setItem("theme", theme);
-  // };
-  // useEffect(() => {
-  //   localStorage.setItem("theme", theme);
-  // }, [theme]);
 
   useEffect(() => {
     console.log("hover");

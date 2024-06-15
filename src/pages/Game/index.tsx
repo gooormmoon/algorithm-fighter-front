@@ -8,9 +8,7 @@ import { CODE_SNIPPETS } from "./Constants";
 import { executeCode } from "./temporary_api";
 import { Button } from "../../components/Common";
 import GameProblem from "./GameProblem";
-import Footer from "./Footer";
 import TimerIcon from "@mui/icons-material/Timer";
-import PublishIcon from "@mui/icons-material/Publish";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 const Game = () => {
