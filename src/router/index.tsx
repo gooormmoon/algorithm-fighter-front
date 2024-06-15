@@ -13,11 +13,13 @@ import {
 } from "../pages";
 
 const router = (
-  <Route path="/" element={<Layout />}>
-    <Route path="/game" element={<GamePage />} />\
-    <Route path="/myRepository" element={<MyReposPage />} />
+  <Route>
+    <Route path="/" element={<Layout />}>
+      <Route path="/game" element={<GamePage />} />\
+      <Route path="/myRepository" element={<MyReposPage />} />
+      <Route path="/mypage" element={<MyPage />} />
+    </Route>
     <Route path="/login" element={<LoginPage />} />
-    <Route path="/mypage" element={<MyPage />} />
     <Route path="/register" element={<RegisterPage />} />
   </Route>
 );
