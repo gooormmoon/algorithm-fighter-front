@@ -9,6 +9,9 @@ import { executeCode } from "./temporary_api";
 import { Button } from "../../components/Common";
 import GameProblem from "./GameProblem";
 import Footer from "./Footer";
+import TimerIcon from "@mui/icons-material/Timer";
+import PublishIcon from "@mui/icons-material/Publish";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 const Game = () => {
   const [isResizingX, setIsResizingX] = useState(false);
@@ -107,45 +110,72 @@ const Game = () => {
 
   return (
     <main className="w-full h-full flex flex-col ">
-      <div className="w-full h-full flex overflow-hidden">
-        <div className="h-full" style={{ width }}>
-          <section className="top-20 left-4 absolute w-[340px] h-[140px]  bg-transparent ">
-            {/* top-20 left-4 absolute  */}
-            <CompetitorProfile />
-          </section>
-          <section className="w-full h-full">
-            <GameProblem />
-          </section>
-        </div>
-        <div
-          className="flex justify-center items-center w-3 border-4 border-transparent bg-gray-100 cursor-col-resize hover:bg-gray-200 "
-          onMouseDown={onMouseDownX}
-        ></div>
-        <div className="w-full h-full flex flex-col overflow-hidden">
-          <section className="w-full overflow-hidden" style={{ height }}>
-            <div className="w-full h-12 bg-white flex justify-end p-4">
-              <LanguageSelector language={language} onSelect={onSelect} />
-            </div>
-            <CodeEditor
-              language={language}
-              onMount={onMount}
-              setValue={setValue}
-              value={value}
-            />
-          </section>
+      <div className="flex justify-start items-center w-full h-full  overflow-hidden">
+        <div className="w-3/4 h-full flex ">
+          <div className="h-full" style={{ width }}>
+            <section className="top-20 left-4 absolute w-[340px] h-[140px]  bg-transparent ">
+              {/* top-20 left-4 absolute  */}
+              <CompetitorProfile />
+            </section>
+            <section className="w-full h-full">
+              <GameProblem />
+            </section>
+          </div>
           <div
-            className="flex flex-col justify-center items-center w-full h-3
+            className="flex justify-center items-center w-3 border-4 border-transparent bg-gray-100 cursor-col-resize hover:bg-gray-200 "
+            onMouseDown={onMouseDownX}
+          />
+          <div className="w-full h-full flex flex-col overflow-hidden">
+            <section className="w-full overflow-hidden" style={{ height }}>
+              <div className="w-full h-16 bg-white flex justify-between items-center p-4 gap-2">
+                <div className=" flex justify-start items-center gap-2 text-secondary">
+                  <LanguageSelector language={language} onSelect={onSelect} />
+                  <TimerIcon />
+                  <span className="text-xl">59:59</span>
+                </div>
+                <div className="flex justify-start items-center gap-4">
+                  <Button
+                    type="button"
+                    size={"small_radius"}
+                    onClick={runCode}
+                    color="secondary"
+                    textColor="secondary_font"
+                    name={"Run Code"}
+                    isLoading={isLoading}
+                    icon={<PlayArrowIcon />}
+                  />
+                  <Button
+                    type="button"
+                    size={"small_radius"}
+                    // onClick={runCode}
+                    color="primary"
+                    textColor="secondary_color_font"
+                    name={"SUBMIT"}
+                  />
+                </div>
+              </div>
+              <CodeEditor
+                language={language}
+                onMount={onMount}
+                setValue={setValue}
+                value={value}
+              />
+            </section>
+            <div
+              className="flex flex-col justify-center items-center w-full h-3
            border-4 border-transparent bg-gray-100  hover:bg-gray-200
             cursor-row-resize "
-            onMouseDown={onMouseDownY}
-          ></div>
-          <section className="w-full flex-1  flex overflow-hidden">
-            <Output isError={isError} output={output} />
-          </section>
+              onMouseDown={onMouseDownY}
+            />
+            <section className="w-full flex-1  flex overflow-hidden">
+              <Output isError={isError} output={output} />
+            </section>
+          </div>
         </div>
+        <div className="w-1/4 h-full bg-gray-300 ">채팅창</div>
       </div>
 
-      <Footer runCode={runCode} isLoading={isLoading} />
+      {/* <Footer runCode={runCode} isLoading={isLoading} /> */}
     </main>
   );
 };
