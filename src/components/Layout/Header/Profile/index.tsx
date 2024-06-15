@@ -11,7 +11,7 @@ const Profile = () => {
   return (
     <section
       className={`w-[300px] h-[360px] z-30 absolute top-16 right-4  p-4 shadow-md  ${
-        localStorage.getItem("theme") === "dark"
+        localStorage.getItem("theme") === "vs-dark"
           ? "bg-secondary text-white border-white"
           : "bg-white text-secondary border-secondary"
       } `}

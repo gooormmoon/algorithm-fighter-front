@@ -138,8 +138,8 @@ const Game = () => {
                     type="button"
                     size={"small_radius"}
                     onClick={runCode}
-                    color="secondary"
-                    textColor="secondary_font"
+                    color="primary"
+                    textColor="secondary_color_font"
                     name={"Run Code"}
                     isLoading={isLoading}
                     icon={<PlayArrowIcon />}

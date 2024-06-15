@@ -7,19 +7,33 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
 import { CreateModal } from "../../../pages/Game/GameModal";
 import { Button, ProfileIcon } from "../../Common";
-
+import { useTheme } from "../../../store/store";
 const Header = () => {
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
-  const [theme, setTheme] = useState("light");
+  // const [theme, setTheme] = useState(
+  //   localStorage.getItem("theme") || "vs-light"
+  // );
+  const { theme, changeTheme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-  }, [theme]);
+  const [hover, setHover] = useState(false);
 
+  // const toggleTheme = () => {
+  //   // setTheme((prev) => (prev === "vs-light" ? "vs-dark" : "vs-light"));
+  //   changeTheme();
+  //   // localStorage.setItem("theme", theme);
+  // };
+  // useEffect(() => {
+  //   localStorage.setItem("theme", theme);
+  // }, [theme]);
+
+  useEffect(() => {
+    console.log("hover");
+  }, [hover]);
+
+  useEffect(() => {
+    console.log(theme);
+  }, [theme]);
   const openModalHandler = () => {
     setIsModalOpen(true);
   };
@@ -55,32 +69,23 @@ const Header = () => {
         </li>
       </ul>
       <ul className="h-full flex gap-4 justify-center items-center">
-        <li className="w-[100px] h-[32px] flex justify-center items-center">
-          구름달님(예시)
-        </li>
         <li className="w-[32px] h-[32px] flex justify-center items-center">
-          <button onClick={() => toggleTheme()}>
-            {theme === "light" ? <LightModeIcon /> : <DarkModeIcon />}
+          <button
+            onClick={() => changeTheme()}
+            onMouseOver={(prev) => setHover(true)}
+            onMouseOut={(prev) => setHover(false)}
+            className="transition-all ease-in-out"
+          >
+            {theme === "dark" && (hover ? <LightModeIcon /> : <DarkModeIcon />)}
+            {theme === "light" &&
+              (hover ? <DarkModeIcon /> : <LightModeIcon />)}
           </button>
         </li>
         <li className="w-[32px] h-[32px] flex justify-center items-center">
           <button onClick={() => setShowProfile((prev) => !prev)}>
-            <ProfileIcon size="small" />
+            <ProfileIcon size="medium" />
           </button>
           {showProfile && <Profile />}
-        </li>
-        <li className="w-[32px] h-[32px] flex justify-center items-center">
-          <ForumIcon />
-        </li>
-        <li>
-          <Button
-            type="button"
-            onClick={() => navigate("/login")}
-            size="medium_small_radius"
-            color="secondary_border"
-            textColor="secondary_color_font"
-            name="로그인"
-          />
         </li>
       </ul>
       {isModalOpen && (
