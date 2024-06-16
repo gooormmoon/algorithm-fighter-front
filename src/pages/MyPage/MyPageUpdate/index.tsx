@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import InputField from "./InputField";
 import TextAreaField from "./TextAreaField";
 import ImageUpload from "./ImageUpload";
-import { Button } from "../../components/Common";
-import useInputChange from "../../hooks/useInputChange";
-import { validatePassword, validateCheckpassword } from "../Auth/utils";
+import { Button } from "../../../components/Common";
+import useInputChange from "../../../hooks/useInputChange";
+import { validatePassword, validateCheckpassword } from "../../Auth/utils";
 
 const exampleData = {
   nickname: "구름이",
@@ -14,7 +14,7 @@ const exampleData = {
   password_check: "0000",
 };
 
-const MyPage: React.FC = () => {
+const MyPageUpdate: React.FC = () => {
   //상태
   const [nickname, handleNicknameChange] = useInputChange(exampleData.nickname);
   const [intro, handleIntroChange] = useInputChange(exampleData.intro);
@@ -78,7 +78,7 @@ const MyPage: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg w-[full] max-w-2xl ">
+    <div className="bg-white p-6 rounded-lg shadow-lg  max-w-2xl ">
       <form onSubmit={handleSubmit}>
         <ImageUpload
           profileImage={profileImage}
@@ -116,8 +116,8 @@ const MyPage: React.FC = () => {
           errorText={validatedCheckPassword}
         />
 
-        <div className="flex justify-center p-3 ">
-          <div className="mx-3">
+        <div className="flex justify-center p-3 space-x-3 ">
+          <div className="">
             <Button
               type="button"
               size="medium_big_radius"
@@ -142,4 +142,4 @@ const MyPage: React.FC = () => {
   );
 };
 
-export default MyPage;
+export default MyPageUpdate;

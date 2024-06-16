@@ -7,9 +7,10 @@ import Layout from "../components/Layout";
 import {
   LoginPage,
   RegisterPage,
-  MyPage,
+  MyPageRead,
   GamePage,
   MyReposPage,
+  MyPageUpdate,
 } from "../pages";
 
 const router = (
@@ -17,8 +18,9 @@ const router = (
     <Route path="/game" element={<GamePage />} />\
     <Route path="/myRepository" element={<MyReposPage />} />
     <Route path="/login" element={<LoginPage />} />
-    <Route path="/mypage" element={<MyPage />} />
+    <Route path="/mypage" element={<MyPageRead />} />
     <Route path="/register" element={<RegisterPage />} />
+    <Route path="/mypageUpdate" element={<MyPageUpdate />} />
   </Route>
 );
 const rootRouter = createBrowserRouter(createRoutesFromElements(router));
