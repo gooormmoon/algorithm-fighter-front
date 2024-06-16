@@ -1,11 +1,18 @@
-import React, { useState } from "react";
-export function RadioButton() {
-  const [selectedValue, setSelectedValue] = useState("lv0");
+import React from "react";
+
+interface RadioButtonProps {
+  selectedValue: string;
+  onChange: (value: string) => void;
+  readOnly?: boolean;
+}
+
+export function RadioButton({ selectedValue, onChange, readOnly }: RadioButtonProps) {
   const levels = ["lv0", "lv1", "lv2", "lv3", "lv4"];
-  const handleChange = (e: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setSelectedValue(e.target.value);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!readOnly) {
+      onChange(e.target.value);
+    }
   };
 
   return (
@@ -34,4 +41,5 @@ export function RadioButton() {
     </div>
   );
 }
+
 export default RadioButton;
