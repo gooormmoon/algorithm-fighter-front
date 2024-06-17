@@ -195,8 +195,8 @@ const Game = () => {
           isOpen={true}
           onClose={() => {
             toggleModal(setModalOpen, false);
-            //onsubmit = {};
           }}
+          setModalOpen={setModalOpen}
         />
       )}
       {/* <Footer runCode={runCode} isLoading={isLoading} /> */}

@@ -4,9 +4,15 @@ interface ModalProps {
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
+  size?: "small" | "medium" | "large";
 }
 
-export const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
+export const Modal: React.FC<ModalProps> = ({
+  children,
+  isOpen,
+  onClose,
+  size = "medium",
+}) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -19,14 +25,28 @@ export const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
     };
   }, [isOpen]);
 
+  const getSizeClasses = () => {
+    switch (size) {
+      case "small":
+        return "max-w-sm";
+      case "medium":
+        return "max-w-xl";
+      case "large":
+        return "max-w-3xl";
+      default:
+        return "max-w-xl";
+    }
+  };
   return (
     <div className="flex absolute  ">
       {isOpen && (
         <div
-          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 "
+          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 overflow-scroll"
           onClick={onClose}
         >
-          <div className="relative p-4 w-full max-w-xl max-h-full transition-all duration-150">
+          <div
+            className={`relative p-4 w-full ${getSizeClasses()} max-h-full transition-all duration-150`}
+          >
             <div
               className="bg-white p-6 rounded-lg w-full relative"
               onClick={(e) => e.stopPropagation()}
@@ -38,8 +58,7 @@ export const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
               >
                 <CloseIcon />
               </button>
-              <div className="mt-6 text-lg text-[#213363] font-semibold">
-              </div>
+              <div className="mt-6 text-lg text-[#213363] font-semibold"></div>
               <div className="mt-4">{children}</div>
             </div>
           </div>
