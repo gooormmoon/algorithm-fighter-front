@@ -1,4 +1,5 @@
 import React from "react";
+import ChatMessage from "../ChatMessage";
 
 const Chat = () => {
   return (
@@ -7,7 +8,12 @@ const Chat = () => {
         <span>전체</span>
         <span>검색폼</span>
       </div>
-      <div className="w-full h-full">채팅 메시지</div>
+      <div className="w-full h-full py-2 flex flex-col items-start gap-2">
+        <ChatMessage />
+        <ChatMessage />
+        <ChatMessage />
+        <ChatMessage />
+      </div>
       <div className="w-full h-[40px] bg-gray-300">입력폼</div>
     </section>
   );
