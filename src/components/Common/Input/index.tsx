@@ -10,6 +10,7 @@ interface InputProps {
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
   size: string;
   errorText?: string | boolean;
+  disabled?: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -22,6 +23,7 @@ const Input: React.FC<InputProps> = ({
   // onKeyPress,
   size,
   errorText,
+  disabled,
 }) => {
   return (
     <div className="py-2">
@@ -32,6 +34,7 @@ const Input: React.FC<InputProps> = ({
         onChange={onChange}
         onBlur={onBlur}
         name={name}
+        disabled={disabled}
         // onKeyPress={onKeyPress}
         className={`shadow-lg outline-none p-4 rounded-md text-secondary  bg-white border-solid border-2 border-secondary 
         drop-shadow-lg shadow-lg
