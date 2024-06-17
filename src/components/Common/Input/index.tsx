@@ -1,5 +1,4 @@
 import React from "react";
-import styles from "./input.module.scss";
 interface InputProps {
   type: string;
   placeholder: string;
@@ -37,7 +36,7 @@ const Input: React.FC<InputProps> = ({
         disabled={disabled}
         // onKeyPress={onKeyPress}
         className={`shadow-lg outline-none p-4 rounded-md text-secondary  bg-white border-solid border-2 border-secondary 
-        drop-shadow-lg shadow-lg
+        drop-shadow-lg 
         ${
           size === "large"
             ? "w-[360px] h-[56px] text-lg "
