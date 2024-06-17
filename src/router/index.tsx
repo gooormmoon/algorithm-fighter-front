@@ -14,13 +14,16 @@ import {
 } from "../pages";
 
 const router = (
-  <Route path="/" element={<Layout />}>
-    <Route path="/game" element={<GamePage />} />\
-    <Route path="/myRepository" element={<MyReposPage />} />
+  <Route>
+    <Route path="/" element={<Layout />}>
+      <Route path="/game" element={<GamePage />} />\
+      <Route path="/myRepository" element={<MyReposPage />} />
+      <Route path="/mypage" element={<MyPageRead />} />
+      <Route path="/mypageUpdate" element={<MyPageUpdate />} />
+    </Route>
     <Route path="/login" element={<LoginPage />} />
-    <Route path="/mypage" element={<MyPageRead />} />
     <Route path="/register" element={<RegisterPage />} />
-    <Route path="/mypageUpdate" element={<MyPageUpdate />} />
+
   </Route>
 );
 const rootRouter = createBrowserRouter(createRoutesFromElements(router));

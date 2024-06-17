@@ -85,70 +85,73 @@ const Register = () => {
     }
   };
   return (
-    <form
-      className="w-[540px] h-[540px] gap-4 p-8 flex flex-col justify-center items-center shadow-2xl"
-      onSubmit={onSubmit}
-    >
-      <h1 className="text-secondary text-3xl font-semibold">REGISTER</h1>
+    <main className="w-full h-[100vh] flex flex-col justify-center items-center bg-secondary">
+      <div className="w-[620px] h-[620px] bg-white/30 blur-xl absolute"></div>
+      <form
+        className="w-[600px] h-[600px] gap-2 p-12 flex flex-col justify-center items-center drop-shadow-md bg-white rounded-md"
+        onSubmit={onSubmit}
+      >
+        <h1 className="text-secondary text-[64px] font-semibold">Register</h1>
 
-      <Input
-        type="text"
-        placeholder="이름"
-        value={form?.name}
-        onChange={onChange}
-        onBlur={onBlur}
-        name="name"
-        size="large"
-        errorText={touched.name && validatedName}
-      />
-      <Input
-        type="email"
-        placeholder="이메일"
-        value={form?.email}
-        onChange={onChange}
-        onBlur={onBlur}
-        name="email"
-        size="large"
-        errorText={touched.email && validatedEmail}
-      />
-      <Input
-        type="password"
-        placeholder="비밀번호"
-        value={form?.password}
-        onChange={onChange}
-        onBlur={onBlur}
-        name="password"
-        size="large"
-        errorText={touched.password && validatedPassword}
-      />
-      <Input
-        type="password"
-        placeholder="비밀번호 확인"
-        value={form?.password_check}
-        onChange={onChange}
-        onBlur={onBlur}
-        name="password_check"
-        size="large"
-        errorText={touched.password_check && validatedCheckpassword}
-      />
-      <div className="mt-2 flex flex-col gap-2">
-        <Button
-          type="submit"
-          size="medium_big_radius"
-          color="secondary"
-          textColor="primary_font"
-          name="회원 가입"
+        <Input
+          type="text"
+          placeholder="Name"
+          value={form?.name}
+          onChange={onChange}
+          onBlur={onBlur}
+          name="name"
+          size="large"
+          errorText={touched.name && validatedName}
         />
-        <Button
-          type="button"
-          onClick={() => navigate("/login")}
-          size="medium_big_radius"
-          color="secondary_border"
-          textColor="secondary_color_font"
-          name="취소"
+        <Input
+          type="email"
+          placeholder="Email"
+          value={form?.email}
+          onChange={onChange}
+          onBlur={onBlur}
+          name="email"
+          size="large"
+          errorText={touched.email && validatedEmail}
         />
-      </div>
-    </form>
+        <Input
+          type="password"
+          placeholder="Password"
+          value={form?.password}
+          onChange={onChange}
+          onBlur={onBlur}
+          name="password"
+          size="large"
+          errorText={touched.password && validatedPassword}
+        />
+        <Input
+          type="password"
+          placeholder="Confirm Password"
+          value={form?.password_check}
+          onChange={onChange}
+          onBlur={onBlur}
+          name="password_check"
+          size="large"
+          errorText={touched.password_check && validatedCheckpassword}
+        />
+        <div className="mt-2 flex flex-col gap-2">
+          <Button
+            type="submit"
+            size="medium_big_radius"
+            color="secondary"
+            textColor="primary_font"
+            name="회원 가입"
+          />
+          <Button
+            type="button"
+            onClick={() => navigate("/login")}
+            size="medium_big_radius"
+            color="secondary_border"
+            textColor="secondary_color_font"
+            name="취소"
+          />
+        </div>
+      </form>
+    </main>
   );
 };
 

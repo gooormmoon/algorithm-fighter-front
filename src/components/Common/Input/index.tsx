@@ -35,8 +35,8 @@ const Input: React.FC<InputProps> = ({
         name={name}
         disabled={disabled}
         // onKeyPress={onKeyPress}
-        className={`shadow-lg outline-none p-4 rounded-md text-secondary  bg-white border-solid border-2 border-secondary 
-        drop-shadow-lg 
+        className={`outline-none p-4 rounded-md text-secondary  bg-white border-solid border-2 border-secondary 
+        drop-shadow-lg shadow-lg
         ${
           size === "large"
             ? "w-[360px] h-[56px] text-lg "
