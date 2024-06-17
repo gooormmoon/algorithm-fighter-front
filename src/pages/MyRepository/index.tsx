@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Chat from "../../components/Common/Chat";
+import Chat from "../../components/Chat";
 const MyRepository = () => {
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
@@ -68,7 +68,7 @@ const MyRepository = () => {
         ||
       </div>
       <div className="flex-1 h-full flex flex-col overflow-hidden">
-        <section className="w-full bg-yellow-300" style={{ height }}>
+        <section className="w-full bg-white" style={{ height }}>
           <Chat />
         </section>
         <div
