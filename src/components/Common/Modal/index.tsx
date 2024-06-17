@@ -39,7 +39,6 @@ export const Modal: React.FC<ModalProps> = ({ children, isOpen, onClose }) => {
                 <CloseIcon />
               </button>
               <div className="mt-6 text-lg text-[#213363] font-semibold">
-                난이도 설정
               </div>
               <div className="mt-4">{children}</div>
             </div>

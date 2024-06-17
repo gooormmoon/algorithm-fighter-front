@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import ForumIcon from "@mui/icons-material/Forum";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
-import { CreateModal } from "../../../pages/Game/GameModal";
+import { CreateModal, EnterModal } from "../../../pages/Game/GameModal";
 import { Button, ProfileIcon } from "../../Common";
 import { useTheme } from "../../../store/store";
 const Header = () => {
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
+
   const { theme, changeTheme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hover, setHover] = useState(false);
@@ -24,15 +24,28 @@ const Header = () => {
   }, [theme]);
   const openModalHandler = () => {
     setIsModalOpen(true);
+
+  const [CreateGame, setCreateGame] = useState(false);
+  const [EnterGame, setEnterGame] = useState(false);
+  const [inviteCode, setInviteCode] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
+  const [selectedNumber, setSelectedNumber] = useState("10 minute");
+  const toggleModal = (modalSetter: React.Dispatch<React.SetStateAction<boolean>>, isOpen: boolean) => {
+    modalSetter(isOpen);
+
   };
 
-  const closeModalHandler = () => {
-    setIsModalOpen(false);
+  const handleCreateSubmit = (code: string, difficulty: string, timer: string) => {
+    setInviteCode(code);
+    setSelectedDifficulty(difficulty);
+    setSelectedNumber(timer);
+    toggleModal(setCreateGame, false);
+    toggleModal(setEnterGame, true);
   };
 
   return (
     <header
-      className={`w-full h-[70px] z-40 flex justify-between items-center gap-12 p-4 shadow-xl ${
+      className={`w-full h-[70px] flex justify-between items-center gap-12 p-4 shadow-xl ${
         theme === "dark"
           ? "bg-secondary text-white border-white"
           : "bg-white text-secondary border-secondary"
@@ -44,10 +57,10 @@ const Header = () => {
           <Link to="/">홈</Link>
         </li>
         <li>
-          <button>게임 참가</button>
+          <button onClick={() => toggleModal(setEnterGame, true)}>게임 참가</button>
         </li>
         <li>
-          <button onClick={openModalHandler}>게임 생성</button>
+          <button onClick={() => toggleModal(setCreateGame, true)}>게임 생성</button>
         </li>
         <li>
           <Link to="/myRepository">내 저장소</Link>
@@ -76,8 +89,21 @@ const Header = () => {
           {showProfile && <Profile />}
         </li>
       </ul>
-      {isModalOpen && (
-        <CreateModal isOpen={isModalOpen} onClose={closeModalHandler} />
+      {CreateGame && (
+        <CreateModal
+          isOpen={CreateGame}
+          onClose={() => toggleModal(setCreateGame, false)}
+          onSubmit={handleCreateSubmit}
+        />
+      )}
+      {EnterGame && (
+        <EnterModal
+          isOpen={EnterGame}
+          onClose={() => toggleModal(setEnterGame, false)}
+          inviteCode={inviteCode}
+          selectedDifficulty={selectedDifficulty}
+          selectedNumber={selectedNumber}
+        />
       )}
     </header>
   );
