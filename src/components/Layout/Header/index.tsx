@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import ForumIcon from "@mui/icons-material/Forum";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
@@ -7,8 +7,18 @@ import Profile from "./Profile";
 import { CreateModal, EnterModal } from "../../../pages/Game/GameModal";
 import { Button, ProfileIcon } from "../../Common";
 import { useTheme } from "../../../store/store";
+interface pathType {
+  path: string;
+  name: string;
+}
+const paths: pathType[] = [
+  { path: "/", name: "홈" },
+  { path: "/myRepository", name: "내 저장소" },
+  { path: "/mypage", name: "마이 페이지" },
+];
 const Header = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const [showProfile, setShowProfile] = useState(false);
   const { theme, changeTheme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -21,8 +31,8 @@ const Header = () => {
   const [selectedNumber, setSelectedNumber] = useState("10 minute");
 
   useEffect(() => {
-    console.log("hover");
-  }, [hover]);
+    console.log(pathname);
+  }, [pathname]);
 
   useEffect(() => {
     console.log(theme);
@@ -53,15 +63,28 @@ const Header = () => {
     <header
       className={`w-full h-[70px] flex justify-between items-center gap-12 p-4 shadow-xl ${
         theme === "dark"
-          ? "bg-secondary text-white border-white"
-          : "bg-white text-secondary border-secondary"
+          ? "bg-secondary text-gray-400 border-white"
+          : "bg-white text-gray-400 border-secondary "
       }`}
     >
-      <ul className="w-4/5 h-full flex gap-12 items-center">
+      <ul className="w-4/5 h-full flex gap-12 items-center ">
         <li className="mr-12">로고</li>
-        <li>
-          <Link to="/">홈</Link>
-        </li>
+        {paths.map(({ path, name }: pathType, index: number) => {
+          return (
+            <li
+              key={index}
+              className={`transition-colors duration-500 ${
+                theme === "dark" ? "hover:text-white" : "hover:text-secondary "
+              } ${
+                pathname === path &&
+                (theme === "dark" ? "text-white" : "text-secondary")
+              }`}
+            >
+              <Link to={path}>{name}</Link>
+            </li>
+          );
+        })}
+
         <li>
           <button onClick={() => toggleModal(setEnterGame, true)}>
             게임 참가
@@ -72,15 +95,13 @@ const Header = () => {
             게임 생성
           </button>
         </li>
-        <li>
-          <Link to="/myRepository">내 저장소</Link>
-        </li>
-        <li>
-          <Link to="/mypage">마이 페이지</Link>
-        </li>
       </ul>
       <ul className="h-full flex gap-4 justify-center items-center">
-        <li className="w-[32px] h-[32px] flex justify-center items-center">
+        <li
+          className={`w-[32px] h-[32px] flex justify-center items-center text-white ${
+            theme === "dark" ? "text-white" : "text-secondary"
+          }`}
+        >
           <button
             onClick={() => changeTheme()}
             onMouseOver={(prev) => setHover(true)}
