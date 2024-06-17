@@ -6,27 +6,33 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
 import { CreateModal, EnterModal } from "../../../pages/Game/GameModal";
 import { Button, ProfileIcon } from "../../Common";
-
+import { useTheme } from "../../../store/store";
 const Header = () => {
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
-  const [theme, setTheme] = useState("light");
+
+  const { theme, changeTheme } = useTheme();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [hover, setHover] = useState(false);
+
+  useEffect(() => {
+    console.log("hover");
+  }, [hover]);
+
+  useEffect(() => {
+    console.log(theme);
+  }, [theme]);
+  const openModalHandler = () => {
+    setIsModalOpen(true);
+
   const [CreateGame, setCreateGame] = useState(false);
   const [EnterGame, setEnterGame] = useState(false);
-
   const [inviteCode, setInviteCode] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
   const [selectedNumber, setSelectedNumber] = useState("10 minute");
-
-  const toggleTheme = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
-  };
-  useEffect(() => {
-    localStorage.setItem("theme", theme);
-  }, [theme]);
-  
   const toggleModal = (modalSetter: React.Dispatch<React.SetStateAction<boolean>>, isOpen: boolean) => {
     modalSetter(isOpen);
+
   };
 
   const handleCreateSubmit = (code: string, difficulty: string, timer: string) => {
@@ -64,32 +70,23 @@ const Header = () => {
         </li>
       </ul>
       <ul className="h-full flex gap-4 justify-center items-center">
-        <li className="w-[100px] h-[32px] flex justify-center items-center">
-          구름달님(예시)
-        </li>
         <li className="w-[32px] h-[32px] flex justify-center items-center">
-          <button onClick={() => toggleTheme()}>
-            {theme === "light" ? <LightModeIcon /> : <DarkModeIcon />}
+          <button
+            onClick={() => changeTheme()}
+            onMouseOver={(prev) => setHover(true)}
+            onMouseOut={(prev) => setHover(false)}
+            className="transition-all ease-in-out"
+          >
+            {theme === "dark" && (hover ? <LightModeIcon /> : <DarkModeIcon />)}
+            {theme === "light" &&
+              (hover ? <DarkModeIcon /> : <LightModeIcon />)}
           </button>
         </li>
         <li className="w-[32px] h-[32px] flex justify-center items-center">
           <button onClick={() => setShowProfile((prev) => !prev)}>
-            <ProfileIcon size="small" />
+            <ProfileIcon size="medium" />
           </button>
           {showProfile && <Profile />}
-        </li>
-        <li className="w-[32px] h-[32px] flex justify-center items-center">
-          <ForumIcon />
-        </li>
-        <li>
-          <Button
-            type="button"
-            onClick={() => navigate("/login")}
-            size="medium_small_radius"
-            color="secondary_border"
-            textColor="secondary_color_font"
-            name="로그인"
-          />
         </li>
       </ul>
       {CreateGame && (

@@ -1,8 +1,14 @@
 import React, { memo } from "react";
+import { useTheme } from "../../../store/store";
 
 const GameProblem = () => {
+  const { theme } = useTheme();
   return (
-    <div className="p-6 pt-[50px] bg-white  shadow-md max-h-[100%] overflow-auto ">
+    <div
+      className={`p-6 pt-[50px] shadow-md max-h-[100%] overflow-auto ${
+        theme === "light" ? "bg-white text-black" : "bg-[#1f2d35] text-white"
+      }`}
+    >
       <h2 className="text-xl font-semibold mb-4">문제 설명</h2>
       {/* This is a Sample Problem text */}
       <>
