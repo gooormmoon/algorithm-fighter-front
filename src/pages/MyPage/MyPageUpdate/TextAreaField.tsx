@@ -2,26 +2,31 @@ import React from "react";
 
 interface TextAreaFieldProps {
   label: string;
-  placeholder: string;
   value: string;
-  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  placeholder?: string;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  disabled?: boolean;
 }
+
 const TextAreaField: React.FC<TextAreaFieldProps> = ({
   label,
-  placeholder,
   value,
+  placeholder,
   onChange,
-}) => (
-  <div className="flex justify-between items-center mb-4">
-    <label className="block text-gray-700 ">{label}</label>
-    <textarea
-      placeholder={placeholder}
-      value={value}
-      onChange={onChange}
-      className="w-[360px] h-[100px] outline-none p-4 rounded-md text-secondary  bg-white border-solid border-2 border-secondary 
-      drop-shadow-lg shadow-lg  max-h-[120px] text-lg"
-    />
-  </div>
-);
+  disabled = false,
+}) => {
+  return (
+    <div className="flex items-center mb-4">
+      <label className="block text-gray-700 w-[180px]">{label}</label>
+      <textarea
+        value={value}
+        placeholder={placeholder}
+        onChange={onChange}
+        className="border-2 p-2 w-full"
+        disabled={disabled}
+      />
+    </div>
+  );
+};
 
 export default TextAreaField;
