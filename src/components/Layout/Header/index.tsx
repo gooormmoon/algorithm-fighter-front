@@ -21,11 +21,10 @@ const Header = () => {
   const { pathname } = useLocation();
   const [showProfile, setShowProfile] = useState(false);
   const { theme, changeTheme } = useTheme();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [hover, setHover] = useState(false);
-  const [CreateGame, setCreateGame] = useState(false);
-  const [EnterGame, setEnterGame] = useState(false);
+  const [createGame, setCreateGame] = useState(false);
+  const [enterGame, setEnterGame] = useState(false);
   const [inviteCode, setInviteCode] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
   const [selectedNumber, setSelectedNumber] = useState("10 minute");
@@ -37,9 +36,7 @@ const Header = () => {
   useEffect(() => {
     console.log(theme);
   }, [theme]);
-  const openModalHandler = () => {
-    setIsModalOpen(true);
-  };
+
   const toggleModal = (
     modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
     isOpen: boolean
@@ -120,16 +117,16 @@ const Header = () => {
           {showProfile && <Profile />}
         </li>
       </ul>
-      {CreateGame && (
+      {createGame && (
         <CreateModal
-          isOpen={CreateGame}
+          isOpen={createGame}
           onClose={() => toggleModal(setCreateGame, false)}
           onSubmit={handleCreateSubmit}
         />
       )}
-      {EnterGame && (
+      {enterGame && (
         <EnterModal
-          isOpen={EnterGame}
+          isOpen={enterGame}
           onClose={() => toggleModal(setEnterGame, false)}
           inviteCode={inviteCode}
           selectedDifficulty={selectedDifficulty}
