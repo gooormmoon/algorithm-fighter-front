@@ -63,7 +63,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
         width={"100%"}
         // height="75vh"
         // theme={localStorage.getItem("theme") || "vs-light"}
-        theme={"onedark"}
+        theme={theme === "dark" ? "vs-dark" : "vs-light"}
         language={language}
         defaultValue={CODE_SNIPPETS[language]}
         beforeMount={setEditorTheme}

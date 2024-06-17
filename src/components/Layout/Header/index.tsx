@@ -29,14 +29,6 @@ const Header = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
   const [selectedNumber, setSelectedNumber] = useState("10 minute");
 
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
-
-  useEffect(() => {
-    console.log(theme);
-  }, [theme]);
-
   const toggleModal = (
     modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
     isOpen: boolean

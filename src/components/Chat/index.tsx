@@ -13,9 +13,9 @@ const Chat = () => {
         theme === "dark"
           ? "bg-transparent"
           : "bg-gradient-to-br from-[#A5D6A7] to-[#81D4FA] text-chat_border"
-      } w-full h-full gap-2 flex flex-col  rounded-2xl justify-between items-center shadow-2xl drop-shadow-2xl`}
+      } w-full h-full gap-2 flex flex-col  rounded-2xl justify-between items-center shadow-2xl drop-shadow-2xl border-2 border-white/10`}
     >
-      <div className="p-6 w-full h-[40px] bg-transparent flex justify-between items-center">
+      <div className="p-6 w-full h-[40px] bg-transparent flex justify-between items-center border-b-2 border-white/10 ">
         <span>전체</span>
         <SearchBar />
       </div>
@@ -42,7 +42,7 @@ const Chat = () => {
         <ChatMessage />
       </div>
       <div
-        className={`px-2 w-full h-[60px] bg-transparent flex items-center border-t-2 rounded-b-xl border-chat_border `}
+        className={`px-2 w-full h-[60px] bg-transparent flex items-center border-t-2 border-white/10 `}
       >
         <InputBar />
       </div>
