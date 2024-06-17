@@ -6,13 +6,14 @@ import { useTheme } from "../../store/store";
 
 const Chat = () => {
   const { theme } = useTheme();
+  // "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white/55"
   return (
     <section
       className={`${
         theme === "dark"
-          ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white/55"
+          ? "bg-transparent"
           : "bg-gradient-to-br from-[#A5D6A7] to-[#81D4FA] text-chat_border"
-      } w-full h-full gap-2 flex flex-col  rounded-lg justify-between items-center shadow-2xl drop-shadow-2xl`}
+      } w-full h-full gap-2 flex flex-col  rounded-2xl justify-between items-center shadow-2xl drop-shadow-2xl`}
     >
       <div className="p-6 w-full h-[40px] bg-transparent flex justify-between items-center">
         <span>전체</span>
