@@ -10,10 +10,15 @@ import { useTheme } from "../../../store/store";
 const Header = () => {
   const navigate = useNavigate();
   const [showProfile, setShowProfile] = useState(false);
-
   const { theme, changeTheme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [hover, setHover] = useState(false);
+  const [CreateGame, setCreateGame] = useState(false);
+  const [EnterGame, setEnterGame] = useState(false);
+  const [inviteCode, setInviteCode] = useState("");
+  const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
+  const [selectedNumber, setSelectedNumber] = useState("10 minute");
 
   useEffect(() => {
     console.log("hover");
@@ -24,18 +29,19 @@ const Header = () => {
   }, [theme]);
   const openModalHandler = () => {
     setIsModalOpen(true);
-
-  const [CreateGame, setCreateGame] = useState(false);
-  const [EnterGame, setEnterGame] = useState(false);
-  const [inviteCode, setInviteCode] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
-  const [selectedNumber, setSelectedNumber] = useState("10 minute");
-  const toggleModal = (modalSetter: React.Dispatch<React.SetStateAction<boolean>>, isOpen: boolean) => {
+  };
+  const toggleModal = (
+    modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
+    isOpen: boolean
+  ) => {
     modalSetter(isOpen);
-
   };
 
-  const handleCreateSubmit = (code: string, difficulty: string, timer: string) => {
+  const handleCreateSubmit = (
+    code: string,
+    difficulty: string,
+    timer: string
+  ) => {
     setInviteCode(code);
     setSelectedDifficulty(difficulty);
     setSelectedNumber(timer);
@@ -57,10 +63,14 @@ const Header = () => {
           <Link to="/">홈</Link>
         </li>
         <li>
-          <button onClick={() => toggleModal(setEnterGame, true)}>게임 참가</button>
+          <button onClick={() => toggleModal(setEnterGame, true)}>
+            게임 참가
+          </button>
         </li>
         <li>
-          <button onClick={() => toggleModal(setCreateGame, true)}>게임 생성</button>
+          <button onClick={() => toggleModal(setCreateGame, true)}>
+            게임 생성
+          </button>
         </li>
         <li>
           <Link to="/myRepository">내 저장소</Link>
