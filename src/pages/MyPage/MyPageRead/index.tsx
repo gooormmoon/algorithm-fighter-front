@@ -66,9 +66,9 @@ const MyPageRead = () => {
           disabled={true}
         />
         <InputField
-          label="마지막 로그인 날짜"
+          label="마지막 로그인 "
           type="text"
-          placeholder="마지막 로그인 날짜"
+          placeholder="마지막 로그인 "
           value={exampleData.loginDate}
           disabled={true}
         />
