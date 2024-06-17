@@ -1,0 +1,116 @@
+@use "../../../styles/constants/" as c;
+.primary {
+  background-color: c.$C_PRIMARY;
+}
+
+.primary:hover {
+  background-color: c.$C_PRIMARY_HOVER;
+  transition: all 0.3s;
+}
+
+.secondary {
+  background-color: c.$C_SECONDARY;
+}
+
+.secondary:hover {
+  background-color: c.$C_SECONDARY_HOVER;
+  transition: all 0.3s;
+}
+
+.secondary_border {
+  background-color: c.$C_WHITE;
+  border: 2px solid;
+  border-color: c.$C_SECONDARY;
+}
+
+.secondary_border:hover {
+  color: c.$C_WHITE;
+  background-color: c.$C_SECONDARY;
+  transition: all 0.3s;
+}
+.wait_border {
+  background-color: c.$C_WHITE;
+  border: 2px solid;
+  border-color: c.$C_RED;
+}
+
+.wait_border:hover {
+  background-color: c.$C_GREEN;
+  border: 2px solid;
+  transition: all 0.3s;
+}
+
+.large {
+  font-size: 20px;
+  width: 360px;
+  height: 56px;
+}
+
+.large_radius {
+  font-size: 20px;
+  width: 360px;
+  height: 56px;
+  border-radius: 4px;
+}
+
+.medium {
+  font-size: 17px;
+  width: 160px;
+  height: 60px;
+}
+
+// radius 큰 것들 ex) 회원가입, 취소, 게임 시작
+.medium_big_radius {
+  font-size: 17px;
+  width: 128px;
+  height: 44px;
+  border-radius: 120px;
+}
+
+// radius 작은 것들 ex) 복사, 코드 생성
+.medium_small_radius {
+  font-size: 17px;
+  width: 120px;
+  height: 48px;
+  border-radius: 4px;
+}
+
+.small {
+  font-size: 12px;
+  width: 52px;
+  height: 32px;
+}
+
+.small_radius {
+  font-size: 12px;
+  width: 52px;
+  height: 32px;
+  border-radius: 4px;
+}
+
+.primary_font {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.secondary_font {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+// 회원가입 밑에 있는 취소 버튼에 쓸 폰트 색
+// 다른 폰트 색들은 다 하얀색임
+.secondary_color_font {
+  color: c.$C_SECONDARY;
+  font-weight: bold;
+}
+
+.wait_color_font {
+  color: c.$C_RED;
+  font-weight: bold;
+}
+
+.wait_color_font:hover {
+  color: c.$C_WHITE;
+  font-weight: bold;
+}
