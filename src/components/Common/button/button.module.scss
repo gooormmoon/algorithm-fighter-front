@@ -1,25 +1,39 @@
+@use "../../../styles/constants/" as c;
 .primary {
-    background-color: #FFBB5C;
+  background-color: c.$C_PRIMARY;
 }
 
 .primary:hover {
-    background-color: #f3a941;
-    transition: all 0.5s;
+  background-color: c.$C_PRIMARY_HOVER;
+  transition: all 0.3s;
 }
 
 .secondary {
-    background-color: #213363;
+  background-color: c.$C_SECONDARY;
 }
 
 .secondary:hover {
-    background-color: #3c5393;
-    transition: all 0.5s;
+  background-color: c.$C_SECONDARY_HOVER;
+  transition: all 0.3s;
 }
 
+.tertiary {
+  background-color: c.$C_TERTIARY;
+}
+.tertiary:hover {
+  background-color: c.$C_TERTIARY_HOVER;
+  transition: all 0.3s;
+}
+.chat {
+  background-color: #2a4e7d;
+}
+.chat:hover {
+  background-color: #325c94;
+}
 .secondary_border {
-    background-color: #ffffff;
-    border: 2px solid;
-    border-color: #213363;
+  background-color: c.$C_WHITE;
+  border: 2px solid;
+  border-color: c.$C_SECONDARY;
 }
 
 .icon{
@@ -28,91 +42,95 @@
     border-color: #b7b7b7;
 }
 
+.secondary_border:hover {
+  color: c.$C_WHITE;
+  background-color: c.$C_SECONDARY;
+  transition: all 0.3s;
+}
+
 .wait_border {
-    background-color: #ffffff;
-    border: 2px solid;
-    border-color: #FF0000;
+  background-color: c.$C_WHITE;
+  border: 2px solid;
+  border-color: c.$C_RED;
 }
 
 .wait_border:hover {
-    background-color: #00AA77;
-    background-color: #00AA77;
-    border: 2px solid;
-    transition: all 0.5s;
+  background-color: c.$C_GREEN;
+  border: 2px solid;
+  transition: all 0.3s;
 }
 
 .large {
-    font-size: 20px;
-    width: 360px;
-    height: 56px;
+  font-size: 20px;
+  width: 360px;
+  height: 56px;
 }
 
 .large_radius {
-    font-size: 20px;
-    width: 360px;
-    height: 56px;
-    border-radius: 4px;
+  font-size: 20px;
+  width: 360px;
+  height: 56px;
+  border-radius: 4px;
 }
 
 .medium {
-    font-size: 17px;
-    width: 160px;
-    height: 60px;
+  font-size: 17px;
+  width: 160px;
+  height: 60px;
 }
-
 
 // radius 큰 것들 ex) 회원가입, 취소, 게임 시작
 .medium_big_radius {
-    font-size: 17px;
-    width: 160px;
-    height: 60px;
-    border-radius: 120px;
+  font-size: 17px;
+  width: 128px;
+  height: 44px;
+  border-radius: 120px;
 }
 
-// radius 작은 것들 ex) 복사, 코드 생성 
+// radius 작은 것들 ex) 복사, 코드 생성
 .medium_small_radius {
-    font-size: 17px;
-    width: 160px;
-    height: 60px;
-    border-radius: 4px;
+  font-size: 17px;
+  width: 120px;
+  height: 48px;
+  border-radius: 4px;
 }
 
 .small {
-    font-size: 12px;
-    width: 50px;
-    height: 30px;
+  font-size: 12px;
+  width: 52px;
+  height: 32px;
 }
 
 .small_radius {
-    font-size: 12px;
-    width: 50px;
-    height: 30px;
-    border-radius: 4px;
+  font-size: 12px;
+  width: 52px;
+  height: 32px;
+  border-radius: 4px;
 }
 
-.primary_font{
-    color: #ffffff;
-    font-weight: bold;
+.primary_font {
+  color: #ffffff;
+  font-weight: bold;
 }
 
-.secondary_font{
-    color: #ffffff;
-    font-weight: bold;
+.secondary_font {
+  color: #ffffff;
+  font-weight: bold;
 }
 
 // 회원가입 밑에 있는 취소 버튼에 쓸 폰트 색
 // 다른 폰트 색들은 다 하얀색임
 .secondary_color_font {
-    color: #213363;
-    font-weight: bold;
+  color: c.$C_SECONDARY;
+  font-weight: bold;
 }
 
 .wait_color_font {
-    color: #FF0000;
-    font-weight: bold;
+  color: c.$C_RED;
+  font-weight: bold;
 }
 
 .wait_color_font:hover {
-    color: #ffffff;
-    font-weight: bold;
+  color: c.$C_WHITE;
+  font-weight: bold;
 }

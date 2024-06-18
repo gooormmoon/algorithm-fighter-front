@@ -1,0 +1,20 @@
+// styles.scss
+$C_PRIMARY: #ffbb5c;
+$C_SECONDARY: #213363;
+
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+// 사용자 정의 클래스를 정의합니다.
+.hover-bg-primary:hover {
+  background-color: $C_PRIMARY !important;
+}
+
+.text-primary {
+  color: $C_PRIMARY !important;
+}
+
+.text-secondary {
+  color: $C_SECONDARY !important;
+}
