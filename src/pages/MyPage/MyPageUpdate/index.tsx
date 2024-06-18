@@ -15,7 +15,6 @@ const exampleData = {
 };
 
 const MyPageUpdate: React.FC = () => {
-  //상태
   const [nickname, handleNicknameChange] = useInputChange(exampleData.nickname);
   const [intro, handleIntroChange] = useInputChange(exampleData.intro);
   const [password, handlePasswordChange, setPassword] = useInputChange("");
@@ -25,13 +24,36 @@ const MyPageUpdate: React.FC = () => {
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const [errorMessages, setErrorMessages] = useState({
+    password: undefined as string | undefined,
+    passwordCheck: undefined as string | undefined,
+  });
 
-  //유효성 검사
-  const validatedPassword = validatePassword(password) || undefined;
-  const validatedCheckPassword =
-    validateCheckpassword(passwordCheck, password) || undefined;
+  // 유효성 검사
+  const validateAndSetError = () => {
+    setErrorMessages({
+      password: validatePassword(password) || undefined,
+      passwordCheck:
+        validateCheckpassword(passwordCheck, password) || undefined,
+    });
+  };
 
-  //사진 추가 icon 클릭
+  const handleBlur = (field: string) => {
+    if (field === "password") {
+      setErrorMessages((prev) => ({
+        ...prev,
+        password: validatePassword(password) || undefined,
+      }));
+    } else if (field === "passwordCheck") {
+      setErrorMessages((prev) => ({
+        ...prev,
+        passwordCheck:
+          validateCheckpassword(passwordCheck, password) || undefined,
+      }));
+    }
+  };
+
+  // 사진 추가 icon 클릭
   const handleIconClick = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -51,19 +73,12 @@ const MyPageUpdate: React.FC = () => {
     }
   };
 
-  //제출
+  // 제출
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    validateAndSetError();
 
-    const formData = {
-      uploadedFile,
-      nickname,
-      intro,
-      password,
-      password_check: passwordCheck,
-    };
-
-    if (!validatedCheckPassword && !validatedPassword) {
+    if (!errorMessages.password && !errorMessages.passwordCheck) {
       alert("Changes saved!");
       setPassword(""); // 비밀번호 필드 비우기
       setPasswordCheck(""); // 비밀번호 확인 필드 비우기
@@ -72,13 +87,14 @@ const MyPageUpdate: React.FC = () => {
     }
   };
 
-  //뒤로가기
+  // 뒤로가기
   const handleCancel = () => {
     navigate(-1);
   };
 
   return (
     <div className="bg-gray-300/90 p-6 rounded-lg shadow-lg  max-w-2xl ">
+
       <form onSubmit={handleSubmit}>
         <ImageUpload
           profileImage={profileImage}
@@ -86,6 +102,7 @@ const MyPageUpdate: React.FC = () => {
           handleFileChange={handleFileChange}
           fileInputRef={fileInputRef}
         />
+
         <InputField
           label="닉네임"
           type="text"
@@ -93,6 +110,7 @@ const MyPageUpdate: React.FC = () => {
           value={nickname}
           onChange={handleNicknameChange}
         />
+
         <TextAreaField
           label="소개"
           placeholder="소개"
@@ -105,7 +123,8 @@ const MyPageUpdate: React.FC = () => {
           placeholder="변경할 비밀번호"
           value={password}
           onChange={handlePasswordChange}
-          errorText={validatedPassword}
+          onBlur={() => handleBlur("password")}
+          errorText={errorMessages.password}
         />
         <InputField
           label="비밀번호 확인"
@@ -113,29 +132,26 @@ const MyPageUpdate: React.FC = () => {
           placeholder="비밀번호 확인"
           value={passwordCheck}
           onChange={handlePasswordCheckChange}
-          errorText={validatedCheckPassword}
+          onBlur={() => handleBlur("passwordCheck")}
+          errorText={errorMessages.passwordCheck}
         />
 
-        <div className="flex justify-center p-3 space-x-3 ">
-          <div className="">
-            <Button
-              type="button"
-              size="medium_big_radius"
-              color="secondary_border"
-              textColor="secondary_color_font"
-              name="취소"
-              onClick={handleCancel}
-            />
-          </div>
-          <div className="mx-3">
-            <Button
-              type="submit"
-              size="medium_big_radius"
-              color="secondary"
-              textColor="primary_font"
-              name="저장"
-            />
-          </div>
+        <div className="m-2 p-2 flex flex-col gap-2 items-center">
+          <Button
+            type="submit"
+            size="medium_big_radius"
+            color="secondary"
+            textColor="primary_font"
+            name="저장"
+          />
+          <Button
+            type="button"
+            size="medium_big_radius"
+            color="secondary_border"
+            textColor="secondary_color_font"
+            name="취소"
+            onClick={handleCancel}
+          />
         </div>
       </form>
     </div>
