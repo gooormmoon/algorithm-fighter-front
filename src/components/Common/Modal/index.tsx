@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+
 interface ModalProps {
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
   size?: "small" | "medium" | "large";
-  backgroundOpacity?: number;
+  bgColor?: string;
   closeButton?: boolean;
 }
 
@@ -14,7 +15,7 @@ export const Modal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   size = "medium",
-  backgroundOpacity = 100,
+  bgColor = 'bg-white',
   closeButton = true,
 }) => {
   useEffect(() => {
@@ -42,9 +43,9 @@ export const Modal: React.FC<ModalProps> = ({
     }
   };
 
-  const getBackgroundOpacityClass = (opacity: number) => {
-    return `bg-opacity-${opacity}`;
-  };
+  const bgColorClass = (color: string) => {
+    return `bg-${color}`
+  }
 
   return (
     <div className="flex absolute ">
@@ -57,7 +58,7 @@ export const Modal: React.FC<ModalProps> = ({
             className={`relative p-4 w-full ${getSizeClasses()} max-h-full transition-all duration-150`}
           >
             <div
-              className={`bg-white p-6 rounded-lg w-full relative ${getBackgroundOpacityClass(backgroundOpacity)}`}
+              className={`${bgColorClass(bgColor)} p-6 rounded-lg w-full relative`}
               onClick={(e) => e.stopPropagation()}
             >
               {closeButton && (

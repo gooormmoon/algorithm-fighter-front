@@ -8,7 +8,7 @@ interface DefeatModalProps {
 
 const DefeatModal: React.FC<DefeatModalProps> = ({ isOpen, onClose }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="large" backgroundOpacity={0} closeButton={false}>
+    <Modal isOpen={isOpen} onClose={onClose} size="large" closeButton={false}>
       <div className="text-center" >
         <h2 className="text-7xl font-bold mb-10 sparkle-container text-white">Game<br/>Over</h2>
         <div className='item-center'>
@@ -18,7 +18,7 @@ const DefeatModal: React.FC<DefeatModalProps> = ({ isOpen, onClose }) => {
           >
           나가기
         </button>
-        <button className="bg-primary text-black font-semibold px-4 py-2 rounded">
+        <button className="bg-primary text-black font-semibold px-4 py-2 rounded mr-4">
           저장하기
         </button>
           </div>
