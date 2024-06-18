@@ -13,6 +13,7 @@ import {
   GamePage,
   MyReposPage,
   MyPageUpdate,
+  Wait,
 } from "../pages";
 
 const router = (
@@ -23,6 +24,7 @@ const router = (
       <Route path="/myRepository" element={<MyReposPage />} />
       <Route path="/mypage" element={<MyPageRead />} />
       <Route path="/mypageUpdate" element={<MyPageUpdate />} />
+      <Route path="/Wait" element={<Wait />} />
     </Route>
 
     <Route path="/login" element={<LoginPage />} />
