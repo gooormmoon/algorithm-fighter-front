@@ -17,7 +17,7 @@ interface EnterModalProps {
 
 const EnterModal: React.FC<EnterModalProps> = ({ isOpen, onClose, inviteCode, selectedDifficulty, selectedNumber }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} bgColor="white">
         <div className="flex-col mt-6 text-lg text-[#213363] font-semibold mb-2">
           <span className="block text-lg text-[#213363] font-semibold mb-2">
             초대코드

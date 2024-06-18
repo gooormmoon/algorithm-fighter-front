@@ -11,7 +11,7 @@ const Layout = () => {
         theme === "dark"
           ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white/70 "
           : ""
-      }`}
+      } border-white/10`}
     >
       <Header />
       <section className="w-full h-[calc(100vh-70px)] flex flex-col justify-center items-center">
