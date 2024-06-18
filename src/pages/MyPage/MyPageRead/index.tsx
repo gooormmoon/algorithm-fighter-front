@@ -1,22 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../../components/Common";
 import ImageUpload from "../MyPageUpdate/ImageUpload";
 import InputField from "../MyPageUpdate/InputField";
 import TextAreaField from "../MyPageUpdate/TextAreaField";
 import MembershipWithdrawalModal from "../MembershipWithdrawalModal";
+import useInputChange from "../../../hooks/useInputChange";
+import { validatePassword, validateCheckpassword } from "../../Auth/utils";
 
-import { getMe } from "../../../api/Users";
+// //api
+// import { getMe } from "../../../api/Users";
 
-interface UserData {
-  id: string;
-  name: string;
-  nickname: string;
-  profileImageUrl?: string;
-  description?: string;
-  createdDate: string;
-  loginDate: string;
-}
+// interface UserData {
+//   id: string;
+//   name: string;
+//   nickname: string;
+//   profileImageUrl?: string;
+//   description?: string;
+//   createdDate: string;
+//   loginDate: string;
+//}
+
+//sample data
 const exampleData = {
   id: "JohnDoe@example.com",
   name: "John Doe",
@@ -28,9 +33,39 @@ const exampleData = {
 };
 
 const MyPageRead: React.FC = () => {
-  const [data, setData] = useState<UserData | null>(null);
   const navigate = useNavigate();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [nickname, handleNicknameChange] = useInputChange(exampleData.nickname);
+  const [description, handleDescriptionChange] = useInputChange(
+    exampleData.description
+  );
+  const [password, handlePasswordChange, setPassword] = useInputChange("");
+  const [profileImage, setProfileImage] = useState<string | null>("");
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const [passwordCheck, handlePasswordCheckChange, setPasswordCheck] =
+    useInputChange("");
+  const [errorMessages, setErrorMessages] = useState({
+    password: undefined as string | undefined,
+    passwordCheck: undefined as string | undefined,
+  });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showSaveButton, setShowSaveButton] = useState(false);
+  const [showPasswordUpdate, setShowPasswordUpdate] = useState(false);
 
+  useEffect(() => {
+    if (
+      nickname !== exampleData.nickname ||
+      description !== exampleData.description ||
+      profileImage !== exampleData.profileImageUrl
+    ) {
+      setShowSaveButton(true);
+    } else {
+      setShowSaveButton(false);
+    }
+  }, [nickname, description, profileImage]);
+
+  // api get
+  //const [data, setData] = useState<UserData | null>(null);
   // function getErrorMessage(error: unknown) {
   //   if (error instanceof Error) return error.message;
   //   return String(error);
@@ -56,111 +91,176 @@ const MyPageRead: React.FC = () => {
 
   //   fetchData();
   // }, []);
+  // if (!data) {
+  //   return <div>Loading...</div>;
+  // }
+
+  // 사진 추가 icon 클릭
+  const handleIconClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  // 사진 업로드
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+      setUploadedFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // 유효성 검사
+  const validateAndSetError = () => {
+    setErrorMessages({
+      password: validatePassword(password) || undefined,
+      passwordCheck:
+        validateCheckpassword(passwordCheck, password) || undefined,
+    });
+  };
+  //유효성검사 - 커서 벗어났는지
+  const handleBlur = (field: string) => {
+    if (field === "password") {
+      setErrorMessages((prev) => ({
+        ...prev,
+        password: validatePassword(password) || undefined,
+      }));
+    } else if (field === "passwordCheck") {
+      setErrorMessages((prev) => ({
+        ...prev,
+        passwordCheck:
+          validateCheckpassword(passwordCheck, password) || undefined,
+      }));
+    }
+  };
+
+  // 제출
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    validateAndSetError();
+
+    if (!errorMessages.password && !errorMessages.passwordCheck) {
+      alert("Changes saved!");
+      setPassword(""); // 비밀번호 필드 비우기
+      setPasswordCheck(""); // 비밀번호 확인 필드 비우기
+    } else {
+      alert("수정사항을 확인하세요");
+    }
+  };
 
   const handleCancel = () => {
     navigate(-1);
   };
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // if (!data) {
-  //   return <div>Loading...</div>;
-  // }
   return (
     <>
-      <div className="bg-transparent p-6 rounded-lg max-w-2xl shadow-2xl drop-shadow-2xl">
-        <div className="flex justify-center mb-4">
-          <ImageUpload profileImage={exampleData.profileImageUrl as string} />
-        </div>
-        <div className="flex items-center text-center w-[488px] mb-4">
-          <div className="block w-32">id</div>
-          <div className="py-2 w-[360px]">{exampleData.id}</div>
-        </div>
-        <div className="flex items-center text-center w-[488px] mb-4">
-          <div className="block w-32">name</div>
-          <div className="py-2 w-[360px]">{exampleData.name}</div>
-        </div>
-        <div className="flex items-center text-center w-[488px] mb-4">
-          <div className="block w-32">nickname</div>
-          <div className="py-2 w-[360px]">{exampleData.nickname}</div>
-        </div>
-        <div className="flex items-center text-center w-[488px] mb-4">
-          <div className="block w-32">description</div>
-          <div className="py-2 w-[360px]">{exampleData.description}</div>
-        </div>
-        <div className="flex items-center text-center w-[488px] mb-4">
-          <div className="block w-32">createdDate</div>
-          <div className="py-2 w-[360px]">{exampleData.createdDate}</div>
-        </div>
-        <div className="flex items-center text-center w-[488px] mb-4">
-          <div className="block w-32">loginDate</div>
-          <div className="py-2 w-[360px]">{exampleData.loginDate}</div>
-        </div>
+      <div className="mt-6 bg-transparent p-6 rounded-lg max-w-2xl shadow-2xl drop-shadow-2xl ">
+        <form onSubmit={handleSubmit}>
+          <div className="items-center justify-center m-0">
+            <ImageUpload
+              profileImage={profileImage}
+              handleIconClick={handleIconClick}
+              handleFileChange={handleFileChange}
+              fileInputRef={fileInputRef}
+            />
+            <div className="pb-5 mb-2">
+              <div className="text-xl font-bold text-center">
+                {exampleData.name}
+              </div>
+              <div className="text-gray-500 text-center">{exampleData.id}</div>
+            </div>
+          </div>
 
-        <form>
-          <InputField
-            label="id"
-            type="text"
-            placeholder="id"
-            value={exampleData.id}
-            disabled={true}
-          />
-
-          <InputField
-            label="이름"
-            type="text"
-            placeholder="이름"
-            value={exampleData.name}
-            disabled={true}
-          />
           <InputField
             label="닉네임"
             type="text"
             placeholder="닉네임"
-            value={exampleData.nickname}
-            disabled={true}
+            value={nickname}
+            onChange={handleNicknameChange}
           />
 
           <TextAreaField
             label="소개"
             placeholder="소개"
-            value={exampleData.description as string}
-            disabled={true}
+            value={description}
+            onChange={handleDescriptionChange}
           />
-          {/* description */}
-          <InputField
-            label="회원가입 날짜"
-            type="text"
-            placeholder="회원가입 날짜"
-            value={exampleData.createdDate}
-            disabled={true}
-          />
-          <InputField
-            label="마지막 로그인 "
-            type="text"
-            placeholder="마지막 로그인 "
-            value={exampleData.loginDate}
-            disabled={true}
-          />
+
+          {showPasswordUpdate && (
+            <>
+              <InputField
+                label="변경할 비밀번호"
+                type="password"
+                placeholder="변경할 비밀번호"
+                value={password}
+                onChange={(e) => {
+                  handlePasswordChange(e);
+                  setShowSaveButton(true);
+                }}
+                onBlur={() => handleBlur("password")}
+                errorText={errorMessages.password}
+              />
+              <InputField
+                label="비밀번호 확인"
+                type="password"
+                placeholder="비밀번호 확인"
+                value={passwordCheck}
+                onChange={(e) => {
+                  handlePasswordCheckChange(e);
+                  setShowSaveButton(true);
+                }}
+                onBlur={() => handleBlur("passwordCheck")}
+                errorText={errorMessages.passwordCheck}
+              />
+            </>
+          )}
+          <div className="flex items-center justify-between">
+            {!showPasswordUpdate && (
+              <InputField
+                label="비밀번호"
+                type="password"
+                placeholder="비밀번호"
+                value={"00000000000"}
+                onChange={handlePasswordChange}
+                disabled={true}
+                size="small"
+              />
+            )}
+
+            <button
+              type="button"
+              className="flex text-gray-500  ml-auto items-center  w-[40px] h-[40px]"
+              onClick={() => setShowPasswordUpdate(!showPasswordUpdate)}
+            >
+              {showPasswordUpdate ? "취소" : "수정"}
+            </button>
+          </div>
+          <div className="m-2 p-2 flex flex-col gap-2 items-center">
+            <Button
+              type="submit"
+              size="medium_big_radius"
+              color="secondary"
+              textColor="primary_font"
+              name="저장"
+              disabled={!showSaveButton}
+            />
+
+            <Button
+              type="button"
+              size="medium_big_radius"
+              color="secondary_border"
+              textColor="secondary_color_font"
+              name="뒤로가기"
+              onClick={handleCancel}
+            />
+          </div>
         </form>
 
-        <div className="m-2 p-2 flex flex-col gap-2 items-center">
-          <Button
-            type="button"
-            size="medium_big_radius"
-            color="secondary"
-            textColor="primary_font"
-            name="수정하기"
-            onClick={() => navigate("/mypageUpdate")}
-          />
-          <Button
-            type="button"
-            size="medium_big_radius"
-            color="secondary_border"
-            textColor="secondary_color_font"
-            name="뒤로가기"
-            onClick={handleCancel}
-          />
-        </div>
         <button
           className="flex text-gray-500 underline ml-auto"
           onClick={() => {
