@@ -3,6 +3,7 @@ import { Editor, OnMount } from "@monaco-editor/react";
 import { useState } from "react";
 import { CODE_SNIPPETS } from "../Constants";
 import { Button } from "../../../components/Common";
+import { useTheme } from "../../../store/store";
 
 interface CodeEditorProps {
   language: string;
@@ -17,6 +18,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   setValue,
   value,
 }) => {
+  const { theme } = useTheme();
   // const [theme, setTheme] = useState<string>("vs-light");
 
   //테마 전역 설정 전 테스트
@@ -35,10 +37,13 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           foreground: "#5d7988",
           fontStyle: "italic",
         },
-        { token: "constant", foreground: "#e06c75" },
+        {
+          token: "constant",
+          foreground: "#e06c75",
+        },
       ],
       colors: {
-        "editor.background": "#19282d",
+        "editor.background": "#1f2d35",
       },
     });
   };
@@ -58,7 +63,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
         width={"100%"}
         // height="75vh"
         // theme={localStorage.getItem("theme") || "vs-light"}
-        theme={"onedark"}
+        theme={theme === "dark" ? "vs-dark" : "vs-light"}
         language={language}
         defaultValue={CODE_SNIPPETS[language]}
         beforeMount={setEditorTheme}

@@ -17,6 +17,19 @@
   transition: all 0.3s;
 }
 
+.tertiary {
+  background-color: c.$C_TERTIARY;
+}
+.tertiary:hover {
+  background-color: c.$C_TERTIARY_HOVER;
+  transition: all 0.3s;
+}
+.chat {
+  background-color: #2a4e7d;
+}
+.chat:hover {
+  background-color: #325c94;
+}
 .secondary_border {
   background-color: c.$C_WHITE;
   border: 2px solid;

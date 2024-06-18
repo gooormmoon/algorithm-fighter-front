@@ -29,14 +29,6 @@ const Header = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
   const [selectedNumber, setSelectedNumber] = useState("10 minute");
 
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
-
-  useEffect(() => {
-    console.log(theme);
-  }, [theme]);
-
   const toggleModal = (
     modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
     isOpen: boolean
@@ -60,7 +52,7 @@ const Header = () => {
     <header
       className={`w-full h-[70px] flex justify-between items-center gap-12 p-4 shadow-xl ${
         theme === "dark"
-          ? "bg-secondary text-gray-400 border-white"
+          ? "bg-gradient-to-r from-teal-950 to-secondary text-gray-400 border-white"
           : "bg-white text-gray-400 border-secondary "
       }`}
     >

@@ -22,11 +22,35 @@ const MyPageRead = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg  max-w-2xl  ">
-      <form>
-        <div className="flex justify-center mb-4">
-          <ImageUpload profileImage={exampleData.profileImageUrl} />
-        </div>
+    <div className="bg-transparent p-6 rounded-lg  max-w-2xl shadow-2xl drop-shadow-2xl">
+      <div className="flex justify-center mb-4">
+        <ImageUpload profileImage={exampleData.profileImageUrl} />
+      </div>
+      <div className="flex items-center text-center w-[488px] mb-4">
+        <div className="block w-32">id</div>
+        <div className="py-2 w-[360px]">{exampleData.id}</div>
+      </div>
+      <div className="flex items-center text-center w-[488px] mb-4">
+        <div className="block w-32">name</div>
+        <div className="py-2 w-[360px]">{exampleData.name}</div>
+      </div>
+      <div className="flex items-center text-center w-[488px] mb-4">
+        <div className="block w-32">nickname</div>
+        <div className="py-2 w-[360px]">{exampleData.nickname}</div>
+      </div>
+      <div className="flex items-center text-center w-[488px] mb-4">
+        <div className="block w-32">description</div>
+        <div className="py-2 w-[360px]">{exampleData.description}</div>
+      </div>
+      <div className="flex items-center text-center w-[488px] mb-4">
+        <div className="block w-32">createdDate</div>
+        <div className="py-2 w-[360px]">{exampleData.createdDate}</div>
+      </div>
+      <div className="flex items-center text-center w-[488px] mb-4">
+        <div className="block w-32">loginDate</div>
+        <div className="py-2 w-[360px]">{exampleData.loginDate}</div>
+      </div>
+
 
         <InputField
           label="id"
@@ -81,7 +105,7 @@ const MyPageRead = () => {
           color="secondary"
           textColor="primary_font"
           name="수정하기"
-          onClick={() => navigate("/MyPageUpdate")}
+          onClick={() => navigate("/mypageUpdate")}
         />
         <Button
           type="button"
