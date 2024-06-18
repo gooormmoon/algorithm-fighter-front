@@ -9,7 +9,6 @@ import { CreateModal } from "../Game/GameModal";
 const Main: React.FC = () => {
   const [createGame, setCreateGame] = useState(false);
   const [enterGame, setEnterGame] = useState(false);
-  const [inviteCode, setInviteCode] = useState("");
   const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
   const [selectedNumber, setSelectedNumber] = useState("10 minute");
   const navigate = useNavigate();
@@ -25,11 +24,9 @@ const Main: React.FC = () => {
     difficulty: string,
     timer: string
   ) => {
-    setInviteCode(code);
     setSelectedDifficulty(difficulty);
     setSelectedNumber(timer);
     toggleModal(setCreateGame, false);
-    toggleModal(setEnterGame, true);
   };
 
   return (

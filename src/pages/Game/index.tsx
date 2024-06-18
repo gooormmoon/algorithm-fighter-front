@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import CodeEditor from "./CodeEditor";
-import CompetitorProfile from "./CompetitorProfile";
+// import CompetitorProfile from "../Wait/CompetitorProfile";
 import Output from "./Output";
 import { OnMount } from "@monaco-editor/react";
 import LanguageSelector from "./LanguageSelector";
@@ -11,7 +11,7 @@ import GameProblem from "./GameProblem";
 import TimerIcon from "@mui/icons-material/Timer";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Chat from "../../components/Chat";
-import {VictoryModal, DefeatModal, TestCaseModal} from "./GameModal";
+import { VictoryModal, DefeatModal, TestCaseModal } from "./GameModal";
 
 const Game = () => {
   const [isResizingX, setIsResizingX] = useState(false);
@@ -24,8 +24,8 @@ const Game = () => {
   const [language, setLanguage] = useState<string>("javascript");
   const [value, setValue] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [victoryModalOpen, setVictoryModalOpen] = useState(false); 
-  const [defeatModalOpen, setDefeatModalOpen] = useState(false); 
+  const [victoryModalOpen, setVictoryModalOpen] = useState(false);
+  const [defeatModalOpen, setDefeatModalOpen] = useState(false);
 
   //TestCaseModal
   const toggleModal = (
@@ -227,10 +227,7 @@ const Game = () => {
         />
       )}
       {defeatModalOpen && (
-        <DefeatModal
-          isOpen={true}
-          onClose={() => setDefeatModalOpen(false)}
-        />
+        <DefeatModal isOpen={true} onClose={() => setDefeatModalOpen(false)} />
       )}
       {/* <Footer runCode={runCode} isLoading={isLoading} /> */}
     </main>
