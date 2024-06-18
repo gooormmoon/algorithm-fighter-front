@@ -51,7 +51,7 @@ const MyPageRead = () => {
         <div className="py-2 w-[360px]">{exampleData.loginDate}</div>
       </div>
 
-
+      <form>
         <InputField
           label="id"
           type="text"
