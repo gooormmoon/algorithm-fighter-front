@@ -36,11 +36,18 @@
   border-color: c.$C_SECONDARY;
 }
 
+.icon{
+    background-color: #ffffff;
+    border: 5px solid;
+    border-color: #b7b7b7;
+}
+
 .secondary_border:hover {
   color: c.$C_WHITE;
   background-color: c.$C_SECONDARY;
   transition: all 0.3s;
 }
+
 .wait_border {
   background-color: c.$C_WHITE;
   border: 2px solid;

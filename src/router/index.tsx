@@ -4,6 +4,7 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Layout from "../components/Layout";
+
 import {
   LoginPage,
   RegisterPage,
@@ -21,10 +22,13 @@ const router = (
       <Route path="/mypage" element={<MyPageRead />} />
       <Route path="/mypageUpdate" element={<MyPageUpdate />} />
     </Route>
+    <Route index element={<MainPage />} />
+
     <Route path="/login" element={<LoginPage />} />
     <Route path="/register" element={<RegisterPage />} />
 
   </Route>
 );
+
 const rootRouter = createBrowserRouter(createRoutesFromElements(router));
 export default rootRouter;
