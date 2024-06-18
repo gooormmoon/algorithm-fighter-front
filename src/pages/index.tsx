@@ -1,6 +1,6 @@
 export { default as RegisterPage } from "./Auth/Register";
 export { default as LoginPage } from "./Auth/Login";
-export { default as MainPage } from "./MainPage";
+export { default as MainPage } from "./Main";
 export { default as MyPageUpdate } from "./MyPage/MyPageUpdate";
 export { default as GamePage } from "./Game";
 export { default as MyReposPage } from "./MyRepository";

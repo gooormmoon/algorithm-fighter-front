@@ -1,0 +1,44 @@
+.main-layout {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  gap: 50px;
+  padding-top: 15px;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.left-column {
+  // flex: 3;
+}
+
+.right-column {
+  // flex: 1;
+  align-items: flex-start;
+  /* 오른쪽 박스들을 왼쪽에 맞춤 */
+}
+
+.box {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  // background-color: #ffffff;
+}
+
+.list {
+  // background-color: #ffffff;
+  width: 700px;
+  height: 830px;
+}
+
+.chat,
+.create {
+  // background-color: #ffffff;
+  width: 600px;
+  height: 400px;
+}

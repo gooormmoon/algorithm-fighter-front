@@ -6,6 +6,7 @@ import {
 import Layout from "../components/Layout";
 
 import {
+  MainPage,
   LoginPage,
   RegisterPage,
   MyPageRead,
@@ -17,16 +18,15 @@ import {
 const router = (
   <Route>
     <Route path="/" element={<Layout />}>
+      <Route index element={<MainPage />} />
       <Route path="/game" element={<GamePage />} />\
       <Route path="/myRepository" element={<MyReposPage />} />
       <Route path="/mypage" element={<MyPageRead />} />
       <Route path="/mypageUpdate" element={<MyPageUpdate />} />
     </Route>
-    <Route index element={<MainPage />} />
 
     <Route path="/login" element={<LoginPage />} />
     <Route path="/register" element={<RegisterPage />} />
-
   </Route>
 );
 
