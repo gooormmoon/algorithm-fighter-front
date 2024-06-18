@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import CloseIcon from "@mui/icons-material/Close";
+import { useTheme } from "../../../store/store";
 
 interface ModalProps {
   children: React.ReactNode;
@@ -15,9 +16,11 @@ export const Modal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   size = "medium",
-  bgColor = 'bg-white',
+  bgColor = "white",
   closeButton = true,
 }) => {
+  const { theme } = useTheme();
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -44,11 +47,15 @@ export const Modal: React.FC<ModalProps> = ({
   };
 
   const bgColorClass = (color: string) => {
-    return `bg-${color}`
-  }
+    return `bg-${color}`;
+  };
 
   return (
-    <div className="flex absolute ">
+    <div
+      className={`${
+        theme === "dark" ? "text-black" : "text-white"
+      }  flex absolute `}
+    >
       {isOpen && (
         <div
           className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 overflow-scroll"
@@ -58,7 +65,9 @@ export const Modal: React.FC<ModalProps> = ({
             className={`relative p-4 w-full ${getSizeClasses()} max-h-full transition-all duration-150`}
           >
             <div
-              className={`${bgColorClass(bgColor)} p-6 rounded-lg w-full relative`}
+              className={`${bgColorClass(
+                bgColor
+              )} p-6 rounded-lg w-full relative`}
               onClick={(e) => e.stopPropagation()}
             >
               {closeButton && (
