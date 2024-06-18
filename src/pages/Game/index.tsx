@@ -10,8 +10,8 @@ import { Button } from "../../components/Common";
 import GameProblem from "./GameProblem";
 import TimerIcon from "@mui/icons-material/Timer";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import TestCaseModal from "./GameModal/TestCaseModal";
 import Chat from "../../components/Chat";
+import {VictoryModal, DefeatModal, TestCaseModal} from "./GameModal";
 
 const Game = () => {
   const [isResizingX, setIsResizingX] = useState(false);
@@ -24,6 +24,9 @@ const Game = () => {
   const [language, setLanguage] = useState<string>("javascript");
   const [value, setValue] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
+  const [victoryModalOpen, setVictoryModalOpen] = useState(false); 
+  const [defeatModalOpen, setDefeatModalOpen] = useState(false); 
+
   //TestCaseModal
   const toggleModal = (
     modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
@@ -148,6 +151,22 @@ const Game = () => {
                     name="테스트 케이스"
                     onClick={() => setModalOpen(true)}
                   />
+                  <Button
+                    type="button"
+                    size="medium_small_radius"
+                    color="secondary"
+                    textColor="primary_font"
+                    name="승리"
+                    onClick={() => setVictoryModalOpen(true)}
+                  />
+                  <Button
+                    type="button"
+                    size="medium_small_radius"
+                    color="secondary"
+                    textColor="primary_font"
+                    name="패배"
+                    onClick={() => setDefeatModalOpen(true)}
+                  />
                 </div>
                 <div className="flex justify-start items-center gap-4">
                   <Button
@@ -199,6 +218,18 @@ const Game = () => {
             toggleModal(setModalOpen, false);
           }}
           setModalOpen={setModalOpen}
+        />
+      )}
+      {victoryModalOpen && (
+        <VictoryModal
+          isOpen={true}
+          onClose={() => setVictoryModalOpen(false)}
+        />
+      )}
+      {defeatModalOpen && (
+        <DefeatModal
+          isOpen={true}
+          onClose={() => setDefeatModalOpen(false)}
         />
       )}
       {/* <Footer runCode={runCode} isLoading={isLoading} /> */}
