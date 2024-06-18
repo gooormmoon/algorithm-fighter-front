@@ -18,12 +18,12 @@ const SearchBar = ({ query }: { query?: string }) => {
     <div
       className={`${
         theme === "dark"
-          ? "border-white/55 text-white/55"
-          : "border-chat_border text-chat_border"
-      } bg-transparent flex gap-2 border-b-2 drop-shadow-2xl shadow-2xl`}
+          ? "bg-[#212C4D] text-white/55"
+          : "bg-gray-200 text-chat_border"
+      }  w-1/3 flex gap-1 rounded-sm  justify-between px-2 min-w-40`}
     >
       <input
-        className="bg-transparent outline-none "
+        className={`bg-transparent outline-none w-4/5 pl-1`}
         type="text"
         value={searchQuery}
         onChange={handleSearchChange}
@@ -33,7 +33,7 @@ const SearchBar = ({ query }: { query?: string }) => {
         type="submit"
         onClick={handleSearchSubmit}
         className={`${
-          theme === "dark" ? "text-white/55" : "text-chat_border_dark"
+          theme === "dark" ? "text-oc_white" : "text-chat_border_dark"
         }`}
       >
         <SearchIcon />

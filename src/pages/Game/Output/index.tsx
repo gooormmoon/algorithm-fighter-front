@@ -5,11 +5,11 @@ interface OutputProps {
 }
 const Output: React.FC<OutputProps> = ({ isError, output }) => {
   return (
-    <div className="p-4 rounded-xl shadow-md w-[100%] h-full border-2 flex flex-col border-white/10">
+    <div className="p-4 rounded-xl shadow-md w-[100%] h-full flex flex-col border border-oc_white">
       <p className="mb-2 text-lg font-semibold ">Output</p>
 
       <div
-        className={` p-2 border-2 border-white/10 mt-4 w-full flex-1 overflow-auto  shadow-md rounded-xl ${
+        className={` p-2 border border-oc_white mt-4 w-full flex-1 overflow-auto  shadow-md rounded-xl ${
           isError
             ? "border-red-500 text-red-400 line-through"
             : "border-white/10"

@@ -27,7 +27,7 @@ const Header = () => {
     <header
       className={`w-full h-[70px] flex justify-between items-center gap-12 p-4 shadow-xl ${
         theme === "dark"
-          ? "bg-gradient-to-r from-teal-950 to-secondary text-gray-400 "
+          ? "bg-secondary text-gray-400 border-b border-[#101935] "
           : "bg-white text-gray-400  "
       }`}
     >

@@ -12,8 +12,10 @@ import TimerIcon from "@mui/icons-material/Timer";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Chat from "../../components/Chat";
 import { VictoryModal, DefeatModal, TestCaseModal } from "./GameModal";
+import { useTheme } from "../../store/store";
 
 const Game = () => {
+  const { theme } = useTheme();
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
   const [initialX, setInitialX] = useState(0);
@@ -124,9 +126,6 @@ const Game = () => {
       <div className="flex justify-start items-center w-full h-full  overflow-hidden">
         <div className="w-3/4 h-full flex ">
           <div className="h-full" style={{ width }}>
-            {/* <section className="top-20 left-4 absolute w-[340px] h-[140px]  bg-transparent ">
-              <CompetitorProfile />
-            </section> */}
             <section className="w-full h-full">
               <GameProblem />
             </section>
