@@ -13,6 +13,7 @@ interface ButtonProps {
   onMouseLeave?: () => void;
   onClick?: () => void;
   icon?: React.ReactNode;
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -26,6 +27,7 @@ const Button: React.FC<ButtonProps> = ({
   onClick,
   isLoading,
   icon,
+  disabled,
 }) => {
   return (
     <button
@@ -36,12 +38,13 @@ const Button: React.FC<ButtonProps> = ({
         styles[textColor],
         `cursor-pointer ${isLoading ? "opacity-50 cursor-not-allowed" : ""}`,
         "shadow-lg",
-        "drop-shadow-lg"
+        "drop-shadow-lg",
+        `${disabled ? "opacity-50 cursor-not-allowed" : ""}`
       )}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       onClick={onClick}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
     >
       {icon
         ? isLoading

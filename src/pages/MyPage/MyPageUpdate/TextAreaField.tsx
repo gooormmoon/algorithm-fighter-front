@@ -17,7 +17,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
 }) => {
   return (
     <div className="flex items-center mb-4">
-      <label className="block text-gray-700 w-[180px]">{label}</label>
+      <label className="block text-gray-700 w-[175px]">{label}</label>
       <textarea
         value={value}
         placeholder={placeholder}

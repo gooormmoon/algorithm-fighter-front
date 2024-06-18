@@ -16,7 +16,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   const hasAllProps = handleFileChange && handleIconClick && fileInputRef;
 
   return (
-    <div className="flex justify-center mb-4">
+    <div className="flex justify-center ">
       <div className="relative">
         <img
           src={

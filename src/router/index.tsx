@@ -12,7 +12,6 @@ import {
   MyPageRead,
   GamePage,
   MyReposPage,
-  MyPageUpdate,
   Wait,
 } from "../pages";
 
@@ -23,7 +22,6 @@ const router = (
       <Route path="/game" element={<GamePage />} />\
       {/* <Route path="/myRepository" element={<MyReposPage />} /> */}
       <Route path="/mypage" element={<MyPageRead />} />
-      <Route path="/mypageUpdate" element={<MyPageUpdate />} />
       <Route path="/Wait" element={<Wait />} />
     </Route>
 
