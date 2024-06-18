@@ -10,6 +10,7 @@ import { Button } from "../../components/Common";
 import GameProblem from "./GameProblem";
 import TimerIcon from "@mui/icons-material/Timer";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import TestCaseModal from "./GameModal/TestCaseModal";
 import Chat from "../../components/Chat";
 
 const Game = () => {
@@ -22,6 +23,14 @@ const Game = () => {
   const editorRef = useRef<any>(null);
   const [language, setLanguage] = useState<string>("javascript");
   const [value, setValue] = useState<string>("");
+  const [modalOpen, setModalOpen] = useState(false);
+  //TestCaseModal
+  const toggleModal = (
+    modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
+    isOpen: boolean
+  ) => {
+    modalSetter(isOpen);
+  };
 
   //Runcode
   const [output, setOutput] = useState<string[] | null>(null);
@@ -130,6 +139,15 @@ const Game = () => {
                   <LanguageSelector language={language} onSelect={onSelect} />
                   <TimerIcon />
                   <span className="text-xl">59:59</span>
+
+                  <Button
+                    type="button"
+                    size="medium_big_radius"
+                    color="secondary"
+                    textColor="primary_font"
+                    name="테스트 케이스"
+                    onClick={() => setModalOpen(true)}
+                  />
                 </div>
                 <div className="flex justify-start items-center gap-4">
                   <Button
@@ -174,7 +192,15 @@ const Game = () => {
           <Chat />
         </div>
       </div>
-
+      {modalOpen && (
+        <TestCaseModal
+          isOpen={true}
+          onClose={() => {
+            toggleModal(setModalOpen, false);
+          }}
+          setModalOpen={setModalOpen}
+        />
+      )}
       {/* <Footer runCode={runCode} isLoading={isLoading} /> */}
     </main>
   );
