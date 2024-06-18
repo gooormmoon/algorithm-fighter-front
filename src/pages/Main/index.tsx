@@ -7,7 +7,7 @@ const Main: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <form className="main-layout">
+    <main className="main-layout">
       <div className="left-column">
         <div className="box list"></div>
       </div>
@@ -18,7 +18,7 @@ const Main: React.FC = () => {
         </div>
         <div className="box create">{/* 아마도 버튼으로 해야 함 */}</div>
       </div>
-    </form>
+    </main>
   );
 };
 

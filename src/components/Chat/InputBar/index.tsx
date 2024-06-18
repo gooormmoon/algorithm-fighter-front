@@ -9,23 +9,17 @@ const InputBar = () => {
     setMessage(e.target.value);
   };
 
-  const handleMessageSubmit = (e: React.FormEvent) => {
+  const handleMessageSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     //api
     setMessage("");
   };
   return (
     <form
+      name="inputForm"
       onSubmit={handleMessageSubmit}
       className="w-full h-full px-4 bg-transparent flex justify-between items-center gap-2 shadow-2xl drop-shadow-2xl"
     >
-      {/* <textarea
-        cols={1}
-        value={message}
-        onChange={handleMessageChange}
-        className="bg-transparent w-full h-3/4 outline-none resize-none"
-        placeholder="메시지를 입력하세요"
-      /> */}
       <input
         value={message}
         onChange={handleMessageChange}
@@ -34,7 +28,7 @@ const InputBar = () => {
       />
       <Button
         type="submit"
-        size="small"
+        size="small_radius"
         color="chat"
         textColor="primary_font"
         name="SEND"
