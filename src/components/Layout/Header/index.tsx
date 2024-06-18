@@ -21,39 +21,14 @@ const Header = () => {
   const { pathname } = useLocation();
   const [showProfile, setShowProfile] = useState(false);
   const { theme, changeTheme } = useTheme();
-
   const [hover, setHover] = useState(false);
-  const [createGame, setCreateGame] = useState(false);
-  const [enterGame, setEnterGame] = useState(false);
-  const [inviteCode, setInviteCode] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
-  const [selectedNumber, setSelectedNumber] = useState("10 minute");
-
-  const toggleModal = (
-    modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
-    isOpen: boolean
-  ) => {
-    modalSetter(isOpen);
-  };
-
-  const handleCreateSubmit = (
-    code: string,
-    difficulty: string,
-    timer: string
-  ) => {
-    setInviteCode(code);
-    setSelectedDifficulty(difficulty);
-    setSelectedNumber(timer);
-    toggleModal(setCreateGame, false);
-    toggleModal(setEnterGame, true);
-  };
 
   return (
     <header
       className={`w-full h-[70px] flex justify-between items-center gap-12 p-4 shadow-xl ${
         theme === "dark"
-          ? "bg-gradient-to-r from-teal-950 to-secondary text-gray-400 border-white"
-          : "bg-white text-gray-400 border-secondary "
+          ? "bg-gradient-to-r from-teal-950 to-secondary text-gray-400 "
+          : "bg-white text-gray-400  "
       }`}
     >
       <ul className="w-4/5 h-full flex gap-12 items-center ">
@@ -73,17 +48,6 @@ const Header = () => {
             </li>
           );
         })}
-
-        <li>
-          <button onClick={() => toggleModal(setEnterGame, true)}>
-            게임 참가
-          </button>
-        </li>
-        <li>
-          <button onClick={() => toggleModal(setCreateGame, true)}>
-            게임 생성
-          </button>
-        </li>
       </ul>
       <ul className="h-full flex gap-4 justify-center items-center">
         <li
@@ -109,22 +73,6 @@ const Header = () => {
           {showProfile && <Profile />}
         </li>
       </ul>
-      {createGame && (
-        <CreateModal
-          isOpen={createGame}
-          onClose={() => toggleModal(setCreateGame, false)}
-          onSubmit={handleCreateSubmit}
-        />
-      )}
-      {enterGame && (
-        <EnterModal
-          isOpen={enterGame}
-          onClose={() => toggleModal(setEnterGame, false)}
-          inviteCode={inviteCode}
-          selectedDifficulty={selectedDifficulty}
-          selectedNumber={selectedNumber}
-        />
-      )}
     </header>
   );
 };

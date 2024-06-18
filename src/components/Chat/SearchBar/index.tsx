@@ -8,15 +8,14 @@ const SearchBar = ({ query }: { query?: string }) => {
     setSearchQuery(e.target.value);
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
+  const handleSearchSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     //query api
     setSearchQuery("");
   };
 
   return (
-    <form
-      onSubmit={handleSearchSubmit}
+    <div
       className={`${
         theme === "dark"
           ? "border-white/55 text-white/55"
@@ -32,13 +31,14 @@ const SearchBar = ({ query }: { query?: string }) => {
       />
       <button
         type="submit"
+        onClick={handleSearchSubmit}
         className={`${
           theme === "dark" ? "text-white/55" : "text-chat_border_dark"
         }`}
       >
         <SearchIcon />
       </button>
-    </form>
+    </div>
   );
 };
 

@@ -77,10 +77,11 @@ const Register = () => {
         saveTokens(data);
         navigate("/");
         //전역변수 내정보 설정
+      } else {
+        console.log(response.status);
       }
-      // else if(response.status ===)
     } catch (err) {
-      alert("회원가입 실패");
+      alert(err);
       //임시로 alert로 해놓음
     }
   };
