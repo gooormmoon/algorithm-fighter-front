@@ -37,7 +37,7 @@ const RoomList = () => {
             <tr
               onClick={onClick}
               key={id}
-              className="w-full flex justify-center items-center h-8 text-center border-b border-slate-400 border-x-0 cursor-pointer"
+              className="w-full flex justify-center items-center h-8 text-center border-b border-slate-400 border-x-0 cursor-pointer hover:bg-secondary/70"
             >
               <td className="w-1/6">{index}</td>
               <td className="w-1/6">{nickname}</td>

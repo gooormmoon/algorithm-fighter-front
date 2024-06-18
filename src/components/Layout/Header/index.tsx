@@ -48,17 +48,6 @@ const Header = () => {
             </li>
           );
         })}
-
-        {/* <li>
-          <button onClick={() => toggleModal(setEnterGame, true)}>
-            게임 참가
-          </button>
-        </li>
-        <li>
-          <button onClick={() => toggleModal(setCreateGame, true)}>
-            게임 생성
-          </button>
-        </li> */}
       </ul>
       <ul className="h-full flex gap-4 justify-center items-center">
         <li
