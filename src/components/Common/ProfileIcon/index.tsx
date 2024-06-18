@@ -11,7 +11,7 @@ const ProfileIcon = ({ src, size }: { src?: string; size: IconSize }) => {
   return (
     <div
       className={`${iconSize[size]}
-         relative drop-shadow-2xl overflow-hidden rounded-[70%]`}
+         relative overflow-hidden rounded-[70%] shadow-2xl drop-shadow-2xl`}
     >
       <img
         alt="user profileImage"

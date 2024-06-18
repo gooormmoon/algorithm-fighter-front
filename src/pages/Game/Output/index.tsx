@@ -5,7 +5,7 @@ interface OutputProps {
 }
 const Output: React.FC<OutputProps> = ({ isError, output }) => {
   return (
-    <div className="p-4  text-black rounded shadow-md w-[100%] h-full border flex flex-col">
+    <div className="p-4 rounded shadow-md w-[100%] h-full border flex flex-col">
       <p className="mb-2 text-lg font-semibold ">Output</p>
 
       <div

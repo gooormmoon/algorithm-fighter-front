@@ -10,6 +10,7 @@ import { Button } from "../../components/Common";
 import GameProblem from "./GameProblem";
 import TimerIcon from "@mui/icons-material/Timer";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import Chat from "../../components/Chat";
 
 const Game = () => {
   const [isResizingX, setIsResizingX] = useState(false);
@@ -111,22 +112,21 @@ const Game = () => {
       <div className="flex justify-start items-center w-full h-full  overflow-hidden">
         <div className="w-3/4 h-full flex ">
           <div className="h-full" style={{ width }}>
-            <section className="top-20 left-4 absolute w-[340px] h-[140px]  bg-transparent ">
-              {/* top-20 left-4 absolute  */}
+            {/* <section className="top-20 left-4 absolute w-[340px] h-[140px]  bg-transparent ">
               <CompetitorProfile />
-            </section>
+            </section> */}
             <section className="w-full h-full">
               <GameProblem />
             </section>
           </div>
           <div
-            className="flex justify-center items-center w-3 border-4 border-transparent bg-gray-100 cursor-col-resize hover:bg-gray-200 "
+            className="flex justify-center items-center w-4 bg-black/20 cursor-col-resize hover:bg-black/50 "
             onMouseDown={onMouseDownX}
           />
           <div className="w-full h-full flex flex-col overflow-hidden">
             <section className="w-full overflow-hidden" style={{ height }}>
-              <div className="w-full h-16 bg-white flex justify-between items-center p-4 gap-2">
-                <div className=" flex justify-start items-center gap-2 text-secondary">
+              <div className="w-full h-16 bg-transparent flex justify-between items-center p-4 gap-2">
+                <div className=" flex justify-start items-center gap-2 ">
                   <LanguageSelector language={language} onSelect={onSelect} />
                   <TimerIcon />
                   <span className="text-xl">59:59</span>
@@ -161,16 +161,18 @@ const Game = () => {
             </section>
             <div
               className="flex flex-col justify-center items-center w-full h-3
-           border-4 border-transparent bg-gray-100  hover:bg-gray-200
+           bg-black/20  hover:bg-black/50
             cursor-row-resize "
               onMouseDown={onMouseDownY}
             />
-            <section className="w-full flex-1  flex overflow-hidden">
+            <section className="w-full flex-1 flex overflow-hidden p-2">
               <Output isError={isError} output={output} />
             </section>
           </div>
         </div>
-        <div className="w-1/4 h-full bg-gray-300 ">채팅창</div>
+        <div className="w-1/4 h-full bg-transparent p-4 ">
+          <Chat />
+        </div>
       </div>
 
       {/* <Footer runCode={runCode} isLoading={isLoading} /> */}

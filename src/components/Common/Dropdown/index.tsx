@@ -21,10 +21,10 @@ const Dropdown = <T extends string | number>({
   };
 
   return (
-    <div className="relative  inline-block text-left z-10">
+    <div className="relative  inline-block text-left z-10 shadow-2xl drop-shadow-2xl">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-[120px] bg-white px-4 py-2 rounded-md shadow ring-1 ring-black ring-opacity-5 focus:outline-none"
+        className="w-[120px] px-4 py-2 rounded-md shadow ring-1 ring-black ring-opacity-5 focus:outline-none"
       >
         {showMinutes ? `${selectedValue}` : selectedValue}
       </button>

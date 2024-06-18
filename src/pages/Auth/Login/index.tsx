@@ -4,6 +4,7 @@ import { Button, Input } from "../../../components/Common";
 import { validateEmail } from "../utils";
 import { saveTokens } from "../../../utils";
 import { login } from "../../../api/Auth";
+import { useTheme } from "../../../store/store";
 
 const Login = () => {
   // const REST_API_KEY = "백엔드한테 달라하자1";
@@ -13,7 +14,7 @@ const Login = () => {
   // const onClickSocialLogin = () => {
   //   window.location.href = link;
   // };
-
+  const { theme } = useTheme();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -53,13 +54,20 @@ const Login = () => {
     }
   };
   return (
-    <main className="w-full h-[100vh] flex flex-col justify-center items-center bg-secondary">
-      <div className="w-[560px] h-[500px] bg-white/30 blur-xl absolute"></div>
+    <main
+      className={`w-full h-[100vh] flex flex-col justify-center items-center 
+        ${
+          theme === "dark"
+            ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white/70 "
+            : "bg-white"
+        }`}
+    >
+      {/* <div className="w-[560px] h-[500px] bg-white/30 blur-lg absolute" /> */}
       <form
-        className="w-[540px] h-[480px] gap-4 p-8 flex flex-col justify-center items-center  rounded-md drop-shadow-md bg-white border-white border-2"
+        className="w-[540px] h-[480px] gap-4 p-8 flex flex-col justify-center items-center  rounded-md  bg-transparent "
         onSubmit={onSubmit}
       >
-        <h1 className="text-secondary text-[68px] font-semibold">Login</h1>
+        <h1 className=" text-[68px] font-semibold">Login</h1>
 
         <Input
           type="email"
@@ -90,7 +98,7 @@ const Login = () => {
           textColor="primary_font"
           name="로그인"
         />
-        <ul className="mt-4 flex gap-2 text-secondary text-sm">
+        <ul className="mt-4 flex gap-2 text-sm">
           <li className="cursor-pointer">아이디 찾기</li>
           <li>|</li>
           <li className="cursor-pointer">비밀번호 찾기</li>

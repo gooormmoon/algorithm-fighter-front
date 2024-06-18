@@ -5,9 +5,10 @@ const GameProblem = () => {
   const { theme } = useTheme();
   return (
     <div
-      className={`p-6 pt-[50px] shadow-md max-h-[100%] overflow-auto ${
-        theme === "light" ? "bg-white text-black" : "bg-[#1f2d35] text-white"
-      }`}
+      // className={`p-6 pt-[50px] shadow-md max-h-[100%] overflow-auto ${
+      //   theme === "light" ? "bg-white text-black" : "bg-[#1f2d35] text-white"
+      // }`}
+      className={`p-6 pt-[50px] shadow-md max-h-[100%] overflow-auto `}
     >
       <h2 className="text-xl font-semibold mb-4">문제 설명</h2>
       {/* This is a Sample Problem text */}
@@ -45,7 +46,7 @@ const GameProblem = () => {
         <h3 className="text-lg font-semibold mb-2">입출력 예</h3>
         <table className="table-auto w-full mb-4 border">
           <thead>
-            <tr className="bg-gray-200">
+            <tr className="bg-gray-400">
               <th className="border px-4 py-2">answers</th>
               <th className="border px-4 py-2">return</th>
             </tr>
