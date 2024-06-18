@@ -28,7 +28,7 @@ const CreateModal: React.FC<CreateModalProps> = ({ isOpen, onClose, onSubmit }) 
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} bgColor="white">
       <span className="mr-12 text-lg text-[#213363] font-semibold mt-6 flex item-center">
         난이도 설정
       </span>
