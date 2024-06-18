@@ -45,6 +45,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
         />
       </div>
 
+
       <div className="flex flex-col gap-2 ">
         <span className="text-lg text-[#213363] font-semibold mt-6 flex item-center">
           난이도 설정
