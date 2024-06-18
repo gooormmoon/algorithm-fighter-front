@@ -1,9 +1,13 @@
+
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../../components/Common";
 import ImageUpload from "../MyPageUpdate/ImageUpload";
 import InputField from "../MyPageUpdate/InputField";
 import TextAreaField from "../MyPageUpdate/TextAreaField";
+import MembershipWithdrawalModal from "../MembershipWithdrawalModal";
+
+
 import { getMe } from "../../../api/Users";
 
 interface UserData {
@@ -49,6 +53,11 @@ const MyPageRead: React.FC = () => {
     navigate(-1);
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  return (
+    <>
+ 
   if (!data) {
     return <div>Loading...</div>;
   }
@@ -130,25 +139,38 @@ const MyPageRead: React.FC = () => {
         />
       </form>
 
-      <div className="m-2 p-2 flex flex-col gap-2 items-center">
-        <Button
-          type="button"
-          size="medium_big_radius"
-          color="secondary"
-          textColor="primary_font"
-          name="수정하기"
-          onClick={() => navigate("/mypageUpdate")}
-        />
-        <Button
-          type="button"
-          size="medium_big_radius"
-          color="secondary_border"
-          textColor="secondary_color_font"
-          name="뒤로가기"
-          onClick={handleCancel}
-        />
+        <div className="m-2 p-2 flex flex-col gap-2 items-center">
+          <Button
+            type="button"
+            size="medium_big_radius"
+            color="secondary"
+            textColor="primary_font"
+            name="수정하기"
+            onClick={() => navigate("/mypageUpdate")}
+          />
+          <Button
+            type="button"
+            size="medium_big_radius"
+            color="secondary_border"
+            textColor="secondary_color_font"
+            name="뒤로가기"
+            onClick={handleCancel}
+          />
+        </div>
+        <button
+          className="flex text-gray-500 underline ml-auto"
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
+          회원탈퇴
+        </button>
       </div>
-    </div>
+      <MembershipWithdrawalModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+    </>
   );
 };
 
