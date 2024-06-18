@@ -46,7 +46,7 @@ const GameProblem = () => {
         <h3 className="text-lg font-semibold mb-2">입출력 예</h3>
         <table className="table-auto w-full mb-4 border">
           <thead>
-            <tr className="bg-gray-200">
+            <tr className="bg-gray-400">
               <th className="border px-4 py-2">answers</th>
               <th className="border px-4 py-2">return</th>
             </tr>

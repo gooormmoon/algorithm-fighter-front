@@ -78,7 +78,7 @@ const MyPageUpdate: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg  max-w-2xl ">
+    <div className="bg-gray-300/90 p-6 rounded-lg shadow-lg  max-w-2xl ">
       <form onSubmit={handleSubmit}>
         <ImageUpload
           profileImage={profileImage}

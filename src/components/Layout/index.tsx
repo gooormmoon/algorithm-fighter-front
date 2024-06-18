@@ -9,7 +9,7 @@ const Layout = () => {
     <main
       className={`${
         theme === "dark"
-          ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white/55"
+          ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white/70 "
           : ""
       }`}
     >

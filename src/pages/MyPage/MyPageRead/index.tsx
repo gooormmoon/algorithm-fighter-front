@@ -20,7 +20,7 @@ const MyPageRead = () => {
   };
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow-lg  max-w-2xl  ">
+    <div className="bg-transparent p-6 rounded-lg  max-w-2xl shadow-2xl drop-shadow-2xl">
       <div className="flex justify-center mb-4">
         <ImageUpload profileImage={exampleData.profileImageUrl} />
       </div>
@@ -64,7 +64,7 @@ const MyPageRead = () => {
           color="secondary"
           textColor="primary_font"
           name="수정하기"
-          onClick={() => navigate("/MyPageUpdate")}
+          onClick={() => navigate("/mypageUpdate")}
         />
       </div>
     </div>
