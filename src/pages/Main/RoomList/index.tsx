@@ -1,4 +1,5 @@
 import React from "react";
+import { useTheme } from "../../../store/store";
 
 const test = [
   {
@@ -16,14 +17,25 @@ const test = [
     nickname: "nviea",
   },
 ];
-const RoomList = () => {
+const RoomList = ({
+  className,
+  hover,
+}: {
+  className?: string;
+  hover?: string;
+}) => {
+  const { theme } = useTheme();
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
   };
   return (
-    <table className="w-full h-full flex flex-col justify-start items-start rounded-lg shadow-xl drop-shadow-xl">
+    <table
+      className={`w-full h-full flex flex-col justify-start items-start rounded-lg shadow-xl drop-shadow-xl ${
+        theme === "dark" && "bg-dark_box"
+      }`}
+    >
       <thead className="w-full flex flex-col">
-        <tr className="w-full flex flex-start items-center bg-secondary/90 text-white h-8 rounded-t-lg">
+        <tr className="w-full flex flex-start items-center bg-[#212C4D] text-white h-8 rounded-t-lg">
           <th className="w-1/6">No.</th>
           <th className="w-1/6">닉네임</th>
           <th className="w-1/3">방 제목</th>
@@ -37,7 +49,11 @@ const RoomList = () => {
             <tr
               onClick={onClick}
               key={id}
-              className="w-full flex justify-center items-center h-8 text-center border-b border-slate-400 border-x-0 cursor-pointer hover:bg-secondary/70"
+              className={`w-full flex justify-center items-center h-8 text-center border-b  border-x-0 cursor-pointer ${
+                theme === "dark"
+                  ? "hover:bg-secondary/70 border-oc_white"
+                  : "hover:bg-[#DFE1E9] border-border"
+              }`}
             >
               <td className="w-1/6">{index}</td>
               <td className="w-1/6">{nickname}</td>

@@ -5,6 +5,7 @@ import cx from "classnames";
 import Chat from "../../components/Chat";
 import RoomList from "./RoomList";
 import { CreateModal } from "../Game/GameModal";
+import { useTheme } from "../../store/store";
 
 const Main: React.FC = () => {
   const [createGame, setCreateGame] = useState(false);

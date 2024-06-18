@@ -4,13 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#FFBB5C",
+        primary: "#6C72FF",
         primary_transparent: "rgba(255, 187, 92, 0.8)",
 
-        secondary: "#213363",
+        secondary: "#080F25",
         secondary_transparent: "rgba(33, 51, 99, 0.7)",
 
-        tertiary: "#7cadf7",
+        tertiary: "#53B8F4",
         tertiary_transparent: "rgba(124, 173, 247, 0.8)",
 
         chat_text: "#49A0A7",
@@ -21,6 +21,14 @@ module.exports = {
         // chat_background_light:,
         // chat_text_dark: "#49A0A7",
         // chat_text_light:,
+
+        border: "#101935",
+        green: "#159464",
+        red: "#C94A59",
+        yellow: "#a88d2b",
+
+        dark_box: "#101935",
+        oc_white: "rgba(255,255,255,0.2)",
       },
     },
   },

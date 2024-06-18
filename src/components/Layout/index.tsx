@@ -8,9 +8,7 @@ const Layout = () => {
   return (
     <main
       className={`${
-        theme === "dark"
-          ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white/70 "
-          : ""
+        theme === "dark" ? "bg-[#080F25] text-white/70 " : ""
       } border-white/10`}
     >
       <Header />

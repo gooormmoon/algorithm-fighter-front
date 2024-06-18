@@ -9,8 +9,10 @@ import {
 } from "../utils";
 import { saveTokens } from "../../../utils";
 import { register } from "../../../api/Auth";
+import { useTheme } from "../../../store/store";
 
 const Register = () => {
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
@@ -86,13 +88,18 @@ const Register = () => {
     }
   };
   return (
-    <main className="w-full h-[100vh] flex flex-col justify-center items-center bg-secondary">
-      <div className="w-[620px] h-[620px] bg-white/30 blur-xl absolute"></div>
+    <main
+      className={`w-full h-[100vh] flex flex-col justify-center items-center  ${
+        theme === "dark"
+          ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
+          : "bg-white text-secondary"
+      } `}
+    >
       <form
-        className="w-[600px] h-[600px] gap-2 p-12 flex flex-col justify-center items-center drop-shadow-md bg-white rounded-md"
+        className="w-[600px] h-[600px] gap-2 p-12 flex flex-col justify-center items-center drop-shadow-md rounded-md"
         onSubmit={onSubmit}
       >
-        <h1 className="text-secondary text-[64px] font-semibold">Register</h1>
+        <h1 className=" text-[64px] font-semibold">Register</h1>
 
         <Input
           type="text"
