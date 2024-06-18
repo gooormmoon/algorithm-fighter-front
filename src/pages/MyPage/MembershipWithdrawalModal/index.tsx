@@ -13,7 +13,7 @@ const MembershipWithdrawalModal: React.FC<MembershipWithdrawalModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="medium">
-      <div className="text-center">
+      <div className="text-center text-secondary">
         <h2 className="text-xl font-bold mb-4">회원탈퇴</h2>
         <p className="mb-4">정말로 회원탈퇴를 하시겠습니까?</p>
         <div className="flex justify-center space-x-4">

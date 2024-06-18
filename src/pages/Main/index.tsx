@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./MainPage.scss";
+import styles from "./MainPage.module.scss";
+import cx from "classnames";
 import Chat from "../../components/Chat";
 import RoomList from "./RoomList";
 import { CreateModal } from "../Game/GameModal";
@@ -32,25 +33,31 @@ const Main: React.FC = () => {
   };
 
   return (
-    <main className="main-layout">
-      <div className="left-column">
-        <div className="box list">
+    <main className={styles.mainLayout}>
+      <div className={styles.column}>
+        <div className={cx(styles.box, styles.list)}>
           <RoomList />
         </div>
       </div>
 
-      <div className="right-column">
-        <div className="box chat">
+      <div className={styles.column}>
+        <div className={cx(styles.box, styles.chat)}>
           <Chat />
         </div>
-        <div className="box create flex justify-between gap-4">
+        <div
+          className={cx(
+            styles.box,
+            styles.create,
+            "flex justify-between gap-12"
+          )}
+        >
           <button
-            className="w-1/2 h-1/2 bg-primary text-[36px] text-white font-semibold rounded-2xl shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out"
+            className="w-1/2 h-full bg-primary text-[36px] text-white font-semibold rounded-2xl shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out"
             onClick={() => toggleModal(setCreateGame, true)}
           >
             게임 생성
           </button>
-          <button className="w-1/2 h-1/2 bg-tertiary text-[36px] text-white font-semibold  rounded-2xl shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out">
+          <button className="w-1/2 h-full bg-tertiary text-[36px] text-white font-semibold  rounded-2xl shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out">
             게임 시작
           </button>
         </div>

@@ -21,7 +21,7 @@ const router = (
     <Route path="/" element={<Layout />}>
       <Route index element={<MainPage />} />
       <Route path="/game" element={<GamePage />} />\
-      <Route path="/myRepository" element={<MyReposPage />} />
+      {/* <Route path="/myRepository" element={<MyReposPage />} /> */}
       <Route path="/mypage" element={<MyPageRead />} />
       <Route path="/mypageUpdate" element={<MyPageUpdate />} />
       <Route path="/Wait" element={<Wait />} />

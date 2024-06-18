@@ -9,7 +9,13 @@ interface VictoryModalProps {
 const VictoryModal: React.FC<VictoryModalProps> = ({ isOpen, onClose }) => {
   return (
     <div className="bg-transparent-10">
-      <Modal isOpen={isOpen} onClose={onClose} size="large" closeButton={false}>
+      <Modal
+        isOpen={isOpen}
+        onClose={onClose}
+        size="large"
+        closeButton={false}
+        classNames="bg-transparent text-white"
+      >
         <div className="text-center">
           <h2 className="text-7xl font-bold mb-10 ">You Win!</h2>
           <div className="item-center">

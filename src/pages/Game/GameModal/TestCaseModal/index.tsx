@@ -64,7 +64,7 @@ const TestCaseModal: React.FC<TestCaseModalProps> = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="large" bgColor="white">
+    <Modal isOpen={isOpen} onClose={onClose} size="large">
       <div className="pb-5 text-2xl font-bold  ">테스트 케이스 추가하기</div>
       <div className="pt-3 overflow-auto">
         <form onSubmit={handleSubmit}>

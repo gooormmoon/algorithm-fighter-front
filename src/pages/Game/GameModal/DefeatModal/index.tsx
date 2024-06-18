@@ -8,7 +8,13 @@ interface DefeatModalProps {
 
 const DefeatModal: React.FC<DefeatModalProps> = ({ isOpen, onClose }) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="large" closeButton={false}>
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      size="large"
+      closeButton={false}
+      classNames="bg-transparent text-white"
+    >
       <div className="text-center">
         <h2 className="text-7xl font-bold mb-10 sparkle-container ">
           Game

@@ -7,7 +7,7 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   size?: "small" | "medium" | "large";
-  bgColor?: string;
+  classNames?: string;
   closeButton?: boolean;
 }
 
@@ -16,7 +16,7 @@ export const Modal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   size = "medium",
-  bgColor = "white",
+  classNames = "bg-white",
   closeButton = true,
 }) => {
   const { theme } = useTheme();
@@ -46,16 +46,15 @@ export const Modal: React.FC<ModalProps> = ({
     }
   };
 
-  const bgColorClass = (color: string) => {
-    return `bg-${color}`;
-  };
+  // const bgColorClass = (color: string) => {
+  //   return `bg-${color}`;
+  // };
+  // bgColorClass(
+  //   bgColor
+  // )
 
   return (
-    <div
-      className={`${
-        theme === "dark" ? "text-black" : "text-white"
-      }  flex absolute `}
-    >
+    <div className={`flex absolute `}>
       {isOpen && (
         <div
           className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 overflow-scroll"
@@ -65,9 +64,7 @@ export const Modal: React.FC<ModalProps> = ({
             className={`relative p-4 w-full ${getSizeClasses()} max-h-full transition-all duration-150`}
           >
             <div
-              className={`${bgColorClass(
-                bgColor
-              )} p-6 rounded-lg w-full relative`}
+              className={`${classNames} p-6 rounded-lg w-full relative`}
               onClick={(e) => e.stopPropagation()}
             >
               {closeButton && (
