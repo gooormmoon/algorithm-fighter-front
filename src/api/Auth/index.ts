@@ -8,3 +8,8 @@ export const login = (body: {}) => {
 export const register = (body: {}) => {
   return apiClient.post("/api/member/register", body);
 };
+
+// MEMO: body => {id, password, }
+export const withdrawal = (body: { id: string; password: string }) => {
+  return apiClient.delete("/api/member", { data: body });
+};
