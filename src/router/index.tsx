@@ -9,10 +9,11 @@ import {
   MainPage,
   LoginPage,
   RegisterPage,
-  MyPageRead,
+  LogoutPage,
+  ProfileSettingPage,
   GamePage,
   MyReposPage,
-  Wait,
+  WaitPage,
 } from "../pages";
 
 const router = (
@@ -21,11 +22,12 @@ const router = (
       <Route index element={<MainPage />} />
       <Route path="/game" element={<GamePage />} />\
       {/* <Route path="/myRepository" element={<MyReposPage />} /> */}
-      <Route path="/mypage" element={<MyPageRead />} />
-      <Route path="/Wait" element={<Wait />} />
+      <Route path="/setting" element={<ProfileSettingPage />} />
+      <Route path="/wait" element={<WaitPage />} />
     </Route>
 
     <Route path="/login" element={<LoginPage />} />
+    <Route path="/logout" element={<LogoutPage />} />
     <Route path="/register" element={<RegisterPage />} />
   </Route>
 );
