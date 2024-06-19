@@ -8,7 +8,8 @@ import MembershipWithdrawalModal from "../MembershipWithdrawalModal";
 import useInputChange from "../../../hooks/useInputChange";
 import { validatePassword, validateCheckpassword } from "../../Auth/utils";
 import { useTheme } from "../../../store/store";
-
+import { modifyPassword, modifyUser } from "../../../api/Users";
+import axios from "axios";
 // //api
 // import { getMe } from "../../../api/Users";
 
@@ -68,10 +69,7 @@ const MyPageRead: React.FC = () => {
 
   // api get
   //const [data, setData] = useState<UserData | null>(null);
-  // function getErrorMessage(error: unknown) {
-  //   if (error instanceof Error) return error.message;
-  //   return String(error);
-  // }
+
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -142,16 +140,66 @@ const MyPageRead: React.FC = () => {
   };
 
   // 제출
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     validateAndSetError();
 
     if (!errorMessages.password && !errorMessages.passwordCheck) {
-      alert("Changes saved!");
-      setPassword(""); // 비밀번호 필드 비우기
-      setPasswordCheck(""); // 비밀번호 확인 필드 비우기
+      try {
+        await modifyPassword(password);
+      } catch (error: unknown) {
+        if (axios.isAxiosError(error) && error.response)
+          if (
+            error.response.status === 401 &&
+            error.response.data?.description === "토큰이 없거나 잘못된 토큰임"
+          ) {
+            throw Error("잘못된 요청입니다" + error.message);
+          } else if (
+            error.response.status === 404 &&
+            error.response.data?.description === "해당하는 유저를 찾을 수 없음"
+          ) {
+            throw Error("잘못된 사용자 입니다." + error.message);
+          } else {
+            throw new Error("예상치 못한 오류가 발생했습니다.");
+          }
+      }
     } else {
-      alert("수정사항을 확인하세요");
+      alert("입력한 비밀번호를 확인하세요");
+    }
+    /*body 필수
+      name
+      nickname
+      profileImageUrl
+      description*/
+    try {
+      const response = await modifyUser({
+        // name: { UserData.name },
+        nickname: nickname,
+        profileImageUrl: uploadedFile,
+        description: description,
+      });
+      if (response.status === 200) {
+        alert("변경되었습니다!");
+        if (response.status === 200) {
+          const data = response.data;
+          // setData(data);
+        }
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error) && error.response)
+        if (
+          error.response.status === 401 &&
+          error.response.data?.description === "토큰이 없거나 잘못된 토큰임"
+        ) {
+          throw Error("잘못된 요청입니다" + error.message);
+        } else if (
+          error.response.status === 404 &&
+          error.response.data?.description === "해당하는 유저를 찾을 수 없음"
+        ) {
+          throw Error("잘못된 사용자 입니다." + error.message);
+        } else {
+          throw new Error("예상치 못한 오류가 발생했습니다.");
+        }
     }
   };
 
@@ -282,5 +330,4 @@ const MyPageRead: React.FC = () => {
     </>
   );
 };
-
 export default MyPageRead;
