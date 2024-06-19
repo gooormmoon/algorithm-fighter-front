@@ -8,9 +8,9 @@ import MembershipWithdrawalModal from "../MembershipWithdrawalModal";
 import useInputChange from "../../../hooks/useInputChange";
 import { validatePassword, validateCheckpassword } from "../../Auth/utils";
 import { useTheme } from "../../../store/store";
-
+import axios from "axios";
 // //api
-// import { getMe } from "../../../api/Users";
+import { getMe } from "../../../api/Users";
 
 // interface UserData {
 //   id: string;
@@ -20,7 +20,7 @@ import { useTheme } from "../../../store/store";
 //   description?: string;
 //   createdDate: string;
 //   loginDate: string;
-//}
+// }
 
 //sample data
 const exampleData = {
@@ -67,11 +67,8 @@ const MyPageRead: React.FC = () => {
   }, [nickname, description, profileImage]);
 
   // api get
-  //const [data, setData] = useState<UserData | null>(null);
-  // function getErrorMessage(error: unknown) {
-  //   if (error instanceof Error) return error.message;
-  //   return String(error);
-  // }
+  // const [data, setData] = useState<UserData | null>(null);
+
   // useEffect(() => {
   //   const fetchData = async () => {
   //     try {
@@ -80,13 +77,18 @@ const MyPageRead: React.FC = () => {
   //         const data = response.data;
   //         setData(data);
   //       }
-  //     } catch (error: any) {
-  //       // if (error instanceof Error){}
-  //       if (error.response && error.response.status === 401) {
-  //         console.log("Unauthorized:", error.message);
-  //       }
-  //       if (error.response && error.response.status === 404) {
-  //         console.log("Not Found:", error.message);
+  //     } catch (error) {
+  //       if (axios.isAxiosError(error)) {
+  //         if (error.response && error.response.status === 401) {
+  //           console.error("Unauthorized:", error.message);
+  //         } else if (error.response && error.response.status === 404) {
+  //           console.error("Not Found:", error.message);
+  //         } else {
+  //           console.error("An unexpected error occurred:", error.message);
+  //         }
+  //         throw new Error(error.message);
+  //       } else {
+  //         throw new Error("An unexpected non-Axios error occurred");
   //       }
   //     }
   //   };
