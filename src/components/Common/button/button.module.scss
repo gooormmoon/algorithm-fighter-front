@@ -30,22 +30,31 @@
 .chat:hover {
   background-color: #325c94;
 }
+.primary_border {
+  background-color: c.$C_WHITE;
+  // border: 2px solid;
+  // border-color: c.$C_PRIMARY;
+}
+.primary_border:hover {
+  background-color: c.$C_PRIMARY_HOVER;
+  color: c.$C_WHITE;
+  transition: all 0.3s;
+}
 .secondary_border {
   background-color: c.$C_WHITE;
   border: 2px solid;
   border-color: c.$C_SECONDARY;
 }
-
-.icon{
-    background-color: #ffffff;
-    border: 5px solid;
-    border-color: #b7b7b7;
-}
-
 .secondary_border:hover {
   color: c.$C_WHITE;
   background-color: c.$C_SECONDARY;
   transition: all 0.3s;
+}
+
+.icon {
+  background-color: #ffffff;
+  border: 5px solid;
+  border-color: #b7b7b7;
 }
 
 .wait_border {

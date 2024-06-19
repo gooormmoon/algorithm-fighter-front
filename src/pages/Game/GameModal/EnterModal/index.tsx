@@ -35,6 +35,7 @@ const EnterModal: React.FC<EnterModalProps> = ({
             value={inviteCode}
             name="inviteCode"
             size="small"
+            border={true}
           />
           <Button
             type="button"

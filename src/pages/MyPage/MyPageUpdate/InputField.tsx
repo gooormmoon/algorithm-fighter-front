@@ -36,6 +36,7 @@ const InputField: React.FC<InputFieldProps> = ({
       errorText={errorText}
       disabled={disabled}
       onBlur={onBlur}
+      border={true}
     />
   </div>
 );

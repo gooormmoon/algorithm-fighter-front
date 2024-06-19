@@ -42,9 +42,10 @@ const CreateModal: React.FC<CreateModalProps> = ({
           onChange={handleTitle}
           placeholder="입력하세요"
           size="small"
+          disabled={false}
+          border={true}
         />
       </div>
-
 
       <div className="flex flex-col gap-2 ">
         <span className="text-lg text-[#213363] font-semibold mt-6 flex item-center">

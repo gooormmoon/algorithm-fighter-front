@@ -22,7 +22,7 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
         value={value}
         placeholder={placeholder}
         onChange={onChange}
-        className="border-2 p-2 w-full"
+        className="border-2 p-2 w-full text-secondary"
         disabled={disabled}
       />
     </div>

@@ -7,6 +7,7 @@ import TextAreaField from "../MyPageUpdate/TextAreaField";
 import MembershipWithdrawalModal from "../MembershipWithdrawalModal";
 import useInputChange from "../../../hooks/useInputChange";
 import { validatePassword, validateCheckpassword } from "../../Auth/utils";
+import { useTheme } from "../../../store/store";
 
 // //api
 // import { getMe } from "../../../api/Users";
@@ -34,6 +35,7 @@ const exampleData = {
 
 const MyPageRead: React.FC = () => {
   const navigate = useNavigate();
+  const { theme } = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [nickname, handleNicknameChange] = useInputChange(exampleData.nickname);
   const [description, handleDescriptionChange] = useInputChange(
@@ -154,12 +156,15 @@ const MyPageRead: React.FC = () => {
   };
 
   const handleCancel = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   return (
     <>
-      <div className="mt-6 bg-transparent p-6 rounded-lg max-w-2xl shadow-2xl drop-shadow-2xl ">
+      <div
+        className={`mt-6 p-6 rounded-lg max-w-2xl shadow-2xl drop-shadow-2xl 
+        ${theme === "dark" && "bg-dark_box"}`}
+      >
         <form onSubmit={handleSubmit}>
           <div className="items-center justify-center m-0">
             <ImageUpload
@@ -244,7 +249,7 @@ const MyPageRead: React.FC = () => {
             <Button
               type="submit"
               size="medium_big_radius"
-              color="secondary"
+              color="primary"
               textColor="primary_font"
               name="저장"
               disabled={!showSaveButton}
@@ -253,9 +258,9 @@ const MyPageRead: React.FC = () => {
             <Button
               type="button"
               size="medium_big_radius"
-              color="secondary_border"
+              color="primary_border"
               textColor="secondary_color_font"
-              name="뒤로가기"
+              name="취소"
               onClick={handleCancel}
             />
           </div>

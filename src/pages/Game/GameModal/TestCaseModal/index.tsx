@@ -65,7 +65,9 @@ const TestCaseModal: React.FC<TestCaseModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="large">
-      <div className="pb-5 text-2xl font-bold  ">테스트 케이스 추가하기</div>
+      <div className="pb-5 text-2xl font-bold text-secondary ">
+        테스트 케이스 추가하기
+      </div>
       <div className="pt-3 overflow-auto">
         <form onSubmit={handleSubmit}>
           {testCases.map((testCase, index) => (
@@ -76,6 +78,7 @@ const TestCaseModal: React.FC<TestCaseModalProps> = ({
               </div>
               <div className="flex items-center space-x-2">
                 <Input
+                  border={true}
                   type="text"
                   name="value input"
                   placeholder="value Input"
@@ -87,6 +90,7 @@ const TestCaseModal: React.FC<TestCaseModalProps> = ({
                 />
 
                 <Input
+                  border={true}
                   name="result input"
                   type="text"
                   placeholder="Result Input"

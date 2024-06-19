@@ -16,7 +16,7 @@ const ChatMessage = () => {
   const [color, setColor] = useState(pickTextColors());
   // const [bgColor, setBgColor] = useState(pickColors("bg-"));
   return (
-    <div className={`text-chat_text flex justify-start gap-1 items-center`}>
+    <div className={`text-primary flex justify-start gap-1 items-center`}>
       {/* <div
         className={`${color} w-[88px] flex justify-center items-center p-1 rounded gap-1 `}
       >

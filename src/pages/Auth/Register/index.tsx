@@ -110,6 +110,7 @@ const Register = () => {
           name="name"
           size="large"
           errorText={touched.name && validatedName}
+          border={false}
         />
         <Input
           type="email"
@@ -120,6 +121,7 @@ const Register = () => {
           name="email"
           size="large"
           errorText={touched.email && validatedEmail}
+          border={false}
         />
         <Input
           type="password"
@@ -130,6 +132,7 @@ const Register = () => {
           name="password"
           size="large"
           errorText={touched.password && validatedPassword}
+          border={false}
         />
         <Input
           type="password"
@@ -140,6 +143,7 @@ const Register = () => {
           name="password_check"
           size="large"
           errorText={touched.password_check && validatedCheckpassword}
+          border={false}
         />
         <div className="mt-2 flex flex-col gap-2">
           <Button
