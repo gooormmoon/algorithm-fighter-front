@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../../../components/Common";
-import { withdrawal } from "../../../api/Auth"; // API 함수 import
-
+import { deleteUser } from "../../../api/Users";
 interface MembershipWithdrawalModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -20,7 +19,7 @@ const MembershipWithdrawalModal: React.FC<MembershipWithdrawalModalProps> = ({
 
   const handleWithdraw = async () => {
     try {
-      await withdrawal({ id: userId, password: password });
+      await deleteUser({ id: userId, password: password });
       alert("회원탈퇴가 성공적으로 완료되었습니다");
       navigate("/");
       onClose();
