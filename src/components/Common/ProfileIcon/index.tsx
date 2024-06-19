@@ -1,5 +1,6 @@
 import React from "react";
-import defaultImage from "./jinjuseo.jpeg";
+import defaultImage from "./defaultUser.png";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 type IconSize = "small" | "medium" | "large" | "x_large";
 const iconSize: Record<IconSize, string> = {
   small: "h-[24px] w-[24px]",

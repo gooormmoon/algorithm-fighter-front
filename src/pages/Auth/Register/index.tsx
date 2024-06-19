@@ -10,15 +10,16 @@ import {
 import { saveTokens } from "../../../utils";
 import { register } from "../../../api/Auth";
 import { useMe, useTheme } from "../../../store/store";
+import { useMount } from "react-use";
 
 const Register = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const { reset } = useMe();
-  useEffect(() => {
+  useMount(() => {
     reset();
     localStorage.clear();
-  }, []);
+  });
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -96,9 +97,10 @@ const Register = () => {
   return (
     <main
       className={`w-full h-[100vh] flex flex-col justify-center items-center  ${
-        theme === "dark"
-          ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
-          : "bg-white text-secondary"
+        // theme === "dark"
+        //   ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
+        //   : "bg-white text-secondary"
+        "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
       } `}
     >
       <form

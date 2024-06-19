@@ -70,9 +70,10 @@ const Login = () => {
     <main
       className={`w-full h-[100vh] flex flex-col justify-center items-center 
         ${
-          theme === "dark"
-            ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
-            : "bg-white text-secondary"
+          // theme === "dark"
+          //   ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
+          //   : "bg-white text-secondary"
+          "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
         }`}
     >
       {/* <div className="w-[560px] h-[500px] bg-white/30 blur-lg absolute" /> */}

@@ -5,14 +5,24 @@ import cx from "classnames";
 import Chat from "../../components/Chat";
 import RoomList from "./RoomList";
 import { CreateModal } from "../Game/GameModal";
-import { useTheme } from "../../store/store";
+import { useMe, useTheme } from "../../store/store";
+import { useMount } from "react-use";
 
 const Main: React.FC = () => {
+  const { me, loggedIn } = useMe();
   const [createGame, setCreateGame] = useState(false);
   const [enterGame, setEnterGame] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
   const [selectedNumber, setSelectedNumber] = useState("10 minute");
   const navigate = useNavigate();
+
+  useMount(() => {
+    if (!loggedIn) {
+      navigate("/login");
+    } else {
+      console.log(me);
+    }
+  });
   const toggleModal = (
     modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
     isOpen: boolean

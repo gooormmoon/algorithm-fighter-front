@@ -14,7 +14,7 @@ interface pathType {
 const paths: pathType[] = [
   { path: "/", name: "홈" },
   // { path: "/myRepository", name: "내 저장소" },
-  { path: "/mypage", name: "마이 페이지" },
+  { path: "/setting", name: "프로필 설정" },
 ];
 const Header = () => {
   const navigate = useNavigate();

@@ -1,17 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../../components/Common";
-import ImageUpload from "../MyPageUpdate/ImageUpload";
-import InputField from "../MyPageUpdate/InputField";
-import TextAreaField from "../MyPageUpdate/TextAreaField";
-import MembershipWithdrawalModal from "../MembershipWithdrawalModal";
-import useInputChange from "../../../hooks/useInputChange";
-import { validatePassword, validateCheckpassword } from "../../Auth/utils";
-import { useTheme } from "../../../store/store";
-import { modifyPassword, modifyUser } from "../../../api/Users";
+import { Button } from "../../components/Common";
+import ImageUpload from "./MyPageUpdate/ImageUpload";
+import InputField from "./MyPageUpdate/InputField";
+import TextAreaField from "./MyPageUpdate/TextAreaField";
+import MembershipWithdrawalModal from "./MembershipWithdrawalModal";
+import useInputChange from "../../hooks/useInputChange";
+import { validatePassword, validateCheckpassword } from "../Auth/utils";
+import { useMe, useTheme } from "../../store/store";
+import { modifyPassword, modifyUser } from "../../api/Users";
 import axios from "axios";
-// //api
-import { getMe } from "../../../api/Users";
 
 // interface UserData {
 //   id: string;
@@ -35,13 +33,12 @@ const exampleData = {
 };
 
 const MyPageRead: React.FC = () => {
+  const { me, setMe } = useMe();
   const navigate = useNavigate();
   const { theme } = useTheme();
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [nickname, handleNicknameChange] = useInputChange(exampleData.nickname);
-  const [description, handleDescriptionChange] = useInputChange(
-    exampleData.description
-  );
+  const [nickname, handleNicknameChange] = useInputChange(me.nickname);
+  const [description, handleDescriptionChange] = useInputChange(me.description);
   const [password, handlePasswordChange, setPassword] = useInputChange("");
   const [profileImage, setProfileImage] = useState<string | null>("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -227,10 +224,8 @@ const MyPageRead: React.FC = () => {
               fileInputRef={fileInputRef}
             />
             <div className="pb-5 mb-2">
-              <div className="text-xl font-bold text-center">
-                {exampleData.name}
-              </div>
-              <div className="text-gray-500 text-center">{exampleData.id}</div>
+              <div className="text-xl font-bold text-center">{me.name}</div>
+              <div className="text-gray-500 text-center">{me.id}</div>
             </div>
           </div>
 
