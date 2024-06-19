@@ -326,6 +326,7 @@ const MyPageRead: React.FC = () => {
       <MembershipWithdrawalModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        userId={""} //data.id
       />
     </>
   );
