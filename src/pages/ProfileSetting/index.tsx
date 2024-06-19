@@ -21,17 +21,6 @@ import axios from "axios";
 //   loginDate: string;
 // }
 
-//sample data
-const exampleData = {
-  id: "JohnDoe@example.com",
-  name: "John Doe",
-  nickname: "구름이",
-  profileImageUrl: "",
-  description: "구름달 구름구름",
-  createdDate: "2021-01-01",
-  loginDate: "2021-12-31",
-};
-
 const MyPageRead: React.FC = () => {
   const { me, setMe } = useMe();
   const navigate = useNavigate();
@@ -40,7 +29,9 @@ const MyPageRead: React.FC = () => {
   const [nickname, handleNicknameChange] = useInputChange(me.nickname);
   const [description, handleDescriptionChange] = useInputChange(me.description);
   const [password, handlePasswordChange, setPassword] = useInputChange("");
-  const [profileImage, setProfileImage] = useState<string | null>("");
+  const [profileImage, setProfileImage] = useState<string | null>(
+    me.profileImageUrl
+  );
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [passwordCheck, handlePasswordCheckChange, setPasswordCheck] =
     useInputChange("");
@@ -51,51 +42,21 @@ const MyPageRead: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showPasswordUpdate, setShowPasswordUpdate] = useState(false);
+  if (me.description === null) {
+    setMe({ ...me, description: "" });
+  }
 
   useEffect(() => {
     if (
-      nickname !== exampleData.nickname ||
-      description !== exampleData.description ||
-      profileImage !== exampleData.profileImageUrl
+      nickname !== me.nickname ||
+      description !== me.description ||
+      profileImage !== me.profileImageUrl
     ) {
       setShowSaveButton(true);
     } else {
       setShowSaveButton(false);
     }
   }, [nickname, description, profileImage]);
-
-  // api get
-  // const [data, setData] = useState<UserData | null>(null);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await getMe();
-  //       if (response.status === 200) {
-  //         const data = response.data;
-  //         setData(data);
-  //       }
-  //     } catch (error) {
-  //       if (axios.isAxiosError(error)) {
-  //         if (error.response && error.response.status === 401) {
-  //           console.error("Unauthorized:", error.message);
-  //         } else if (error.response && error.response.status === 404) {
-  //           console.error("Not Found:", error.message);
-  //         } else {
-  //           console.error("An unexpected error occurred:", error.message);
-  //         }
-  //         throw new Error(error.message);
-  //       } else {
-  //         throw new Error("An unexpected non-Axios error occurred");
-  //       }
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
-  // if (!data) {
-  //   return <div>Loading...</div>;
-  // }
 
   // 사진 추가 icon 클릭
   const handleIconClick = () => {
@@ -104,6 +65,7 @@ const MyPageRead: React.FC = () => {
     }
   };
 
+  let profileImageUrl = "";
   // 사진 업로드
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -114,6 +76,8 @@ const MyPageRead: React.FC = () => {
         setProfileImage(reader.result as string);
       };
       reader.readAsDataURL(file);
+      const imageUrl = URL.createObjectURL(file).split("blob:");
+      profileImageUrl = imageUrl[1];
     }
   };
 
@@ -141,70 +105,79 @@ const MyPageRead: React.FC = () => {
     }
   };
 
+  const handleAxiosError = (error: unknown) => {
+    if (axios.isAxiosError(error) && error.response) {
+      if (
+        error.response.status === 401 &&
+        error.response.data?.description === "토큰이 없거나 잘못된 토큰임"
+      ) {
+        alert("잘못된 요청입니다: " + error.message);
+      } else if (
+        error.response.status === 404 &&
+        error.response.data?.description === "해당하는 유저를 찾을 수 없음"
+      ) {
+        alert("잘못된 사용자 입니다: " + error.message);
+      } else {
+        alert("예상치 못한 오류가 발생했습니다.");
+      }
+    } else {
+      console.error("An unexpected error occurred", error);
+    }
+  };
+
   // 제출
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     validateAndSetError();
-
+    const token = localStorage.getItem("ACCESS_TOKEN");
+    //비번변경
     if (!errorMessages.password && !errorMessages.passwordCheck) {
       try {
-        await modifyPassword(password);
+        await modifyPassword(password, token as string);
       } catch (error: unknown) {
-        if (axios.isAxiosError(error) && error.response)
-          if (
-            error.response.status === 401 &&
-            error.response.data?.description === "토큰이 없거나 잘못된 토큰임"
-          ) {
-            throw Error("잘못된 요청입니다" + error.message);
-          } else if (
-            error.response.status === 404 &&
-            error.response.data?.description === "해당하는 유저를 찾을 수 없음"
-          ) {
-            throw Error("잘못된 사용자 입니다." + error.message);
-          } else {
-            throw new Error("예상치 못한 오류가 발생했습니다.");
-          }
+        handleAxiosError(error);
+        //     if (axios.isAxiosError(error) && error.response)
+        //       if (
+        //         error.response.status === 401 &&
+        //         error.response.data?.description === "토큰이 없거나 잘못된 토큰임"
+        //       ) {
+        //         throw Error("잘못된 요청입니다" + error.message);
+        //       } else if (
+        //         error.response.status === 404 &&
+        //         error.response.data?.description === "해당하는 유저를 찾을 수 없음"
+        //       ) {
+        //         throw Error("잘못된 사용자 입니다." + error.message);
+        //       } else {
+        //         throw new Error("예상치 못한 오류가 발생했습니다.");
+        //       }
+        //   }
+        // } else {
+        //   alert("입력한 비밀번호를 확인하세요");
+        //   return;
       }
-    } else {
-      alert("입력한 비밀번호를 확인하세요");
-    }
-    /*body 필수
-      name
-      nickname
-      profileImageUrl
-      description*/
-    try {
-      const response = await modifyUser({
-        // name: { UserData.name },
-        nickname: nickname,
-        profileImageUrl: uploadedFile,
-        description: description,
-      });
-      if (response.status === 200) {
-        alert("변경되었습니다!");
+
+      try {
+        const response = await modifyUser(
+          {
+            name: me.name,
+            nickname: nickname,
+            profileImageUrl: profileImageUrl,
+            description: description,
+          },
+          token as string
+        );
         if (response.status === 200) {
-          const data = response.data;
-          // setData(data);
+          alert("변경되었습니다!");
+          if (response.status === 200) {
+            const data = response.data;
+            // setData(data);
+          }
         }
+      } catch (error: unknown) {
+        handleAxiosError(error);
       }
-    } catch (error: unknown) {
-      if (axios.isAxiosError(error) && error.response)
-        if (
-          error.response.status === 401 &&
-          error.response.data?.description === "토큰이 없거나 잘못된 토큰임"
-        ) {
-          throw Error("잘못된 요청입니다" + error.message);
-        } else if (
-          error.response.status === 404 &&
-          error.response.data?.description === "해당하는 유저를 찾을 수 없음"
-        ) {
-          throw Error("잘못된 사용자 입니다." + error.message);
-        } else {
-          throw new Error("예상치 못한 오류가 발생했습니다.");
-        }
     }
   };
-
   const handleCancel = () => {
     navigate("/");
   };
@@ -326,9 +299,10 @@ const MyPageRead: React.FC = () => {
       <MembershipWithdrawalModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        userId={""} //data.id
+        userId={me.id}
       />
     </>
   );
 };
+
 export default MyPageRead;

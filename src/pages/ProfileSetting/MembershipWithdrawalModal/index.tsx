@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal } from "../../../components/Common";
 import { deleteUser } from "../../../api/Users";
+import { useMe } from "../../../store/store";
 interface MembershipWithdrawalModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -13,6 +14,7 @@ const MembershipWithdrawalModal: React.FC<MembershipWithdrawalModalProps> = ({
   onClose,
   userId,
 }) => {
+  const { reset } = useMe();
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -20,8 +22,11 @@ const MembershipWithdrawalModal: React.FC<MembershipWithdrawalModalProps> = ({
   const handleWithdraw = async () => {
     try {
       await deleteUser({ id: userId, password: password });
+      localStorage.removeItem("meStorage");
       alert("회원탈퇴가 성공적으로 완료되었습니다");
-      navigate("/");
+      reset();
+      localStorage.clear();
+      navigate("/login");
       onClose();
     } catch (err) {
       if (err instanceof Error) {
