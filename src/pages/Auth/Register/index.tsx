@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../../components/Common";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   validateName,
   validateEmail,
@@ -9,11 +9,16 @@ import {
 } from "../utils";
 import { saveTokens } from "../../../utils";
 import { register } from "../../../api/Auth";
-import { useTheme } from "../../../store/store";
+import { useMe, useTheme } from "../../../store/store";
 
 const Register = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
+  const { reset } = useMe();
+  useEffect(() => {
+    reset();
+    localStorage.clear();
+  }, []);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -76,14 +81,15 @@ const Register = () => {
       const response = await register(registerData);
       if (response.status === 200) {
         const data = response.data;
-        saveTokens(data);
-        navigate("/");
-        //전역변수 내정보 설정
-      } else {
-        console.log(response.status);
+        navigate("/login");
       }
-    } catch (err) {
-      alert(err);
+    } catch (err: any) {
+      if (err.response.status === 400) {
+        console.error(err);
+        const { msg } = err.response.data;
+        alert(msg);
+      }
+
       //임시로 alert로 해놓음
     }
   };

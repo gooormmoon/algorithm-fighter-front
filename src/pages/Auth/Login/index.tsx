@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../../components/Common";
 import { validateEmail } from "../utils";
-import { saveTokens } from "../../../utils";
+import { getTokens, saveTokens } from "../../../utils";
 import { login } from "../../../api/Auth";
-import { useTheme } from "../../../store/store";
+import { useMe, useTheme } from "../../../store/store";
+import { getMe } from "../../../api/Users";
 
 const Login = () => {
   // const REST_API_KEY = "백엔드한테 달라하자1";
@@ -15,12 +16,18 @@ const Login = () => {
   //   window.location.href = link;
   // };
   const { theme } = useTheme();
+  const { me, loggedIn, setMe } = useMe();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
+  useEffect(() => {
+    if (loggedIn) {
+      navigate("/");
+    }
+  }, []);
   const onChange = (e: any) => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -31,7 +38,6 @@ const Login = () => {
   };
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(form);
 
     const loginData = {
       id: form.email,
@@ -43,12 +49,19 @@ const Login = () => {
       if (response.status === 200) {
         const data = response.data;
         saveTokens(data);
-        navigate("/");
-        //전역변수 내정보 설정
+        if (getTokens()) {
+          const myInfoResponse = await getMe();
+          if (myInfoResponse.status === 200) {
+            const myInfo = myInfoResponse.data;
+            setMe(myInfo);
+            navigate("/");
+          }
+        }
       }
       // else if(response.status ===)
       //로그인 실패시 toast 알람을 추가할지 아니면 그냥 에러메세지만 태그로 넣어줄지 고민해봐야할듯!
     } catch (err) {
+      console.error(err);
       alert("로그인 실패");
       //임시로 alert로 해놓음
     }
