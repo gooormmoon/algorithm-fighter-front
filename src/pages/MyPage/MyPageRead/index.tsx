@@ -11,7 +11,7 @@ import { useTheme } from "../../../store/store";
 import { modifyPassword, modifyUser } from "../../../api/Users";
 import axios from "axios";
 // //api
-// import { getMe } from "../../../api/Users";
+import { getMe } from "../../../api/Users";
 
 // interface UserData {
 //   id: string;
@@ -21,7 +21,7 @@ import axios from "axios";
 //   description?: string;
 //   createdDate: string;
 //   loginDate: string;
-//}
+// }
 
 //sample data
 const exampleData = {
@@ -68,7 +68,7 @@ const MyPageRead: React.FC = () => {
   }, [nickname, description, profileImage]);
 
   // api get
-  //const [data, setData] = useState<UserData | null>(null);
+  // const [data, setData] = useState<UserData | null>(null);
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -78,13 +78,18 @@ const MyPageRead: React.FC = () => {
   //         const data = response.data;
   //         setData(data);
   //       }
-  //     } catch (error: any) {
-  //       // if (error instanceof Error){}
-  //       if (error.response && error.response.status === 401) {
-  //         console.log("Unauthorized:", error.message);
-  //       }
-  //       if (error.response && error.response.status === 404) {
-  //         console.log("Not Found:", error.message);
+  //     } catch (error) {
+  //       if (axios.isAxiosError(error)) {
+  //         if (error.response && error.response.status === 401) {
+  //           console.error("Unauthorized:", error.message);
+  //         } else if (error.response && error.response.status === 404) {
+  //           console.error("Not Found:", error.message);
+  //         } else {
+  //           console.error("An unexpected error occurred:", error.message);
+  //         }
+  //         throw new Error(error.message);
+  //       } else {
+  //         throw new Error("An unexpected non-Axios error occurred");
   //       }
   //     }
   //   };
