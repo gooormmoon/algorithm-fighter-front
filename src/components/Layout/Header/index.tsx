@@ -51,7 +51,7 @@ const Header = () => {
       </ul>
       <ul className="h-full flex gap-4 justify-center items-center">
         <li
-          className={`w-[32px] h-[32px] flex justify-center items-center text-white ${
+          className={`w-[32px] h-[32px] flex justify-center items-center  ${
             theme === "dark" ? "text-white" : "text-secondary"
           }`}
         >

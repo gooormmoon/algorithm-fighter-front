@@ -76,6 +76,7 @@ const Login = () => {
           onChange={onChange}
           name="email"
           size="large"
+          border={false}
         />
         <Input
           type="password"
@@ -84,6 +85,7 @@ const Login = () => {
           onChange={onChange}
           name="password"
           size="large"
+          border={false}
         />
 
         {/* <div className="w-[360px] h-[56px] flex justify-center">
