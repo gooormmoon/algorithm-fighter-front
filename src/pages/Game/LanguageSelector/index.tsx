@@ -27,7 +27,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       onChange={(value) => {
         setLang(value);
       }}
-      showMinutes={true}
+      showMinutes={false}
     />
   );
 };

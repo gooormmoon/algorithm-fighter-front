@@ -11,24 +11,24 @@ import {
 interface CreateModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (code: string, difficulty: string, timer: string) => void;
+  onSubmit: (title: string, difficulty: number, timer: number) => void;
 }
-const numberOptions = [10, 20, 30, 40, 50, 60].map((opt) => opt + " minute");
-
+// const numberOptions = [10, 20, 30, 40, 50, 60].map((opt) => opt + " minute");
+const numberOptions = [10, 20, 30, 40, 50, 60];
 const CreateModal: React.FC<CreateModalProps> = ({
   isOpen,
   onClose,
   onSubmit,
 }) => {
-  const [selectedNumber, setSelectedNumber] = useState<number | string>(
+  const [selectedNumber, setSelectedNumber] = useState<number>(
     numberOptions[0]
   );
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("lv0");
+  const [selectedDifficulty, setSelectedDifficulty] = useState<number>(0);
 
   const [title, handleTitle] = useInputChange("");
 
   const handleSubmit = () => {
-    onSubmit(title, selectedDifficulty, selectedNumber.toString());
+    onSubmit(title, selectedDifficulty, selectedNumber);
   };
 
   return (

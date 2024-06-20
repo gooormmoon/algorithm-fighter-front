@@ -5,19 +5,25 @@ import cx from "classnames";
 import Chat from "../../components/Chat";
 import RoomList from "./RoomList";
 import { CreateModal } from "../Game/GameModal";
-import { useMe, useTheme } from "../../store/store";
+import { useMe, useStomp, useTheme } from "../../store/store";
 import { useMount } from "react-use";
-import StompJS from "@stomp/stompjs";
-import { getClient } from "../../api/Game";
 
 const Main: React.FC = () => {
   const { me, loggedIn } = useMe();
   const navigate = useNavigate();
   const [createGame, setCreateGame] = useState(false);
   const [enterGame, setEnterGame] = useState(false);
-  const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
-  const [selectedNumber, setSelectedNumber] = useState("10 minute");
-  const [stompClient, setStompClient] = useState<StompJS.Client | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState(0);
+  const [selectedNumber, setSelectedNumber] = useState(10);
+
+  const [gameSetting, setGameSetting] = useState({
+    title: "",
+    difficulty: 0,
+    timer: 10,
+  });
+
+  // const [stompClient, setStompClient] = useState<StompJS.Client | null>(null);
+  const { gameClient, chatClient } = useStomp();
 
   useMount(() => {
     if (!loggedIn) {
@@ -29,12 +35,12 @@ const Main: React.FC = () => {
     }
   });
   useEffect(() => {
-    if (createGame && stompClient) {
-      stompClient.onConnect = () => {
+    if (createGame && gameClient) {
+      gameClient.onConnect = () => {
         console.log("WebSocket 연결이 열렸습니다.");
       };
     }
-  }, [createGame, stompClient]);
+  }, [createGame, gameClient]);
   const toggleModal = (
     modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
     isOpen: boolean
@@ -43,9 +49,9 @@ const Main: React.FC = () => {
   };
 
   const handleCreateSubmit = (
-    code: string,
-    difficulty: string,
-    timer: string
+    title: string,
+    difficulty: number,
+    timer: number
   ) => {
     setSelectedDifficulty(difficulty);
     setSelectedNumber(timer);
