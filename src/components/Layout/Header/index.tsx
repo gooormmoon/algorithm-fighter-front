@@ -6,6 +6,8 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
 import { Button, ProfileIcon } from "../../Common";
 import { useTheme } from "../../../store/store";
+import Lightmode_logo from "../../../Lightmode_logo.png";
+import Darkmode_logo from "../../../Darkmode_logo.png";
 interface pathType {
   path: string;
   name: string;
@@ -31,7 +33,27 @@ const Header = () => {
       }`}
     >
       <ul className="w-4/5 h-full flex gap-12 items-center ">
-        <li className="mr-12">로고</li>
+        <li className="">
+          <div
+            className={`w-[100px] h-full
+         relative overflow-hidden flex justify-center cursor-pointer`}
+            onClick={() => navigate("/")}
+          >
+            {theme === "dark" ? (
+              <img
+                alt="dark_logo"
+                src={Darkmode_logo}
+                className="object-cover w-full h-full"
+              />
+            ) : (
+              <img
+                alt="light_logo"
+                src={Lightmode_logo}
+                className="object-cover w-full h-full"
+              />
+            )}
+          </div>
+        </li>
         {paths.map(({ path, name }: pathType, index: number) => {
           return (
             <li
