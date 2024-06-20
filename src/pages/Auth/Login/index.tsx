@@ -4,8 +4,9 @@ import { Button, Input } from "../../../components/Common";
 import { validateEmail } from "../utils";
 import { getTokens, saveTokens } from "../../../utils";
 import { login } from "../../../api/Auth";
-import { useMe, useTheme } from "../../../store/store";
+import { useMe, useStomp, useTheme } from "../../../store/store";
 import { getMe } from "../../../api/Users";
+import { createGameClient } from "../../../api/Game";
 
 const Login = () => {
   // const REST_API_KEY = "백엔드한테 달라하자1";
@@ -17,6 +18,7 @@ const Login = () => {
   // };
   const { theme } = useTheme();
   const { me, loggedIn, setMe } = useMe();
+  const { setGameClient, setChatClient } = useStomp();
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
@@ -54,7 +56,17 @@ const Login = () => {
           if (myInfoResponse.status === 200) {
             const myInfo = myInfoResponse.data;
             setMe(myInfo);
-            navigate("/");
+            const gameClient = createGameClient();
+            gameClient.activate();
+            gameClient.onConnect = (frame: any) => {
+              setGameClient(gameClient);
+              navigate("/");
+            };
+            gameClient.onStompError = (frame: any) => {
+              console.log("Broker reported error: " + frame.headers["message"]);
+              console.log("Additional details: " + frame.body);
+            };
+            // const chatClient = createChatClient();
           }
         }
       }
