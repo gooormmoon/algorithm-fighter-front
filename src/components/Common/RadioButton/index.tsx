@@ -37,7 +37,7 @@ export function RadioButton({
             />
             <label
               htmlFor={option + ""}
-              className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-secondary peer-checked:font-bold peer-checked:text-white duration-200 ease-out"
+              className="block cursor-pointer select-none rounded-xl p-2 text-center peer-checked:bg-secondary peer-checked:font-bold peer-checked:text-white duration-200 ease-out text-secondary"
             >
               {"lv" + option}
             </label>

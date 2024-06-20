@@ -5,25 +5,32 @@ import styles from "./wait.module.scss";
 import CompetitorProfile from "./CompetitorProfile";
 import Chat from "../../components/Chat";
 import { Dropdown, RadioButton } from "../../components/Common";
+import { useTheme } from "../../store/store";
 
 const numberOptions = [10, 20, 30, 40, 50, 60];
 
 const Wait: React.FC = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(0);
   const [selectedNumber, setSelectedNumber] = useState(10);
-
+  const { theme } = useTheme();
   const navigate = useNavigate();
   const handleClick = () => navigate("/");
 
   return (
     <main className={styles.layout}>
-      <section className={styles.waitContainer}>
+      <section
+        className={cx(
+          styles.waitContainer,
+          `${
+            theme === "dark"
+              ? "border border-oc_white"
+              : "border border-[#e1e1e1]"
+          }`
+        )}
+      >
         <div className={styles.waitHeader}>
           <div className={styles.buttons}>
-            <button
-              className="font-bold text-[20px] text-white"
-              onClick={handleClick}
-            >
+            <button className="font-bold text-[20px]" onClick={handleClick}>
               뒤로가기
             </button>
           </div>
@@ -36,7 +43,7 @@ const Wait: React.FC = () => {
               />
             </div>
             <Dropdown
-              color={"text-secondary bg-white rounded flex font-bold"}
+              color={"text-secondary bg-white rounded flex font-semibold"}
               options={numberOptions}
               selectedValue={selectedNumber}
               onChange={(value) => setSelectedNumber(value)}
@@ -45,19 +52,31 @@ const Wait: React.FC = () => {
           </div>
         </div>
         <div className={cx(styles.container, styles.top)}>
-          <div className={styles.box}>
+          <div className={cx(styles.box, "border border-oc_white")}>
             <CompetitorProfile />
           </div>
           <div className={styles.versus}>VS</div>
-          <div className={styles.box}>
+          <div className={cx(styles.box, "border border-oc_white")}>
             <CompetitorProfile />
           </div>
         </div>
         <section className={styles.container}>
-          <div className={cx(styles.chatbox, styles.right)}>
+          <div
+            className={cx(
+              styles.chatbox,
+              styles.right,
+              "border border-oc_white"
+            )}
+          >
             <Chat />
           </div>
-          <div className={cx(styles.right, styles.chatbox)}>
+          <div
+            className={cx(
+              styles.right,
+              styles.chatbox,
+              "border border-oc_white"
+            )}
+          >
             <div className={cx(styles.buttons, styles.container)}>
               <button className={styles.readyButton}>준비</button>
               <button className={styles.startButton}>게임 시작</button>
