@@ -1,6 +1,7 @@
 import { create } from "zustand";
-import { ThemeType, MeType } from "./types";
+import { ThemeType, MeType, GameSocketType, StompType } from "./types";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { Stomp } from "@stomp/stompjs";
 
 export const useTheme = create(
   persist<ThemeType>(
@@ -52,6 +53,52 @@ export const useMe = create(
     }),
     {
       name: "meStorage", // Key name for local storage
+    }
+  )
+);
+
+export const useGameSocket = create(
+  persist<GameSocketType>(
+    (set) => ({
+      client: null,
+      setClient: (newClient: GameSocketType["client"]) => {
+        set((prevState: GameSocketType) => {
+          return {
+            client: newClient,
+          };
+        });
+      },
+    }),
+    {
+      name: "gameSocketStorage",
+    }
+  )
+);
+
+export const useStomp = create(
+  persist<StompType>(
+    (set) => ({
+      gameClient: null,
+      chatClient: null,
+      setGameClient: (newGameClient: StompType["gameClient"]) => {
+        set((prevState: StompType) => {
+          return {
+            ...prevState,
+            gameClient: newGameClient,
+          };
+        });
+      },
+      setChatClient: (newChatClient: StompType["chatClient"]) => {
+        set((prevState: StompType) => {
+          return {
+            ...prevState,
+            chatClient: newChatClient,
+          };
+        });
+      },
+    }),
+    {
+      name: "stompStorage",
     }
   )
 );
