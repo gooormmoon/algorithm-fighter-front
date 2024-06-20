@@ -11,32 +11,14 @@ export const getUser = (id: string) => {
 };
 
 //MEMO : body => {name, nickname, profileImage,description}
-// export const modifyUser = (body: {}) => {
-//   return apiClient.put(`/api/member/`, body);
-// };
-
-export const modifyUser = async (userData: any, token: string) => {
-  return apiClient.put("/api/user", userData, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const modifyUser = (body: {}) => {
+  return apiClient.put(`/api/member`, body);
 };
 
-export const modifyPassword = (change_password: string, token: string) => {
-  return apiClient.put(`/api/member/${change_password}`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+export const modifyPassword = (password: string) => {
+  return apiClient.put("/api/member/change-password", { password });
 };
-
 //MEMO : body => {id,password }
-// export const deleteUser = (body: {}) => {
-//   return apiClient.delete(`/api/member`);
-// };
-export const deleteUser = (body: { id: string; password: string }) => {
-  return apiClient.delete("/api/member", {
-    data: body,
-  });
+export const deleteUser = (body: {}) => {
+  return apiClient.delete(`/api/member`);
 };
