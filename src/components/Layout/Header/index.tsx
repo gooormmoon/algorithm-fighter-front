@@ -6,6 +6,8 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
 import { Button, ProfileIcon } from "../../Common";
 import { useTheme } from "../../../store/store";
+// import {LightModeLogo} from "../../../Lightmode_logo.png"
+// import {LightModeLogo} from "../../../Lightmode_logo.png"
 interface pathType {
   path: string;
   name: string;

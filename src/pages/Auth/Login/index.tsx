@@ -7,6 +7,11 @@ import { login } from "../../../api/Auth";
 import { useMe, useStomp, useTheme } from "../../../store/store";
 import { getMe } from "../../../api/Users";
 import { createGameClient } from "../../../api/Game";
+import {
+  createChatClient,
+  // enterChatRoom,
+  // sendMessage,
+} from "../../../api/Chat";
 
 const Login = () => {
   // const REST_API_KEY = "백엔드한테 달라하자1";
@@ -56,20 +61,54 @@ const Login = () => {
           if (myInfoResponse.status === 200) {
             const myInfo = myInfoResponse.data;
             setMe(myInfo);
-            navigate("/");
-            const gameClient = createGameClient();
-            gameClient.activate();
-            gameClient.onConnect = (frame: any) => {
-              console.log(gameClient);
-              setGameClient(gameClient);
+            // navigate("/");
+            // const gameClient = createGameClient();
+            // gameClient.activate();
+            // gameClient.onConnect = (frame: any) => {
+            //   console.log(gameClient);
+            //   setGameClient(gameClient);
+            //   // navigate("/");
+            // };
+            // gameClient.onStompError = (frame: any) => {
+            //   console.log("Broker reported error: " + frame.headers["message"]);
+            //   console.log("Additional details: " + frame.body);
+            //   // navigate("/");
+            // };
+            const chatClient = createChatClient();
+            chatClient.activate();
+            chatClient.onConnect = (frame: any) => {
+              console.log(frame);
+              chatClient.subscribe(
+                "/topic/room/4f9285dc-1d15-45d5-93b9-8c220cc4ac56",
+                (message) => {
+                  console.log(JSON.parse(message.body).content);
+                }
+              );
+              // const response = enterChatRoom(
+              //   chatClient,
+              //   "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"
+              // );
+              // console.log(response);
+              // setChatClient(chatClient);
               // navigate("/");
             };
-            gameClient.onStompError = (frame: any) => {
+            chatClient.onStompError = (frame: any) => {
               console.log("Broker reported error: " + frame.headers["message"]);
               console.log("Additional details: " + frame.body);
               // navigate("/");
             };
-            // const chatClient = createChatClient();
+            const room_id = "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"; // 실제 채팅방 ID로 교체
+            const messageContent = "hihi";
+            const message = {
+              chat_room_id: room_id,
+              content: messageContent,
+              type: "TALK",
+            };
+
+            chatClient.publish({
+              destination: "/app/send-message", // 메시지 매핑 엔드포인트
+              body: JSON.stringify(message),
+            });
           }
         }
       }
@@ -77,7 +116,7 @@ const Login = () => {
       //로그인 실패시 toast 알람을 추가할지 아니면 그냥 에러메세지만 태그로 넣어줄지 고민해봐야할듯!
     } catch (err) {
       console.error(err);
-      alert("로그인 실패");
+      // alert("로그인 실패");
       //임시로 alert로 해놓음
     }
   };
