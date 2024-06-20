@@ -112,7 +112,7 @@ const Login = () => {
               console.log("connected", frame);
 
               chatClient.subscribe(
-                "/topic/room/c5847bd7-2ed2-11ef-be2f-0242ac160002",
+                "/topic/room/4f9285dc-1d15-45d5-93b9-8c220cc4ac56",
                 (message) => {
                   showMessage(message);
                 }
@@ -125,7 +125,7 @@ const Login = () => {
               // console.log(response);
               // setChatClient(chatClient);
               // navigate("/");
-              const room_id = "c5847bd7-2ed2-11ef-be2f-0242ac160002"; // 실제 채팅방 ID로 교체
+              const room_id = "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"; // 실제 채팅방 ID로 교체
               const messageContent = "hihi";
               const message = {
                 chat_room_id: room_id,
