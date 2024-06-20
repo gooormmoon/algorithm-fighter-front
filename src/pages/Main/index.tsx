@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./MainPage.module.scss";
 import cx from "classnames";
@@ -7,22 +7,34 @@ import RoomList from "./RoomList";
 import { CreateModal } from "../Game/GameModal";
 import { useMe, useTheme } from "../../store/store";
 import { useMount } from "react-use";
+import StompJS from "@stomp/stompjs";
+import { getClient } from "../../api/Game";
 
 const Main: React.FC = () => {
   const { me, loggedIn } = useMe();
+  const navigate = useNavigate();
   const [createGame, setCreateGame] = useState(false);
   const [enterGame, setEnterGame] = useState(false);
   const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
   const [selectedNumber, setSelectedNumber] = useState("10 minute");
-  const navigate = useNavigate();
+  const [stompClient, setStompClient] = useState<StompJS.Client | null>(null);
 
   useMount(() => {
     if (!loggedIn) {
       navigate("/login");
     } else {
-      console.log(me);
+      // const stomp = getClient();
+      // setStompClient(stomp);
+      // stomp.activate();
     }
   });
+  useEffect(() => {
+    if (createGame && stompClient) {
+      stompClient.onConnect = () => {
+        console.log("WebSocket 연결이 열렸습니다.");
+      };
+    }
+  }, [createGame, stompClient]);
   const toggleModal = (
     modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
     isOpen: boolean
