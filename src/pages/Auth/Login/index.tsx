@@ -59,12 +59,14 @@ const Login = () => {
             const gameClient = createGameClient();
             gameClient.activate();
             gameClient.onConnect = (frame: any) => {
+              console.log(gameClient);
               setGameClient(gameClient);
               navigate("/");
             };
             gameClient.onStompError = (frame: any) => {
               console.log("Broker reported error: " + frame.headers["message"]);
               console.log("Additional details: " + frame.body);
+              navigate("/");
             };
             // const chatClient = createChatClient();
           }

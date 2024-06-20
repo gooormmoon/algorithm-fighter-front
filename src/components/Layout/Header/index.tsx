@@ -4,7 +4,6 @@ import ForumIcon from "@mui/icons-material/Forum";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
-import { CreateModal, EnterModal } from "../../../pages/Game/GameModal";
 import { Button, ProfileIcon } from "../../Common";
 import { useTheme } from "../../../store/store";
 interface pathType {

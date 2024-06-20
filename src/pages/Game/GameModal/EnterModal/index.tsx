@@ -51,11 +51,11 @@ const EnterModal: React.FC<EnterModalProps> = ({
         <span className="block text-lg text-[#213363] font-semibold mb-2">
           난이도
         </span>
-        <RadioButton
+        {/* <RadioButton
           selectedValue={selectedDifficulty}
           onChange={() => {}}
           readOnly
-        />
+        /> */}
       </div>
 
       <div className="mb-6">
@@ -79,3 +79,4 @@ const EnterModal: React.FC<EnterModalProps> = ({
 };
 
 export default EnterModal;
+export {};

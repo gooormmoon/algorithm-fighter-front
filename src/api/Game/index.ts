@@ -39,7 +39,7 @@
 //MEMO: main에서 호출될예정
 import { Client } from "@stomp/stompjs";
 import { getTokens } from "../../utils";
-import StompJS from "@stomp/stompjs";
+// import { StompJS } from "@stomp/stompjs";
 // export const getClient = () => {
 //   return new Client({
 //     brokerURL: "ws://localhost:8080/game",
@@ -55,7 +55,7 @@ import StompJS from "@stomp/stompjs";
 //   });
 // };
 export const createGameClient = () => {
-  return new StompJS.Client({
+  return new Client({
     brokerURL: "ws://localhost:8080/game",
     connectHeaders: {
       Authorization: `Bearer ${getTokens()}`,
@@ -66,6 +66,7 @@ export const createGameClient = () => {
     reconnectDelay: 5000, //자동 재 연결
     heartbeatIncoming: 4000,
     heartbeatOutgoing: 4000,
+    // onConnect:()=>{}
   });
 };
 // client.onConnect = function (frame) {};

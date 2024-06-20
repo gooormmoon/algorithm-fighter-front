@@ -28,7 +28,7 @@ const Dropdown = <T extends string | number>({
         onClick={() => setIsOpen(!isOpen)}
         className="w-[120px] px-4 py-2 rounded-md shadow ring-1 ring-black ring-opacity-5 focus:outline-none border border-oc_white"
       >
-        {showMinutes ? `${selectedValue}` : selectedValue}
+        {showMinutes ? `${selectedValue} minutes` : selectedValue}
       </button>
 
       {isOpen && (
@@ -40,7 +40,7 @@ const Dropdown = <T extends string | number>({
               //class name: block 삭제
               className="w-[120px] rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer flex justify-center"
             >
-              {showMinutes ? `${option} ` : option}
+              {showMinutes ? `${option} minutes` : option}
             </div>
           ))}
         </div>
