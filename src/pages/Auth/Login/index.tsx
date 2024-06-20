@@ -56,17 +56,18 @@ const Login = () => {
           if (myInfoResponse.status === 200) {
             const myInfo = myInfoResponse.data;
             setMe(myInfo);
+            navigate("/");
             const gameClient = createGameClient();
             gameClient.activate();
             gameClient.onConnect = (frame: any) => {
               console.log(gameClient);
               setGameClient(gameClient);
-              navigate("/");
+              // navigate("/");
             };
             gameClient.onStompError = (frame: any) => {
               console.log("Broker reported error: " + frame.headers["message"]);
               console.log("Additional details: " + frame.body);
-              navigate("/");
+              // navigate("/");
             };
             // const chatClient = createChatClient();
           }
