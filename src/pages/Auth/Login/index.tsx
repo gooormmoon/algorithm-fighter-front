@@ -125,17 +125,32 @@ const Login = () => {
               // console.log(response);
               // setChatClient(chatClient);
               // navigate("/");
-              const room_id = "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"; // 실제 채팅방 ID로 교체
-              const messageContent = "hihi";
+              // const room_id = "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"; // 실제 채팅방 ID로 교체
+              // const messageContent = "hihi";
+              // const message = {
+              //   chatroom_id: room_id,
+              //   content: messageContent,
+              //   type: "TALK",
+              // };
+              // if (chatClient.connected) {
+              //   chatClient.publish({
+              //     destination: "/app/send-message", // 메시지 매핑 엔드포인트
+              //     body: JSON.stringify(message),
+              //   });
+              // }
+              const room_id = "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"; // Replace with the actual chat room ID
+              const messageContent = "입장했습니다."; // 메시지 내용 입력 필드에서 가져옴
+
               const message = {
-                chat_room_id: room_id,
+                chatroom_id: room_id,
                 content: messageContent,
-                type: "TALK",
+                type: "ENTER",
               };
+
               if (chatClient.connected) {
                 chatClient.publish({
-                  destination: "/app/send-message", // 메시지 매핑 엔드포인트
-                  body: JSON.stringify(message),
+                  destination: `${`/app/enter-room/${room_id}`}`, // Adjust the endpoint as needed
+                  body: JSON.stringify(message), // You can pass additional data if needed
                 });
               }
             };
