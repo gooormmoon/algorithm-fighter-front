@@ -12,13 +12,12 @@ export const getUser = (id: string) => {
 
 //MEMO : body => {name, nickname, profileImage,description}
 export const modifyUser = (body: {}) => {
-  return apiClient.put(`/api/member/`, body);
+  return apiClient.put(`/api/member`, body);
 };
 
-export const modifyPassword = (change_password: string) => {
-  return apiClient.put(`/api/member/${change_password}`);
+export const modifyPassword = (password: string) => {
+  return apiClient.put("/api/member/change-password", { password });
 };
-
 //MEMO : body => {id,password }
 export const deleteUser = (body: {}) => {
   return apiClient.delete(`/api/member`);
