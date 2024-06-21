@@ -23,7 +23,7 @@ type TestCase = {
 };
 
 const Game = () => {
-
+  const { gameClient } = useStomp();
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
   const [initialX, setInitialX] = useState(0);
@@ -62,7 +62,7 @@ const Game = () => {
 
   //STOMP
   useEffect(() => {
-    if (gameClient) {
+    if (gameClient?.connected) {
       gameClient.subscribe("/user/queue/game/session", (message) => {
         try {
           const data = JSON.parse(message.body);
