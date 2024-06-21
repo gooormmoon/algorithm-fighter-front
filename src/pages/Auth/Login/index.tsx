@@ -63,7 +63,7 @@ const Login = () => {
             //   console.log("Additional details: " + frame.body);
             //   // navigate("/");
             // };
-
+            const gameClient: StompJs.Client = createGameClient();
             const chatClient: StompJs.Client = createChatClient();
             chatClient.activate();
             chatClient.onConnect = (frame: any) => {
@@ -75,8 +75,17 @@ const Login = () => {
                 });
               });
             };
+
             setChatClient(chatClient);
             resetMessages(); // 메시지 리셋
+
+            gameClient.onConnect = (frame: any) => {
+              gameClient.subscribe("/game", (message) => {
+                setMessage(JSON.parse(message.body));
+              });
+            };
+
+
             navigate("/");
           }
         }

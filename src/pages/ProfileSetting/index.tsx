@@ -34,21 +34,21 @@ const MyPageRead: React.FC = () => {
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showPasswordUpdate, setShowPasswordUpdate] = useState(false);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await getMe();
-        setMe(response.data);
-        if (response.data.profileImageUrl) {
-          const filename = response.data.profileImageUrl;
-          setProfileImage(filename);
-        }
-      } catch (error) {
-        console.error("Failed to fetch user data", error);
-      }
-    };
-    fetchUser();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const response = await getMe();
+  //       setMe(response.data);
+  //       if (response.data.profileImageUrl) {
+  //         const filename = response.data.profileImageUrl;
+  //         setProfileImage(filename);
+  //       }
+  //     } catch (error) {
+  //       console.error("Failed to fetch user data", error);
+  //     }
+  //   };
+  //   fetchUser();
+  // }, []);
 
   useEffect(() => {
     if (
@@ -133,8 +133,8 @@ const MyPageRead: React.FC = () => {
         const updatedUser = await modifyUser({
           name: me.name,
           nickname: nickname,
-          profileImageUrl: profileImage,
-          description: description,
+          profileImageUrl: profileImage || "",
+          description: description || "",
         });
         if (updatedUser.status === 200) {
           const data = updatedUser.data;
@@ -206,7 +206,7 @@ const MyPageRead: React.FC = () => {
         <TextAreaField
           label="소개"
           placeholder="소개"
-          value={description}
+          value={description || ""}
           onChange={handleDescriptionChange}
         />
 
