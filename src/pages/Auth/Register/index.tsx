@@ -7,7 +7,6 @@ import {
   validatePassword,
   validateCheckpassword,
 } from "../utils";
-import { saveTokens } from "../../../utils";
 import { register } from "../../../api/Auth";
 import { useMe, useTheme } from "../../../store/store";
 import { useMount } from "react-use";
@@ -49,7 +48,7 @@ const Register = () => {
       [name]: value,
     });
   };
-  //유효성 검사 -> 조건 충족 X ? 메시지 리턴
+
   const validatedName = validateName(form.name);
   const validatedEmail = validateEmail(form.email);
   const validatedPassword = validatePassword(form.password);
@@ -68,11 +67,10 @@ const Register = () => {
 
     if (!validatedForm) {
       //유효성 검사 통과 - 회원가입진행
-      alert("invalid form");
+      alert("회원가입 형식이 맞지 않습니다.");
       return;
     }
     try {
-      console.log(form);
       const registerData = {
         id: form.email,
         password: form.password,
@@ -81,7 +79,6 @@ const Register = () => {
 
       const response = await register(registerData);
       if (response.status === 200) {
-        const data = response.data;
         navigate("/login");
       }
     } catch (err: any) {
@@ -96,12 +93,7 @@ const Register = () => {
   };
   return (
     <main
-      className={`w-full h-[100vh] flex flex-col justify-center items-center  ${
-        // theme === "dark"
-        //   ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
-        //   : "bg-white text-secondary"
-        "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
-      } `}
+      className={`w-full h-[100vh] flex flex-col justify-center items-center  ${"bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "} `}
     >
       <form
         className="w-[600px] h-[600px] gap-2 p-12 flex flex-col justify-center items-center drop-shadow-md rounded-md"

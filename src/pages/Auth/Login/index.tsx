@@ -1,33 +1,15 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../../components/Common";
-import { validateEmail } from "../utils";
 import { getTokens, saveTokens } from "../../../utils";
 import { login } from "../../../api/Auth";
-import { useMe, useStomp, useTheme } from "../../../store/store";
+import { useMe, useStomp } from "../../../store/store";
 import { getMe } from "../../../api/Users";
 import { createGameClient } from "../../../api/Game";
+import { createChatClient } from "../../../api/Chat";
 import * as StompJs from "@stomp/stompjs";
-
-import { WebSocket } from "ws";
-import {
-  createChatClient,
-  // enterChatRoom,
-  // sendMessage,
-} from "../../../api/Chat";
-import { Client } from "@stomp/stompjs";
-
 const Login = () => {
-  const client = useRef<Client | null>(null);
-  // const REST_API_KEY = "백엔드한테 달라하자1";
-  // const REDIRECT_URI = "백엔드한테 달라하자2";
-  // const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
-  // const onClickSocialLogin = () => {
-  //   window.location.href = link;
-  // };
-  const { theme } = useTheme();
-  const { me, loggedIn, setMe } = useMe();
+  const { loggedIn, setMe } = useMe();
   const { setGameClient, setChatClient } = useStomp();
   const navigate = useNavigate();
 
@@ -111,12 +93,9 @@ const Login = () => {
             chatClient.onConnect = (frame: any) => {
               console.log("connected", frame);
 
-              chatClient.subscribe(
-                "/topic/room/4f9285dc-1d15-45d5-93b9-8c220cc4ac56",
-                (message) => {
-                  showMessage(message);
-                }
-              );
+              chatClient.subscribe("/topic/room/global", (message) => {
+                showMessage(message);
+              });
 
               // const response = enterChatRoom(
               //   chatClient,
@@ -138,7 +117,7 @@ const Login = () => {
               //     body: JSON.stringify(message),
               //   });
               // }
-              const room_id = "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"; // Replace with the actual chat room ID
+              const room_id = "global"; // Replace with the actual chat room ID
               const messageContent = "입장했습니다."; // 메시지 내용 입력 필드에서 가져옴
 
               const message = {
@@ -168,14 +147,8 @@ const Login = () => {
   return (
     <main
       className={`w-full h-[100vh] flex flex-col justify-center items-center 
-        ${
-          // theme === "dark"
-          //   ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
-          //   : "bg-white text-secondary"
-          "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
-        }`}
+        ${"bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "}`}
     >
-      {/* <div className="w-[560px] h-[500px] bg-white/30 blur-lg absolute" /> */}
       <form
         className="w-[540px] h-[480px] gap-4 p-8 flex flex-col justify-center items-center  rounded-md  bg-transparent "
         onSubmit={onSubmit}
@@ -200,12 +173,6 @@ const Login = () => {
           size="large"
           border={false}
         />
-
-        {/* <div className="w-[360px] h-[56px] flex justify-center">
-        <button type="button" onClick={onClickSocialLogin}>
-          TEST-카카오 소셜로그인
-        </button>
-      </div> */}
         <Button
           type="submit"
           size="large_radius"

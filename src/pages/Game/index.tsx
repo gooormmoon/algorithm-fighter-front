@@ -13,16 +13,30 @@ import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Chat from "../../components/Chat";
 import { VictoryModal, DefeatModal, TestCaseModal } from "./GameModal";
 import { useTheme } from "../../store/store";
+import { types } from "sass";
 
 const Game = () => {
-  const { theme } = useTheme();
+  const [isResizing, setIsResizing] = useState({
+    x: false,
+    y: false,
+  });
+  const [initial, setInitial] = useState({
+    x: 0,
+    y: 0,
+  });
+  const [size, setSize] = useState({
+    width: window.innerWidth / 3,
+    height: window.innerHeight / 1.5,
+  });
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
   const [initialX, setInitialX] = useState(0);
   const [initialY, setInitialY] = useState(0);
   const [width, setWidth] = useState(window.innerWidth / 3);
   const [height, setHeight] = useState(window.innerHeight / 1.5);
+
   const editorRef = useRef<any>(null);
+
   const [language, setLanguage] = useState<string>("javascript");
   const [value, setValue] = useState<string>("");
   const [modalOpen, setModalOpen] = useState(false);
@@ -75,8 +89,29 @@ const Game = () => {
   };
   const onMouseDownX = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsResizingX(true);
+    setIsResizing((prev) => {
+      return {
+        ...prev,
+        x: true,
+      };
+    });
+    // setIsResizingX(true);
     setInitialX(e.clientX);
+  };
+  const onMouseDown = (e: React.MouseEvent, type: string) => {
+    e.preventDefault();
+    setIsResizing((prev) => {
+      return {
+        ...prev,
+        [type]: true,
+      };
+    });
+    setInitial((prev) => {
+      return {
+        ...prev,
+        [type]: `${"e.client" + type.toUpperCase()}`,
+      };
+    });
   };
 
   const onMouseDownY = (e: React.MouseEvent) => {
