@@ -12,10 +12,16 @@ import TimerIcon from "@mui/icons-material/Timer";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Chat from "../../components/Chat";
 import { VictoryModal, DefeatModal, TestCaseModal } from "./GameModal";
-import { useTheme } from "../../store/store";
-import { types } from "sass";
+import { useStomp } from "../../store/store";
+type ProblemData = {
+  problemTitle: string;
+  problemData: string;
+  problemCodeTemplate: string;
+};
 
 const Game = () => {
+  const { gameClient } = useStomp();
+
   const [isResizing, setIsResizing] = useState({
     x: false,
     y: false,
@@ -42,6 +48,25 @@ const Game = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [victoryModalOpen, setVictoryModalOpen] = useState(false);
   const [defeatModalOpen, setDefeatModalOpen] = useState(false);
+  const [problemTitle, setProblemTitle] = useState<string>("");
+  const [problemData, setProblemData] = useState<string>("");
+  const [problemLevel, setProblemLevel] = useState<string>("");
+  const [problemCodeTemplate, setProblemCodeTemplate] = useState<string>("");
+  //Get Problem Content
+  useEffect(() => {
+    if (gameClient) {
+      gameClient.subscribe("/user/queue/game/session", (message) => {
+        try {
+          const data: ProblemData = JSON.parse(message.body);
+          setProblemData(data.problemData);
+          setProblemTitle(data.problemTitle);
+          setProblemCodeTemplate(data.problemCodeTemplate);
+        } catch (e) {
+          console.error("Failed to parse message:", e);
+        }
+      });
+    }
+  }, [gameClient]);
 
   //TestCaseModal
   const toggleModal = (
@@ -67,7 +92,6 @@ const Game = () => {
       }
       setOutput(result.output.split("\n"));
       setIsError(!!result.stderr);
-      console.log(result);
     } catch (error) {
       if (error instanceof Error) {
         setIsError(true);
@@ -110,6 +134,7 @@ const Game = () => {
       return {
         ...prev,
         [type]: `${"e.client" + type.toUpperCase()}`,
+        // [type]: e[`client${type.toUpperCase()}`],
       };
     });
   };
@@ -162,7 +187,10 @@ const Game = () => {
         <div className="w-3/4 h-full flex ">
           <div className="h-full" style={{ width }}>
             <section className="w-full h-full">
-              <GameProblem />
+              <GameProblem
+                problemTitle={problemTitle}
+                problemData={problemData}
+              />
             </section>
           </div>
           <div

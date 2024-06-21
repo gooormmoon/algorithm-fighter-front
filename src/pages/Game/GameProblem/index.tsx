@@ -1,13 +1,19 @@
 import React, { memo } from "react";
-import { useTheme } from "../../../store/store";
 
-const GameProblem = () => {
-  const { theme } = useTheme();
+type GameProblemProps = {
+  problemTitle: string;
+  problemData: string;
+};
+const GameProblem: React.FC<GameProblemProps> = ({
+  problemTitle,
+  problemData,
+}) => {
   return (
-    <div className={`p-6 pt-[50px] max-h-[100%] overflow-auto `}>
+    <div className="p-6 pt-[50px] max-h-[100%] overflow-auto">
+      <h1>{problemTitle}</h1>
       <h2 className="text-xl font-semibold mb-4">문제 설명</h2>
-      {/* This is a Sample Problem text */}
-      <>
+      <p>{problemData}</p>
+      {/* <>
         <p className="mb-4">
           수포자는 수학을 포기한 사람의 준말입니다. 수포자 삼인방은 모의고사에
           수학 문제를 전부 찍으려 합니다. 수포자는 1번 문제부터 마지막 문제까지
@@ -66,7 +72,7 @@ const GameProblem = () => {
         <p>
           <strong>입출력 예 #2</strong>: 모든 사람이 2문제씩을 맞췄습니다.
         </p>
-      </>
+      </> */}
     </div>
   );
 };

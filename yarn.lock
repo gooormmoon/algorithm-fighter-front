@@ -3503,7 +3503,7 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001599, caniuse-lite@^1.0.30001629:
 
 canvas-confetti@^1.9.3:
   version "1.9.3"
-  resolved "https://registry.npmjs.org/canvas-confetti/-/canvas-confetti-1.9.3.tgz"
+  resolved "https://registry.yarnpkg.com/canvas-confetti/-/canvas-confetti-1.9.3.tgz#ef4c857420ad8045ab4abe8547261c8cdf229845"
   integrity sha512-rFfTURMvmVEX1gyXFgn5QMn81bYk70qa0HLzcIOSVEyl57n6o9ItHeBtUSWdvKAPY0xlvBHno4/v3QPrT83q9g==
 
 case-sensitive-paths-webpack-plugin@^2.4.0:
