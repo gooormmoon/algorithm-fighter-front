@@ -7,28 +7,63 @@ import {
   Button,
   Input,
 } from "../../../../components/Common/";
+import { useStomp } from "../../../../store/store";
+import { useMount } from "react-use";
+import { createGame } from "../../../../api/Game";
+import { useNavigate } from "react-router-dom";
 
 interface CreateModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (title: string, difficulty: number, timer: number) => void;
 }
-// const numberOptions = [10, 20, 30, 40, 50, 60].map((opt) => opt + " minute");
+
 const numberOptions = [10, 20, 30, 40, 50, 60];
 const CreateModal: React.FC<CreateModalProps> = ({
   isOpen,
   onClose,
-  onSubmit,
+  // onSubmit,
 }) => {
+  const { gameClient } = useStomp();
+  const navigate = useNavigate();
   const [selectedNumber, setSelectedNumber] = useState<number>(
     numberOptions[0]
   );
   const [selectedDifficulty, setSelectedDifficulty] = useState<number>(0);
+  const [title, setTitle] = useState("");
 
-  const [title, handleTitle] = useInputChange("");
-
+  useMount(() => {
+    if (gameClient?.connected) {
+      gameClient.subscribe("/user/queue/game/session", (message) => {
+        const data = JSON.parse(message.body);
+        if (data.host_id) {
+          //생성하고 콜백함수
+          onClose();
+          navigate(`/wait/${data.host_id}`, {
+            state: {
+              host: `${data.host}`,
+              host_id: `${data.host_id}`,
+              players: data.players,
+              ready_player: data.ready_player,
+              max_player: data.max_player,
+              problem_level: data.problem_level,
+              timer_time: data.timer_time,
+              title: data.title,
+              chat_room_id: data.chat_room_id,
+            },
+          });
+        }
+      });
+    }
+  });
   const handleSubmit = () => {
-    onSubmit(title, selectedDifficulty, selectedNumber);
+    const message = {
+      title: title || "알고리즘 대결할래?",
+      difficulty: selectedDifficulty,
+      timer: selectedNumber,
+    };
+    if (gameClient?.connected) {
+      createGame(gameClient, message);
+    }
   };
 
   return (
@@ -39,7 +74,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
           type="text"
           value={title}
           name="title"
-          onChange={handleTitle}
+          onChange={(e) => setTitle(e.target.value)}
           placeholder="입력하세요"
           size="small"
           disabled={false}

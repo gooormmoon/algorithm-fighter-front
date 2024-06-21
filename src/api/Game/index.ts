@@ -2,6 +2,7 @@
 import { Client } from "@stomp/stompjs";
 import { getTokens } from "../../utils";
 import apiClient from "../apiClient";
+
 export const createGameClient = () => {
   return new Client({
     brokerURL: "ws://localhost:8080/game",
@@ -28,6 +29,7 @@ export const createGame = (client: Client, body: {}) => {
     // headers: { priority: "9" },
   });
 };
+
 //2. 게임 참가 - MAIN
 //reqeust: {host_id}
 //response:{host, players, ready_player, max_player, problem_level, timer_time, title, chat_room_id}
@@ -63,6 +65,13 @@ export const startGame = (client: Client) => {
 export const submitCode = (client: Client, body: {}) => {
   client.publish({
     destination: "/app/game/submit",
+    body: JSON.stringify(body),
+  });
+};
+//7. 게임방 목록 받기위해 아무 메세지 보내기
+export const sendGetRooms = (client: Client, body: {}) => {
+  client.publish({
+    destination: "/app/game/sessions",
     body: JSON.stringify(body),
   });
 };
