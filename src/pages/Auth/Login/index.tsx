@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../../components/Common";
 import { validateEmail } from "../utils";
@@ -7,13 +7,18 @@ import { login } from "../../../api/Auth";
 import { useMe, useStomp, useTheme } from "../../../store/store";
 import { getMe } from "../../../api/Users";
 import { createGameClient } from "../../../api/Game";
+import * as StompJs from "@stomp/stompjs";
+
+import { WebSocket } from "ws";
 import {
   createChatClient,
   // enterChatRoom,
   // sendMessage,
 } from "../../../api/Chat";
+import { Client } from "@stomp/stompjs";
 
 const Login = () => {
+  const client = useRef<Client | null>(null);
   // const REST_API_KEY = "백엔드한테 달라하자1";
   // const REDIRECT_URI = "백엔드한테 달라하자2";
   // const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
@@ -50,7 +55,10 @@ const Login = () => {
       id: form.email,
       password: form.password,
     };
-
+    const showMessage = (message: any) => {
+      console.log("Received message:", message.body);
+      alert(JSON.parse(message.body).content);
+    };
     try {
       const response = await login(loginData);
       if (response.status === 200) {
@@ -74,16 +82,42 @@ const Login = () => {
             //   console.log("Additional details: " + frame.body);
             //   // navigate("/");
             // };
-            const chatClient = createChatClient();
+
+            const chatClient = new StompJs.Client({
+              brokerURL: "ws://localhost:8080/chat",
+              connectHeaders: {
+                Authorization: `Bearer ${getTokens()}`,
+              },
+              // debug: function (str) {
+              //   console.log(str);
+              // },
+              reconnectDelay: 5000, //자동 재 연결
+              heartbeatIncoming: 4000,
+              heartbeatOutgoing: 4000,
+              // onConnect:()=>{}
+
+              onStompError: (frame: any) => {
+                console.log(
+                  "Broker reported error: " + frame.headers["message"]
+                );
+                console.log("Additional details: " + frame.body);
+                // navigate("/");
+              },
+              onWebSocketError: (error: Error) => {
+                console.error("WebSocket Error:", error);
+              },
+            });
             chatClient.activate();
             chatClient.onConnect = (frame: any) => {
-              console.log(frame);
+              console.log("connected", frame);
+
               chatClient.subscribe(
                 "/topic/room/4f9285dc-1d15-45d5-93b9-8c220cc4ac56",
                 (message) => {
-                  console.log(JSON.parse(message.body).content);
+                  showMessage(message);
                 }
               );
+
               // const response = enterChatRoom(
               //   chatClient,
               //   "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"
@@ -91,24 +125,35 @@ const Login = () => {
               // console.log(response);
               // setChatClient(chatClient);
               // navigate("/");
-            };
-            chatClient.onStompError = (frame: any) => {
-              console.log("Broker reported error: " + frame.headers["message"]);
-              console.log("Additional details: " + frame.body);
-              // navigate("/");
-            };
-            const room_id = "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"; // 실제 채팅방 ID로 교체
-            const messageContent = "hihi";
-            const message = {
-              chat_room_id: room_id,
-              content: messageContent,
-              type: "TALK",
-            };
+              // const room_id = "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"; // 실제 채팅방 ID로 교체
+              // const messageContent = "hihi";
+              // const message = {
+              //   chatroom_id: room_id,
+              //   content: messageContent,
+              //   type: "TALK",
+              // };
+              // if (chatClient.connected) {
+              //   chatClient.publish({
+              //     destination: "/app/send-message", // 메시지 매핑 엔드포인트
+              //     body: JSON.stringify(message),
+              //   });
+              // }
+              const room_id = "4f9285dc-1d15-45d5-93b9-8c220cc4ac56"; // Replace with the actual chat room ID
+              const messageContent = "입장했습니다."; // 메시지 내용 입력 필드에서 가져옴
 
-            chatClient.publish({
-              destination: "/app/send-message", // 메시지 매핑 엔드포인트
-              body: JSON.stringify(message),
-            });
+              const message = {
+                chatroom_id: room_id,
+                content: messageContent,
+                type: "ENTER",
+              };
+
+              if (chatClient.connected) {
+                chatClient.publish({
+                  destination: `${`/app/enter-room/${room_id}`}`, // Adjust the endpoint as needed
+                  body: JSON.stringify(message), // You can pass additional data if needed
+                });
+              }
+            };
           }
         }
       }

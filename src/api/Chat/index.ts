@@ -1,8 +1,12 @@
 import { Client } from "@stomp/stompjs";
 import { getTokens } from "../../utils";
+import * as StompJs from "@stomp/stompjs";
+
+// import { WebSocket } from "ws";
+// Object.assign(global, { WebSocket });
 
 export const createChatClient = () => {
-  return new Client({
+  return new StompJs.Client({
     brokerURL: "ws://localhost:8080/chat",
     connectHeaders: {
       Authorization: `Bearer ${getTokens()}`,
@@ -14,6 +18,15 @@ export const createChatClient = () => {
     // heartbeatIncoming: 4000,
     // heartbeatOutgoing: 4000,
     // onConnect:()=>{}
+
+    onStompError: (frame: any) => {
+      console.log("Broker reported error: " + frame.headers["message"]);
+      console.log("Additional details: " + frame.body);
+      // navigate("/");
+    },
+    onWebSocketError: (error: Error) => {
+      console.error("WebSocket Error:", error);
+    },
   });
 };
 
