@@ -2,8 +2,9 @@ import "../../../styles/tailwind.scss";
 interface OutputProps {
   isError: boolean;
   output: string[] | null;
+  outcomeMessage: string;
 }
-const Output: React.FC<OutputProps> = ({ isError, output }) => {
+const Output: React.FC<OutputProps> = ({ isError, output, outcomeMessage }) => {
   return (
     <div className="p-4 rounded-lg w-[100%] h-full flex flex-col ">
       <p className="mb-2 text-lg font-semibold ">Output</p>
@@ -18,6 +19,7 @@ const Output: React.FC<OutputProps> = ({ isError, output }) => {
         {output
           ? output.map((line: string, i: number) => <p key={i}>{line}</p>)
           : 'Click "Run Code" to see the output here'}
+        {outcomeMessage}
       </div>
     </div>
   );
