@@ -14,11 +14,9 @@ export const createChatClient = () => {
     // debug: function (str) {
     //   console.log(str);
     // },
-    // reconnectDelay: 5000, //자동 재 연결
-    // heartbeatIncoming: 4000,
-    // heartbeatOutgoing: 4000,
-    // onConnect:()=>{}
-
+    reconnectDelay: 5000, //자동 재 연결
+    heartbeatIncoming: 4000,
+    heartbeatOutgoing: 4000,
     onStompError: (frame: any) => {
       console.log("Broker reported error: " + frame.headers["message"]);
       console.log("Additional details: " + frame.body);
@@ -30,13 +28,35 @@ export const createChatClient = () => {
   });
 };
 
-// export const enterChatRoom = (client: Client, roomId: string) => {
-//   return client.publish({
-//     destination: `/app/enter-room/${roomId}`,
-//     // body: JSON.stringify(body),
-//   });
-// };
+//body : {chatroom_id:string, content:string, type="ENTER"}
+export const enterChatRoom = (
+  client: StompJs.Client,
+  body: {
+    chatroom_id: string;
+    content: string;
+    type: string;
+  }
+) => {
+  client.publish({
+    destination: `/app/enter-room/${body.chatroom_id}`,
+    body: JSON.stringify(body),
+  });
+};
 
+//body: {chatroom_id:string, content:string, type="TALK"}
+export const sendMessage = (
+  client: StompJs.Client,
+  body: {
+    chatroom_id: string;
+    content: string;
+    type: string;
+  }
+) => {
+  client.publish({
+    destination: "/app/send-message", // 메시지 매핑 엔드포인트
+    body: JSON.stringify(body),
+  });
+};
 // // 메시지 전송 함수
 // export function sendMessage(client: Client) {
 //   // const name = $('#name').val(); // 이름 입력 필드에서 가져옴

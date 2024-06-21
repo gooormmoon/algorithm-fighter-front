@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../../Common";
-import { useTheme } from "../../../store/store";
 
 const InputBar = () => {
-  const { theme } = useTheme();
   const [message, setMessage] = useState<string>("");
   const handleMessageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);

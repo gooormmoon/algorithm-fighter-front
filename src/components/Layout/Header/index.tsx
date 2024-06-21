@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import ForumIcon from "@mui/icons-material/Forum";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
-import { Button, ProfileIcon } from "../../Common";
+import { ProfileIcon } from "../../Common";
 import { useTheme } from "../../../store/store";
 import Lightmode_logo from "../../../Lightmode_logo.png";
 import Darkmode_logo from "../../../Darkmode_logo.png";
@@ -14,14 +13,13 @@ interface pathType {
 }
 const paths: pathType[] = [
   { path: "/", name: "홈" },
-  // { path: "/myRepository", name: "내 저장소" },
   { path: "/setting", name: "프로필 설정" },
 ];
 const Header = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [showProfile, setShowProfile] = useState(false);
   const { theme, changeTheme } = useTheme();
+  const [showProfile, setShowProfile] = useState(false);
   const [hover, setHover] = useState(false);
 
   return (
@@ -33,7 +31,7 @@ const Header = () => {
       }`}
     >
       <ul className="w-4/5 h-full flex gap-12 items-center ">
-        <li className="">
+        <li>
           <div
             className={`w-[100px] h-full
          relative overflow-hidden flex justify-center cursor-pointer`}

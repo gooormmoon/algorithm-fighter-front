@@ -6,7 +6,6 @@ import { useTheme } from "../../store/store";
 
 const Chat = () => {
   const { theme } = useTheme();
-  // "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white/55"
   return (
     <section
       className={`w-full h-full gap-2 flex flex-col rounded-lg justify-between items-center  ${
@@ -31,17 +30,6 @@ const Chat = () => {
         <ChatMessage />
         <ChatMessage />
         <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
-        <ChatMessage />
       </div>
       <div
         className={`px-2 w-full h-[60px] bg-transparent flex items-center border-t  ${
@@ -53,9 +41,5 @@ const Chat = () => {
     </section>
   );
 };
-
-// ${
-//   theme === "dark" ? "border-chat_border_dark" : ""
-// }
 
 export default Chat;
