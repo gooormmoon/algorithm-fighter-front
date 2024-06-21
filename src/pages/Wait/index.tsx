@@ -96,10 +96,12 @@ const Wait: React.FC = () => {
       >
         <div className={styles.waitHeader}>
           <div className={styles.header}>
+
             <button
               className="font-bold text-[20px]"
               onClick={() => navigate("/")}
             >
+
               <ArrowBackIcon />
             </button>
             <h1 className={styles.title}>{roomInfo.title}</h1>
@@ -134,7 +136,7 @@ const Wait: React.FC = () => {
         </div>
         <section className={cx(styles.container, styles.bottom)}>
           <div className={cx(styles.chatbox, styles.left)}>
-            <Chat />
+            <Chat roomId='global' />
           </div>
           <div className={cx(styles.right, styles.chatbox)}>
             <div className={cx(styles.buttons, styles.container)}>

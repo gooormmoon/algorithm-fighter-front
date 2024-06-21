@@ -17,3 +17,9 @@ export const getTokens = () => {
   // };
   return access_token;
 };
+
+//NOTE: 토큰을 삭제하는 함수
+export const clearTokens = () => {
+  localStorage.removeItem("ACCESS_TOKEN");
+  // localStorage.removeItem("REFRESH_TOKEN");
+};

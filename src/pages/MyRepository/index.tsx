@@ -57,27 +57,27 @@ const MyRepository = () => {
   }, [isResizingX, isResizingY]);
 
   return (
-    <main className="w-full h-full flex overflow-hidden">
-      <div className="h-full" style={{ width }}>
+    <main className='w-full h-full flex overflow-hidden'>
+      <div className='h-full' style={{ width }}>
         <section></section>
       </div>
       <div
-        className="flex justify-center items-center w-[20px] bg-transparent border-x-2 border-white/55 cursor-col-resize hover:bg-blue-500"
+        className='flex justify-center items-center w-[20px] bg-transparent border-x-2 border-white/55 cursor-col-resize hover:bg-blue-500'
         onMouseDown={onMouseDownX}
       >
         ||
       </div>
-      <div className="flex-1 h-full flex flex-col overflow-hidden">
-        <section className="w-full bg-transparent p-4" style={{ height }}>
-          <Chat />
+      <div className='flex-1 h-full flex flex-col overflow-hidden'>
+        <section className='w-full bg-transparent p-4' style={{ height }}>
+          <Chat roomId='roomId' />
         </section>
         <div
-          className="flex flex-col justify-center items-center w-full h-[24px]text-centerbg-transparent border-x-2 border-white/55 cursor-row-resize hover:bg-blue-500"
+          className='flex flex-col justify-center items-center w-full h-[24px]text-centerbg-transparent border-x-2 border-white/55 cursor-row-resize hover:bg-blue-500'
           onMouseDown={onMouseDownY}
         >
           ||
         </div>
-        <section className="w-full flex-1 bg-transparent "></section>
+        <section className='w-full flex-1 bg-transparent '></section>
       </div>
     </main>
   );
