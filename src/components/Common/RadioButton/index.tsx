@@ -23,7 +23,7 @@ export function RadioButton({
 
   return (
     <div className="w-full flex justify-center">
-      <div className="grid w-full grid-cols-5 gap-2 rounded-xl bg-gray-200 p-2">
+      <div className="grid w-full grid-cols-5 gap-2 rounded-md bg-gray-200 p-2">
         {levels.map((option) => (
           <div key={option}>
             <input
