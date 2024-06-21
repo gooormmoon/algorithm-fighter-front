@@ -69,6 +69,7 @@ const Login = () => {
                 setMessage(JSON.parse(message.body));
               });
             };
+            setChatClient(chatClient);
             navigate("/");
           }
         }
