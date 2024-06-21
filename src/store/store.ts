@@ -9,7 +9,7 @@ import {
   initialMe,
 } from "./types";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { Stomp } from "@stomp/stompjs";
+import Logout from "../pages/Auth/Logout";
 
 export const useTheme = create(
   persist<ThemeType>(
@@ -84,6 +84,7 @@ export const useStomp = create(
           };
         });
       },
+
       setChatClient: (newChatClient: StompType["chatClient"]) => {
         set((prevState: StompType) => {
           return {
@@ -103,14 +104,19 @@ export const useGlobalChat = create(
   persist<GlobalChatType>(
     (set) => ({
       messages: [],
-      setMessage: (newMessage: Message) => {
-        set((state) => ({
-          messages: [...state.messages, newMessage],
-        }));
+      setMessages: (newMessage: Message) => {
+        set((state) => {
+          const updatedMessages = [...state.messages, newMessage];
+          console.log("Updating messages:", updatedMessages); // 콘솔 로그 추가
+          return { messages: updatedMessages };
+        });
+      },
+      resetMessages: () => {
+        set({ messages: [] });
       },
     }),
     {
-      name: "globalMessageStorage", // The key used for local storage
+      name: "globalMessageStorage", // 로컬 스토리지에서 사용할 키
     }
   )
 );

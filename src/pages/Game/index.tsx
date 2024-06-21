@@ -157,68 +157,68 @@ const Game = () => {
   }, [isResizingX, isResizingY]);
 
   return (
-    <main className="w-full h-full flex flex-col ">
-      <div className="flex justify-start items-center w-full h-full  overflow-hidden">
-        <div className="w-3/4 h-full flex ">
-          <div className="h-full" style={{ width }}>
-            <section className="w-full h-full">
+    <main className='w-full h-full flex flex-col '>
+      <div className='flex justify-start items-center w-full h-full  overflow-hidden'>
+        <div className='w-3/4 h-full flex '>
+          <div className='h-full' style={{ width }}>
+            <section className='w-full h-full'>
               <GameProblem />
             </section>
           </div>
           <div
-            className="flex justify-center items-center w-4 bg-black/20 cursor-col-resize hover:bg-black/50 "
+            className='flex justify-center items-center w-4 bg-black/20 cursor-col-resize hover:bg-black/50 '
             onMouseDown={onMouseDownX}
           />
-          <div className="w-full h-full flex flex-col overflow-hidden">
-            <section className="w-full overflow-hidden" style={{ height }}>
-              <div className="w-full h-16 bg-transparent flex justify-between items-center p-4 gap-2">
-                <div className=" flex justify-start items-center gap-2 ">
+          <div className='w-full h-full flex flex-col overflow-hidden'>
+            <section className='w-full overflow-hidden' style={{ height }}>
+              <div className='w-full h-16 bg-transparent flex justify-between items-center p-4 gap-2'>
+                <div className=' flex justify-start items-center gap-2 '>
                   <LanguageSelector language={language} onSelect={onSelect} />
                   <TimerIcon />
-                  <span className="text-xl">59:59</span>
+                  <span className='text-xl'>59:59</span>
 
                   <Button
-                    type="button"
-                    size="medium_big_radius"
-                    color="secondary"
-                    textColor="primary_font"
-                    name="테스트 케이스"
+                    type='button'
+                    size='medium_big_radius'
+                    color='secondary'
+                    textColor='primary_font'
+                    name='테스트 케이스'
                     onClick={() => setModalOpen(true)}
                   />
                   <Button
-                    type="button"
-                    size="medium_small_radius"
-                    color="secondary"
-                    textColor="primary_font"
-                    name="승리"
+                    type='button'
+                    size='medium_small_radius'
+                    color='secondary'
+                    textColor='primary_font'
+                    name='승리'
                     onClick={() => setVictoryModalOpen(true)}
                   />
                   <Button
-                    type="button"
-                    size="medium_small_radius"
-                    color="secondary"
-                    textColor="primary_font"
-                    name="패배"
+                    type='button'
+                    size='medium_small_radius'
+                    color='secondary'
+                    textColor='primary_font'
+                    name='패배'
                     onClick={() => setDefeatModalOpen(true)}
                   />
                 </div>
-                <div className="flex justify-start items-center gap-4">
+                <div className='flex justify-start items-center gap-4'>
                   <Button
-                    type="button"
+                    type='button'
                     size={"small_radius"}
                     onClick={runCode}
-                    color="primary"
-                    textColor="secondary_color_font"
+                    color='primary'
+                    textColor='secondary_color_font'
                     name={"Run Code"}
                     isLoading={isLoading}
                     icon={<PlayArrowIcon />}
                   />
                   <Button
-                    type="button"
+                    type='button'
                     size={"small_radius"}
                     // onClick={runCode}
-                    color="primary"
-                    textColor="secondary_color_font"
+                    color='primary'
+                    textColor='secondary_color_font'
                     name={"SUBMIT"}
                   />
                 </div>
@@ -231,18 +231,18 @@ const Game = () => {
               />
             </section>
             <div
-              className="flex flex-col justify-center items-center w-full h-3
+              className='flex flex-col justify-center items-center w-full h-3
            bg-black/20  hover:bg-black/50
-            cursor-row-resize "
+            cursor-row-resize '
               onMouseDown={onMouseDownY}
             />
-            <section className="w-full flex-1 flex overflow-hidden p-2">
+            <section className='w-full flex-1 flex overflow-hidden p-2'>
               <Output isError={isError} output={output} />
             </section>
           </div>
         </div>
-        <div className="w-1/4 h-full bg-transparent p-4 ">
-          <Chat />
+        <div className='w-1/4 h-full bg-transparent p-4 '>
+          <Chat roomId='global' />
         </div>
       </div>
       {modalOpen && (

@@ -48,6 +48,7 @@ export type StompType = {
 
 //"type":"TALK","chatroom_id":"global","content":"hihi","sender_id":"sjj@naver.com","created_date":"2024-06-21T05:28:43.524011295"}
 export type Message = {
+  nickname: string;
   type: string;
   chatroom_id: string;
   content: string;
@@ -56,5 +57,6 @@ export type Message = {
 };
 export type GlobalChatType = {
   messages: Message[];
-  setMessage: (newMessage: Message) => void;
+  setMessages: (newMessage: Message) => void;
+  resetMessages: () => void; // 추가
 };

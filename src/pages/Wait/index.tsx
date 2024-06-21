@@ -31,7 +31,7 @@ const Wait: React.FC = () => {
       >
         <div className={styles.waitHeader}>
           <div className={styles.header}>
-            <button className="font-bold text-[20px]" onClick={handleClick}>
+            <button className='font-bold text-[20px]' onClick={handleClick}>
               <ArrowBackIcon />
             </button>
             <h1 className={styles.title}>게임 방 제목</h1>
@@ -64,7 +64,7 @@ const Wait: React.FC = () => {
         </div>
         <section className={styles.container}>
           <div className={cx(styles.chatbox, styles.left)}>
-            <Chat />
+            <Chat roomId='global' />
           </div>
           <div className={cx(styles.right, styles.chatbox)}>
             <div className={cx(styles.buttons, styles.container)}>

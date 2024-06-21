@@ -1,13 +1,24 @@
 import React from "react";
 import { useMount } from "react-use";
-import { useMe } from "../../../store/store";
+import { useGlobalChat, useMe, useStomp } from "../../../store/store";
 import { useNavigate } from "react-router-dom";
+
+
 //stomp 연결 끊기
 const Logout = () => {
+  const {resetMessages} = useGlobalChat();
+  const {gameClient, chatClient} = useStomp();
   const { reset } = useMe();
   const navigate = useNavigate();
   useMount(() => {
     reset();
+    resetMessages();
+    if (gameClient?.connected) {
+      gameClient.deactivate();
+    }
+    if (chatClient?.connected) {
+      chatClient.deactivate();
+    }
     localStorage.clear();
     navigate("/login");
   });
