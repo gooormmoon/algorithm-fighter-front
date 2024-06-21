@@ -1,59 +1,6 @@
-// import { CompatClient, Stomp } from "@stomp/stompjs";
-// import SockJS from "sockjs-client";
-
-// let stompClient: CompatClient | null = null;
-
-// export const connect = (
-//   token: string,
-//   onMessageReceived: (message: any) => void
-// ) => {
-//   const socket = new SockJS("ws://localhost:8080/game");
-//   stompClient = Stomp.over(socket);
-
-//   stompClient.connect(
-//     { Authorization: `Bearer ${token}` },
-//     () => {
-//     //   console.log("Connected");
-//       stompClient?.subscribe("/topic/game", (message) => {
-//         onMessageReceived(JSON.parse(message.body));
-//       });
-//     },
-//     (error: Error) => {
-//       console.log("Connection error:", error);
-//     }
-//   );
-// };
-
-// export const disconnect = () => {
-//   if (stompClient !== null) {
-//     stompClient.disconnect(() => {
-//       console.log("Disconnected");
-//     });
-//   }
-// };
-
-// export const sendMessage = (message: any) => {
-//   stompClient?.send("app/game", {}, JSON.stringify(message));
-// };
-
 //MEMO: main에서 호출될예정
 import { Client } from "@stomp/stompjs";
 import { getTokens } from "../../utils";
-// import { StompJS } from "@stomp/stompjs";
-// export const getClient = () => {
-//   return new Client({
-//     brokerURL: "ws://localhost:8080/game",
-//     connectHeaders: {
-//       Authorization: `Bearer ${getTokens()}`,
-//     },
-//     debug: (str: string) => {
-//       console.log(str);
-//     },
-//     reconnectDelay: 5000, //자동 재 연결
-//     heartbeatIncoming: 4000,
-//     heartbeatOutgoing: 4000,
-//   });
-// };
 export const createGameClient = () => {
   return new Client({
     brokerURL: "ws://localhost:8080/game",
@@ -102,11 +49,12 @@ export const createGame = (client: Client, body: {}) => {
     // headers: { priority: "9" },
   });
 };
+
 //2. 게임 참가 - MAIN
 //reqeust: {host_id}
 //response:{host, players, ready_player, max_player, problem_level, timer_time, title, chat_room_id}
 export const joinGame = (client: Client, body: {}) => {
-  return client.publish({
+  client.publish({
     destination: "/app/game/join",
     body: JSON.stringify(body),
   });
@@ -115,14 +63,14 @@ export const joinGame = (client: Client, body: {}) => {
 //reqeust: {problem_level:int, timer_time:int, title:stirng}
 //response: 예시없음, 성공
 export const updateGame = (client: Client, body: {}) => {
-  return client.publish({
+  client.publish({
     destination: "/app/game/updates",
     body: JSON.stringify(body),
   });
 };
 //4. 상대방 게임 준비 상태 수정 - WAIT
 export const readyGame = (client: Client) => {
-  return client.publish({
+  client.publish({
     destination: "/app/game/ready",
   });
 };
@@ -135,8 +83,15 @@ export const startGame = (client: Client) => {
 //6. 작성한 코드 제출 - GAME
 //reqeust;{code:string, language:string}
 export const submitCode = (client: Client, body: {}) => {
-  return client.publish({
+  client.publish({
     destination: "/app/game/submit",
+    body: JSON.stringify(body),
+  });
+};
+//7. 게임방 목록 받기위해 아무 메세지 보내기
+export const sendGetRooms = (client: Client, body: {}) => {
+  client.publish({
+    destination: "/app/game/sessions",
     body: JSON.stringify(body),
   });
 };

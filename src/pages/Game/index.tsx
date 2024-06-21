@@ -16,18 +16,6 @@ import { useTheme } from "../../store/store";
 import { types } from "sass";
 
 const Game = () => {
-  const [isResizing, setIsResizing] = useState({
-    x: false,
-    y: false,
-  });
-  const [initial, setInitial] = useState({
-    x: 0,
-    y: 0,
-  });
-  const [size, setSize] = useState({
-    width: window.innerWidth / 3,
-    height: window.innerHeight / 1.5,
-  });
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
   const [initialX, setInitialX] = useState(0);
@@ -89,29 +77,8 @@ const Game = () => {
   };
   const onMouseDownX = (e: React.MouseEvent) => {
     e.preventDefault();
-    setIsResizing((prev) => {
-      return {
-        ...prev,
-        x: true,
-      };
-    });
-    // setIsResizingX(true);
+    setIsResizingX(true);
     setInitialX(e.clientX);
-  };
-  const onMouseDown = (e: React.MouseEvent, type: string) => {
-    e.preventDefault();
-    setIsResizing((prev) => {
-      return {
-        ...prev,
-        [type]: true,
-      };
-    });
-    setInitial((prev) => {
-      return {
-        ...prev,
-        [type]: `${"e.client" + type.toUpperCase()}`,
-      };
-    });
   };
 
   const onMouseDownY = (e: React.MouseEvent) => {

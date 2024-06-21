@@ -14,7 +14,7 @@ const Chat = () => {
     >
       <div
         className={`p-6 w-full h-[40px] bg-transparent flex justify-between items-center border-b ${
-          theme === "dark" ? "border-oc_white" : "border-secondary"
+          theme === "dark" ? "border-oc_white" : "border-gray-300"
         }`}
       >
         <span>전체</span>
@@ -33,7 +33,7 @@ const Chat = () => {
       </div>
       <div
         className={`px-2 w-full h-[60px] bg-transparent flex items-center border-t  ${
-          theme === "dark" ? "border-oc_white" : "border-secondary"
+          theme === "dark" ? "border-oc_white" : "border-gray-300"
         }`}
       >
         <InputBar />
