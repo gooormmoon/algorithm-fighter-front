@@ -51,20 +51,20 @@ const RoomList = ({
     e.preventDefault();
 
     //game연결되면 이 navigate는 없앨예정
-    navigate(`/wait/${"sfdsfsfd@123"}`, {
-      state: {
-        players: ["구름달"],
-        ready_player: [],
-        chat_room_id: "chatroomId",
-        host_id: "sfdsfsfd@123",
-        host: "구름달",
-        title: "대결하실래요?",
-        max_player: 2,
-        problem_level: 2,
-        timer_time: 20,
-        // is_started: true,
-      },
-    });
+    // navigate(`/wait/${"sfdsfsfd@123"}`, {
+    //   state: {
+    //     players: ["구름달"],
+    //     ready_player: [],
+    //     chat_room_id: "chatroomId",
+    //     host_id: "sfdsfsfd@123",
+    //     host: "구름달",
+    //     title: "대결하실래요?",
+    //     max_player: 2,
+    //     problem_level: 2,
+    //     timer_time: 20,
+    //     // is_started: true,
+    //   },
+    // });
     if (gameClient?.connected) {
       joinGame(gameClient, {
         host_id: e.currentTarget.id,

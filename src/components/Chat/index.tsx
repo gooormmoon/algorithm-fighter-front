@@ -19,15 +19,15 @@ const Chat = ({ roomId }: { roomId: string }) => {
   const { me } = useMe();
   const { chatClient } = useStomp();
   const { messages } = useGlobalChat();
-  const [gameMessage, setGameMessage] = useState([]);
+  const [gameMessage, setGameMessage] = useState<GameMessage[]>([]);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useMount(() => {
     if (chatClient?.connected && roomId !== "global") {
       chatClient.subscribe(`/user/queue/chat/${roomId}`, (message) => {
-        setGameMessage(JSON.parse(message.body));
-        // const newMessage: GameMessage = JSON.parse(message.body);
-        // setGameMessage((prev: GameMessage[]) => [...prev, newMessage]);
+        // setGameMessage(JSON.parse(message.body));
+        const newMessage = JSON.parse(message.body);
+        setGameMessage((prevMessages) => [...prevMessages, newMessage]);
       });
     }
   });
@@ -55,14 +55,22 @@ const Chat = ({ roomId }: { roomId: string }) => {
         <span>전체</span>
         <SearchBar />
       </div>
-      <div className='w-full h-full p-4 flex flex-col items-start justify-start gap-1 overflow-scroll'>
-        {messages.map((msg, index) => (
-          <ChatMessage
-            key={index}
-            message={msg}
-            // nickname={me.nickname}
-          />
-        ))}
+      <div className="w-full h-full p-4 flex flex-col items-start justify-start gap-1 overflow-scroll">
+        {roomId === "global"
+          ? messages.map((msg, index) => (
+              <ChatMessage
+                key={index}
+                message={msg}
+                // nickname={me.nickname}
+              />
+            ))
+          : gameMessage.map((msg, index) => (
+              <ChatMessage
+                key={index}
+                message={msg}
+                // nickname={me.nickname}
+              />
+            ))}
         <div ref={messagesEndRef} />
       </div>
       <div

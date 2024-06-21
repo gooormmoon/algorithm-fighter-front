@@ -8,10 +8,11 @@ import { getMe } from "../../../api/Users";
 import { createGameClient } from "../../../api/Game";
 import { createChatClient } from "../../../api/Chat";
 import * as StompJs from "@stomp/stompjs";
+import { AnyCnameRecord } from "dns";
 
 const Login = () => {
   const { loggedIn, setMe } = useMe();
-  const { setChatClient } = useStomp();
+  const { setGameClient, setChatClient } = useStomp();
   const navigate = useNavigate();
   const { setMessages, resetMessages } = useGlobalChat();
   const [form, setForm] = useState({
@@ -50,19 +51,6 @@ const Login = () => {
           if (myInfoResponse.status === 200) {
             const myInfo = myInfoResponse.data;
             setMe(myInfo);
-            // navigate("/");
-            // const gameClient = createGameClient();
-            // gameClient.activate();
-            // gameClient.onConnect = (frame: any) => {
-            //   console.log(gameClient);
-            //   setGameClient(gameClient);
-            //   // navigate("/");
-            // };
-            // gameClient.onStompError = (frame: any) => {
-            //   console.log("Broker reported error: " + frame.headers["message"]);
-            //   console.log("Additional details: " + frame.body);
-            //   // navigate("/");
-            // };
             const gameClient: StompJs.Client = createGameClient();
             const chatClient: StompJs.Client = createChatClient();
             chatClient.activate();
@@ -78,13 +66,11 @@ const Login = () => {
 
             setChatClient(chatClient);
             resetMessages(); // 메시지 리셋
-
+            gameClient.activate();
             gameClient.onConnect = (frame: any) => {
-              gameClient.subscribe("/game", (message) => {
-                setMessage(JSON.parse(message.body));
-              });
+              console.log("connected");
+              setGameClient(gameClient);
             };
-
 
             navigate("/");
           }
@@ -114,43 +100,43 @@ const Login = () => {
         ${"bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "}`}
     >
       <form
-        className='w-[540px] h-[480px] gap-4 p-8 flex flex-col justify-center items-center  rounded-md  bg-transparent '
+        className="w-[540px] h-[480px] gap-4 p-8 flex flex-col justify-center items-center  rounded-md  bg-transparent "
         onSubmit={onSubmit}
       >
-        <h1 className=' text-[68px] font-semibold'>Login</h1>
+        <h1 className=" text-[68px] font-semibold">Login</h1>
 
         <Input
-          type='email'
-          placeholder='Email'
+          type="email"
+          placeholder="Email"
           value={form?.email}
           onChange={onChange}
-          name='email'
-          size='large'
+          name="email"
+          size="large"
           border={false}
         />
         <Input
-          type='password'
-          placeholder='Password'
+          type="password"
+          placeholder="Password"
           value={form?.password}
           onChange={onChange}
-          name='password'
-          size='large'
+          name="password"
+          size="large"
           border={false}
         />
         <Button
-          type='submit'
-          size='large_radius'
-          color='secondary'
-          textColor='primary_font'
-          name='로그인'
+          type="submit"
+          size="large_radius"
+          color="secondary"
+          textColor="primary_font"
+          name="로그인"
         />
-        <ul className='mt-4 flex gap-2 text-sm'>
-          <li className='cursor-pointer'>아이디 찾기</li>
+        <ul className="mt-4 flex gap-2 text-sm">
+          <li className="cursor-pointer">아이디 찾기</li>
           <li>|</li>
-          <li className='cursor-pointer'>비밀번호 찾기</li>
+          <li className="cursor-pointer">비밀번호 찾기</li>
           <li>|</li>
           <li
-            className='font-semibold cursor-pointer'
+            className="font-semibold cursor-pointer"
             onClick={() => navigate("/register")}
           >
             회원가입
