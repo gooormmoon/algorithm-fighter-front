@@ -15,6 +15,8 @@ import { VictoryModal, DefeatModal, TestCaseModal } from "./GameModal";
 import { useStomp } from "../../store/store";
 import { autoUserSubmitCode, submitCode, gradeCode } from "../../api/Game/";
 import { v4 as uuidv4 } from "uuid";
+import { useLocation } from "react-router-dom";
+import { useMount } from "react-use";
 //TestCase type
 type TestCase = {
   id: string;
@@ -60,21 +62,26 @@ const Game = () => {
   const [outcomeMessage, setOutcomeMessage] = useState<string>("");
   //Get Problem Content
 
+  const location = useLocation();
   //STOMP
+  useMount(() => {
+    //게임시작 => 게임대기에서 받을 예정
+    const data = { ...location.state };
+
+    if (data.title && data.content && data.level) {
+      setProblemData(data.problemData);
+      setProblemTitle(data.problemTitle);
+      setGaming(true);
+      console.log("game start");
+    }
+  });
+
   useEffect(() => {
     if (gameClient?.connected) {
       gameClient.subscribe("/user/queue/game/session", (message) => {
         try {
           const data = JSON.parse(message.body);
 
-          //게임시작
-          if (data.title && data.content && data.level && data.code_templates) {
-            setProblemData(data.problemData);
-            setProblemTitle(data.problemTitle);
-            setProblemCodeTemplate(data.problemCodeTemplate);
-            setGaming(true);
-            console.log("game start");
-          }
           //게임종료
           if (data.running_time && data.game_over_type) {
             if (data.game_over_type === "win") {
@@ -96,8 +103,8 @@ const Game = () => {
           //게임 종료시 자동으로 보내기
           const sourceCode = editorRef.current.getValue();
           autoUserSubmitCode(gameClient, {
-            code: sourceCode.files[0].content,
-            language: sourceCode.language,
+            code: sourceCode,
+            language: language,
           });
         } catch (e) {
           console.error("Failed to parse message:", e);
@@ -153,8 +160,8 @@ const Game = () => {
     setIsLoading(true);
     if (gameClient) {
       submitCode(gameClient, {
-        code: sourceCode.files[0].content,
-        language: sourceCode.language,
+        code: sourceCode,
+        language: language,
       });
     }
   };
@@ -180,7 +187,7 @@ const Game = () => {
       setIsLoading(true);
       const response = await gradeCode({
         code: sourceCode,
-        language: sourceCode.language,
+        language: language,
         input: testCases.map((tc) => tc.value).join("\n"), // 문자열로 변환
         expected: testCases.map((tc) => tc.result).join("\n"),
       });
