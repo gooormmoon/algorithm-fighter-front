@@ -9,7 +9,7 @@ const Chat = () => {
   // "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white/55"
   return (
     <section
-      className={`w-full h-full gap-2 flex flex-col rounded-2xl justify-between items-center shadow-2xl drop-shadow-2xl ${
+      className={`w-full h-full gap-2 flex flex-col rounded-lg justify-between items-center  ${
         theme === "dark" ? "bg-dark_box" : ""
       }`}
     >

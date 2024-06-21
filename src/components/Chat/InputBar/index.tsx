@@ -18,7 +18,7 @@ const InputBar = () => {
     <form
       name="inputForm"
       onSubmit={handleMessageSubmit}
-      className="w-full h-full px-4 bg-transparent flex justify-between items-center gap-2 shadow-2xl drop-shadow-2xl"
+      className="w-full h-full px-4 bg-transparent flex justify-between items-center gap-2"
     >
       <input
         value={message}
