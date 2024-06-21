@@ -58,27 +58,21 @@ export const startGame = (client: Client) => {
     destination: "/app/game/start",
   });
 };
-//6. 작성한 코드 제출 - GAME - post
+//6. 작성한 코드 제출 - GAME - post - complete
 //reqeust;{code:string, language:string}
-// export const submitCode = (client: Client, body: {}) => {
-//   client.publish({
-//     destination: "/app/game/submit",
-//     body: JSON.stringify(body),
-//   });
-// };
+export const submitCode = (client: Client, body: {}) => {
+  client.publish({
+    destination: "/app/game/submit",
+    body: JSON.stringify(body),
+  });
+};
+
 export const getFile = (path: string) => {
   return apiClient.get(`/api/file/${path}`);
 };
-export const submitCode = (body: {
-  code: string;
-  language: string;
-  arguments: string;
-  expect: string;
-}) => {
-  return apiClient.post("/api/execute");
-};
-//7. 게임 종료 후 코드 송신
-export const forceSubmitCode = (
+
+//7. 게임 정답 코드 강제 송신
+export const autoUserSubmitCode = (
   client: Client,
   body: { code: string; language: string }
 ) => {
@@ -88,64 +82,12 @@ export const forceSubmitCode = (
   });
 };
 
-// 8.사용자 테스트 케이스 채점
-// code	String	O	사용자가 작성한 코드
-// language	String	O	작성한 코드의 언어
-// input	String	X	사용자가 작성한 테스트 케이스 입력
-// expected	String	O	기대하는 출력
-export const submitTestCase = (body: {
+// 코드채점
+export const gradeCode = (body: {
   code: string;
   language: string;
   input: string;
   expected: string;
 }) => {
-  return apiClient.post("/api/judge-input");
+  return apiClient.post("/api/judge-input", body);
 };
-
-//STOMP RECEIVE 게임 구독 (받을 메세지)
-//1. 현재 개설된 게임 세션 목록 불러오기
-//response: rooms:Ojbect[] : {host:String, title,String,max_player, problem_level,timer_time}
-
-//2. 게임 세션 업데이트됨
-//response:{host:string, players:String[], ready_player:String[], max_player :int, problem_level:int, timer_time:int, title:String, chat_room_id:String}
-
-//3. 게임 시작 신호 수신
-//response:timer_time:String, AlgorithmProblem :{title:String, content, level, code_templates:Object},
-
-// const gameStartRecieved = (client: Client) => {
-//   client.subscribe("/user/queue/game/session", (message: string) => {
-//     const data = JSON.parse(message);
-//     //제목 바꾸기
-//     // setTitle(message.title);
-//     // 문제 내용 바꾸기
-//     // setcontent(message.content)
-//     // 레벨 바꾸기
-//     // setLevel(message.level)
-//     //
-//     // setCodeTemplage(message.code_templates)
-//   });
-// };
-//4. 게임 종료 결과를 수신
-//response:running_time:String, game_over_type:String(win,lose,time_over)
-
-// export const gameStartRecieved = (client: Client) => {
-//   client.subscribe("/user/queue/game/session", (message) => {
-//     const message = JSON.parse(message.body);
-
-//     //  게임 시간 stop
-//     message.running_time;
-
-//     // 게임 모달에  game_over_type 전달
-//     if (message.game_over_type === "win") {
-//       //게임 승리 모달
-//     }
-//     if (message.game_over_type === "lose") {
-//       //게임 승리 모달
-//     }
-//     if (message.game_over_type === "time_over") {
-//       //게임 승리 모달
-//     }
-//   });
-// };
-
-export {};
