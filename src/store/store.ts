@@ -1,5 +1,13 @@
 import { create } from "zustand";
-import { ThemeType, MeType, GameSocketType, StompType } from "./types";
+import {
+  ThemeType,
+  MeType,
+  GameSocketType,
+  StompType,
+  GlobalChatType,
+  Message,
+  initialMe,
+} from "./types";
 import { createJSONStorage, persist } from "zustand/middleware";
 import { Stomp } from "@stomp/stompjs";
 
@@ -21,18 +29,6 @@ export const useTheme = create(
   )
 );
 
-const initialMe = {
-  me: {
-    id: "",
-    name: "",
-    nickname: "",
-    profileImageUrl: "",
-    description: "",
-    createdDate: "",
-    loginDate: "",
-  },
-  loggedIn: false,
-};
 export const useMe = create(
   persist<MeType>(
     (set) => ({
@@ -99,6 +95,22 @@ export const useStomp = create(
     }),
     {
       name: "stompStorage",
+    }
+  )
+);
+
+export const useGlobalChat = create(
+  persist<GlobalChatType>(
+    (set) => ({
+      messages: [],
+      setMessage: (newMessage: Message) => {
+        set((state) => ({
+          messages: [...state.messages, newMessage],
+        }));
+      },
+    }),
+    {
+      name: "globalMessageStorage", // The key used for local storage
     }
   )
 );

@@ -4,6 +4,19 @@ export interface ThemeType {
   theme: string;
   changeTheme: () => void;
 }
+
+export const initialMe = {
+  me: {
+    id: "",
+    name: "",
+    nickname: "",
+    profileImageUrl: "",
+    description: "",
+    createdDate: "",
+    loginDate: "",
+  },
+  loggedIn: false,
+};
 export type MeType = {
   me: {
     id: string;
@@ -31,4 +44,17 @@ export type StompType = {
   // setAllChatClient: (newClient: StompType["allChatClient"]) => void;
   // gameChatClient: Client | null;
   // setGameChatClient: (newClient: StompType["gameChatClient"]) => void;
+};
+
+//"type":"TALK","chatroom_id":"global","content":"hihi","sender_id":"sjj@naver.com","created_date":"2024-06-21T05:28:43.524011295"}
+export type Message = {
+  type: string;
+  chatroom_id: string;
+  content: string;
+  sender_id: string;
+  created_date: string;
+};
+export type GlobalChatType = {
+  messages: Message[];
+  setMessage: (newMessage: Message) => void;
 };
