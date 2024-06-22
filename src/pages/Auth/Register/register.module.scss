@@ -1,0 +1,16 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@200;700&display=swap");
+
+$primary-color: #1b2735;
+$secondary-color: #3b4d71;
+
+.container {
+  background: url("../../../../public/back.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Noto Sans KR", sans-serif;
+  overflow: hidden;
+}

@@ -12,6 +12,7 @@ import { useMe, useTheme } from "../../../store/store";
 import { useMount } from "react-use";
 import Lightmode_logo from "../../../Lightmode_logo.png";
 import { toast } from "react-toastify";
+import styles from "./register.module.scss";
 
 const Register = () => {
   const { theme } = useTheme();
@@ -95,85 +96,87 @@ const Register = () => {
     }
   };
   return (
-    <main
-      className={`w-full h-[100vh] flex flex-col justify-start items-center gap-[4vh]  ${"bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "} `}
-    >
-      <div className="flex justify-start w-full px-4">
-        <img
-          src={Lightmode_logo}
-          alt="Lightmode_logo"
-          className="w-[12vh] h-[12vh] object-contain"
-        />
-      </div>
-      <form
-        className="w-[52vh] h-[68vh] gap-2 flex flex-col justify-center items-center drop-shadow-md rounded-md"
-        onSubmit={onSubmit}
+    <div className={styles.container}>
+      <main
+        className={`w-full h-[100vh] flex flex-col justify-start items-center gap-[4vh]  ${"bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "} `}
       >
-        <h1 className=" text-[64px] font-semibold">Register</h1>
-
-        <Input
-          type="text"
-          placeholder="Name"
-          value={form?.name}
-          onChange={onChange}
-          onBlur={onBlur}
-          name="name"
-          size="large"
-          errorText={touched.name && validatedName}
-          border={false}
-        />
-        <Input
-          type="email"
-          placeholder="Email"
-          value={form?.email}
-          onChange={onChange}
-          onBlur={onBlur}
-          name="email"
-          size="large"
-          errorText={touched.email && validatedEmail}
-          border={false}
-        />
-        <Input
-          type="password"
-          placeholder="Password"
-          value={form?.password}
-          onChange={onChange}
-          onBlur={onBlur}
-          name="password"
-          size="large"
-          errorText={touched.password && validatedPassword}
-          border={false}
-        />
-        <Input
-          type="password"
-          placeholder="Confirm Password"
-          value={form?.password_check}
-          onChange={onChange}
-          onBlur={onBlur}
-          name="password_check"
-          size="large"
-          errorText={touched.password_check && validatedCheckpassword}
-          border={false}
-        />
-        <div className="mt-2 flex flex-col gap-2">
-          <Button
-            type="submit"
-            size="medium_big_radius"
-            color="secondary"
-            textColor="primary_font"
-            name="회원 가입"
-          />
-          <Button
-            type="button"
-            onClick={() => navigate("/login")}
-            size="medium_big_radius"
-            color="secondary_border"
-            textColor="secondary_color_font"
-            name="취소"
+        <div className="flex justify-start w-full px-4">
+          <img
+            src={Lightmode_logo}
+            alt="Lightmode_logo"
+            className="w-[12vh] h-[12vh] object-contain"
           />
         </div>
-      </form>
-    </main>
+        <form
+          className="w-[52vh] h-[68vh] gap-2 flex flex-col justify-center items-center drop-shadow-md rounded-md"
+          onSubmit={onSubmit}
+        >
+          <h1 className=" text-[64px] font-semibold">Register</h1>
+
+          <Input
+            type="text"
+            placeholder="Name"
+            value={form?.name}
+            onChange={onChange}
+            onBlur={onBlur}
+            name="name"
+            size="large"
+            errorText={touched.name && validatedName}
+            border={false}
+          />
+          <Input
+            type="email"
+            placeholder="Email"
+            value={form?.email}
+            onChange={onChange}
+            onBlur={onBlur}
+            name="email"
+            size="large"
+            errorText={touched.email && validatedEmail}
+            border={false}
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            value={form?.password}
+            onChange={onChange}
+            onBlur={onBlur}
+            name="password"
+            size="large"
+            errorText={touched.password && validatedPassword}
+            border={false}
+          />
+          <Input
+            type="password"
+            placeholder="Confirm Password"
+            value={form?.password_check}
+            onChange={onChange}
+            onBlur={onBlur}
+            name="password_check"
+            size="large"
+            errorText={touched.password_check && validatedCheckpassword}
+            border={false}
+          />
+          <div className="mt-2 flex flex-col gap-2">
+            <Button
+              type="submit"
+              size="medium_big_radius"
+              color="secondary"
+              textColor="primary_font"
+              name="회원 가입"
+            />
+            <Button
+              type="button"
+              onClick={() => navigate("/login")}
+              size="medium_big_radius"
+              color="secondary_border"
+              textColor="secondary_color_font"
+              name="취소"
+            />
+          </div>
+        </form>
+      </main>
+    </div>
   );
 };
 
