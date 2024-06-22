@@ -33,30 +33,35 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
   useMount(() => {
     if (gameClient?.connected) {
-      gameClient.subscribe("/user/queue/game/join", (message) => {
-        const data = JSON.parse(message.body);
-        if (data.host_id) {
-          //생성하고 콜백함수
-          onClose();
-          console.log("modal close");
-          navigate(`/wait/${data.host_id}`, {
-            state: {
-              host: `${data.host}`,
-              host_id: `${data.host_id}`,
-              players: data.players,
-              ready_players: data.ready_players,
-              max_player: data.max_player,
-              problem_level: data.problem_level,
-              timer_time: data.timer_time,
-              title: data.title,
-              chatroom_id: data.chatroom_id,
-            },
-          });
-        }
-        if (data.msg) {
-          alert(data.msg);
-        }
-      });
+      gameClient.unsubscribe("createModal");
+      gameClient.subscribe(
+        "/user/queue/game/join",
+        (message) => {
+          const data = JSON.parse(message.body);
+          if (data.host_id) {
+            //생성하고 콜백함수
+            onClose();
+            console.log("modal close");
+            navigate(`/wait/${data.host_id}`, {
+              state: {
+                host: `${data.host}`,
+                host_id: `${data.host_id}`,
+                players: data.players,
+                ready_players: data.ready_players,
+                max_player: data.max_player,
+                problem_level: data.problem_level,
+                timer_time: data.timer_time,
+                title: data.title,
+                chatroom_id: data.chatroom_id,
+              },
+            });
+          }
+          if (data.msg) {
+            alert(data.msg);
+          }
+        },
+        { id: "createModal" }
+      );
     }
   });
   const handleSubmit = () => {

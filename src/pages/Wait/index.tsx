@@ -14,6 +14,7 @@ import {
   startGame,
   updateGame,
 } from "../../api/Game";
+import * as StompJs from "@stomp/stompjs";
 
 const numberOptions = [10, 20, 30, 40, 50, 60];
 
@@ -77,9 +78,11 @@ const Wait: React.FC = () => {
   }, [roomInfo, me]);
 
   const onClickPrev = () => {
-    gameClient?.deactivate();
+    if (gameClient?.connected) {
+      gameClient?.deactivate();
+    }
 
-    const newGameClient = createGameClient();
+    const newGameClient: StompJs.Client = createGameClient();
     newGameClient.activate();
     newGameClient.onConnect = (frame: any) => {
       console.log("connected");
@@ -88,14 +91,15 @@ const Wait: React.FC = () => {
         console.log(data);
         if (data.rooms) {
           setRooms(data.rooms);
-          newGameClient.unsubscribe("/user/queue/game/sessions");
+          // newGameClient.unsubscribe("/user/queue/game/sessions");
         }
       });
+      const message = {
+        msg: "give me room list",
+      };
       newGameClient.publish({
         destination: "/app/game/sessions",
-        body: JSON.stringify({
-          message: "give me room list",
-        }),
+        body: JSON.stringify(message),
       });
     };
     setGameClient(newGameClient);

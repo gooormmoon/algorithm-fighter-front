@@ -77,7 +77,7 @@ const Login = () => {
                 console.log(data);
                 if (data.rooms) {
                   setRooms(data.rooms);
-                  gameClient.unsubscribe("/user/queue/game/sessions");
+                  // gameClient.unsubscribe("/user/queue/game/sessions");
                 }
               });
               gameClient.publish({
@@ -96,8 +96,8 @@ const Login = () => {
 
       // else if(response.status ===)
       //로그인 실패시 toast 알람을 추가할지 아니면 그냥 에러메세지만 태그로 넣어줄지 고민해봐야할듯!
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      console.error(err.message);
       // alert("로그인 실패");
       //임시로 alert로 해놓음
     }

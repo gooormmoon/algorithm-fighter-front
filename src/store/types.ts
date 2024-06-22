@@ -69,6 +69,7 @@ export type Room = {
   problem_level: string;
   timer_time: number;
   started: boolean;
+  players: [];
 };
 export type RoomsType = {
   rooms: Room[];

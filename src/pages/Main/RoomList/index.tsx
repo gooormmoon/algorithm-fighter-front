@@ -16,32 +16,7 @@ const RoomList = ({
   const { theme } = useTheme();
   const { gameClient } = useStomp();
   const navigate = useNavigate();
-  useMount(() => {
-    if (gameClient?.connected) {
-      gameClient.subscribe("/user/queue/game/join", (message) => {
-        const data = JSON.parse(message.body);
-        console.log(data);
-        if (data.host_id) {
-          //생성하고 콜백함수
-          navigate(`/wait/${data.host_id}`, {
-            state: {
-              host: `${data.host}`,
-              host_id: `${data.host_id}`,
-              players: data.players,
-              ready_players: data.ready_players,
-              max_player: data.max_player,
-              problem_level: data.problem_level,
-              timer_time: data.timer_time,
-              title: data.title,
-              chatroom_id: data.chatroom_id,
-            },
-          });
-        } else {
-          alert(data.msg);
-        }
-      });
-    }
-  });
+  useMount(() => {});
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
@@ -100,6 +75,7 @@ const RoomList = ({
               problem_level,
               timer_time,
               started,
+              players,
             },
             index
           ) => {
@@ -117,7 +93,7 @@ const RoomList = ({
                 <td className="w-[10%]">{index}</td>
                 <td className="w-[15%]">{host}</td>
                 <td className="w-[25%]">{title}</td>
-                <td className="w-[10%]">{`1/${max_player}`}</td>
+                <td className="w-[10%]">{`${players.length}/${max_player}`}</td>
                 <td className="w-[10%]">{`lv.${problem_level}`}</td>
                 <td className="w-[15%]">{`${timer_time} min`}</td>
                 <td className="w-[15%]"> {started ? "게임중" : "대기중"}</td>
