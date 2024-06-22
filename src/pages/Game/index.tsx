@@ -67,7 +67,7 @@ const Game = () => {
     //게임시작 => 게임대기에서 받을 예정
     const data = { ...location.state };
 
-    if (data.title && data.content && data.level) {
+    if (data.title && data.content && data.problem_level) {
       setProblemData(data.problemData);
       setProblemTitle(data.problemTitle);
       setGaming(true);

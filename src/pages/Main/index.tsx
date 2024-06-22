@@ -5,59 +5,63 @@ import cx from "classnames";
 import Chat from "../../components/Chat";
 import RoomList from "./RoomList";
 import { CreateModal } from "../Game/GameModal";
-import { useMe, useStomp, useTheme } from "../../store/store";
+import { useMe, useRooms, useStomp, useTheme } from "../../store/store";
 import { useMount } from "react-use";
 import { createGame, sendGetRooms } from "../../api/Game";
 
 const Main: React.FC = () => {
   const { me, loggedIn } = useMe();
+  const { rooms } = useRooms();
   const navigate = useNavigate();
   const [createGameModal, setCreateGameModal] = useState(false);
   const [enterGame, setEnterGame] = useState(false);
   const { gameClient, chatClient } = useStomp();
   const { theme } = useTheme();
 
-  const [rooms, setRooms] = useState([
-    // {
-    //   host_id: "sfdsfsfd@123",
-    //   host: "구름달",
-    //   title: "대결하실래요?",
-    //   max_player: 2,
-    //   problem_level: 2,
-    //   timer_time: 20,
-    //   is_started: true,
-    // },
-    // {
-    //   host_id: "sfds@1234",
-    //   host: "알고파이터",
-    //   title: "맞장뜨자!!",
-    //   max_player: 2,
-    //   problem_level: 4,
-    //   timer_time: 60,
-    //   is_started: true,
-    // },
-  ]);
   useMount(() => {
+    if (gameClient?.connected) {
+      gameClient.unsubscribe("joinGame");
+      gameClient.subscribe(
+        "/user/queue/game/join",
+        (message) => {
+          const data = JSON.parse(message.body);
+          console.log("메세지옴");
+          if (data.host_id) {
+            //생성하고 콜백함수
+            navigate(`/wait/${data.host_id}`, {
+              state: {
+                host: `${data.host}`,
+                host_id: `${data.host_id}`,
+                players: data.players,
+                ready_players: data.ready_players,
+                max_player: data.max_player,
+                problem_level: data.problem_level,
+                timer_time: data.timer_time,
+                title: data.title,
+                chatroom_id: data.chatroom_id,
+              },
+            });
+          } else {
+            alert(data.msg);
+          }
+        },
+        { id: "joinGame" }
+      );
+    }
+  });
+  useEffect(() => {
     if (!loggedIn) {
       navigate("/login");
     } else {
       if (gameClient?.connected) {
-        gameClient.subscribe("/user/queue/game/session", (message) => {
-          const data = JSON.parse(message.body);
-          console.log(data);
-          if (data.rooms) {
-            setRooms(data.rooms);
-          }
-        });
       }
     }
-  });
-  useEffect(() => {
-    if (gameClient?.connected) {
-      sendGetRooms(gameClient, {
-        message: "give me room list",
-      });
-    }
+    // if (gameClient?.connected) {
+    //   // sendGetRooms(gameClient, {
+    //   //   message: "give me room list",
+    //   // });
+
+    // }
   }, []);
 
   const toggleModal = (

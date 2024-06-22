@@ -3,14 +3,17 @@ import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../../components/Common";
 import { getTokens, saveTokens, clearTokens } from "../../../utils";
 import { login } from "../../../api/Auth";
-import { useGlobalChat, useMe, useStomp } from "../../../store/store";
+import { useGlobalChat, useMe, useRooms, useStomp } from "../../../store/store";
 import { getMe } from "../../../api/Users";
 import { createGameClient } from "../../../api/Game";
 import { createChatClient } from "../../../api/Chat";
 import * as StompJs from "@stomp/stompjs";
 import { AnyCnameRecord } from "dns";
+import Darkmode_logo from "../../../Darkmode_logo.png";
+import Lightmode_logo from "../../../Lightmode_logo.png";
 
 const Login = () => {
+  const { setRooms } = useRooms();
   const { loggedIn, setMe } = useMe();
   const { setGameClient, setChatClient } = useStomp();
   const navigate = useNavigate();
@@ -69,8 +72,22 @@ const Login = () => {
             gameClient.activate();
             gameClient.onConnect = (frame: any) => {
               console.log("connected");
-              setGameClient(gameClient);
+              gameClient.subscribe("/user/queue/game/sessions", (message) => {
+                const data = JSON.parse(message.body);
+                console.log(data);
+                if (data.rooms) {
+                  setRooms(data.rooms);
+                  // gameClient.unsubscribe("/user/queue/game/sessions");
+                }
+              });
+              gameClient.publish({
+                destination: "/app/game/sessions",
+                body: JSON.stringify({
+                  message: "give me room list",
+                }),
+              });
             };
+            setGameClient(gameClient);
 
             navigate("/");
           }
@@ -79,28 +96,27 @@ const Login = () => {
 
       // else if(response.status ===)
       //로그인 실패시 toast 알람을 추가할지 아니면 그냥 에러메세지만 태그로 넣어줄지 고민해봐야할듯!
-    } catch (err) {
-      console.error(err);
+    } catch (err: any) {
+      console.error(err.message);
       // alert("로그인 실패");
       //임시로 alert로 해놓음
     }
   };
 
-  // 로그아웃
-  // const onLogout = () => {
-  //   clearTokens(); // 토큰 삭제
-  //   reset(); // 사용자 상태 리셋
-  //   resetMessages(); // 메시지 리셋
-  //   navigate("/login");
-  // };
-
   return (
     <main
-      className={`w-full h-[100vh] flex flex-col justify-center items-center 
+      className={`w-full h-[100vh] flex flex-col justify-start items-center gap-[6vh]
         ${"bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "}`}
     >
+      <div className="flex justify-start w-full px-4">
+        <img
+          src={Lightmode_logo}
+          alt="Lightmode_logo"
+          className="w-[12vh] h-[12vh] object-contain"
+        />
+      </div>
       <form
-        className="w-[540px] h-[480px] gap-4 p-8 flex flex-col justify-center items-center  rounded-md  bg-transparent "
+        className="w-[52vh] h-[60vh] gap-4 flex flex-col justify-center items-center  rounded-md  bg-transparent "
         onSubmit={onSubmit}
       >
         <h1 className=" text-[68px] font-semibold">Login</h1>

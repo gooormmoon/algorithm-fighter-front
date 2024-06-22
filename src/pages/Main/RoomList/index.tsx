@@ -3,54 +3,24 @@ import { useStomp, useTheme } from "../../../store/store";
 import { useMount } from "react-use";
 import { joinGame } from "../../../api/Game";
 import { useNavigate } from "react-router-dom";
-type room = {
-  host_id: string;
-  host: string;
-  title: string;
-  max_player: number;
-  problem_level: number;
-  timer_time: number;
-  is_started: boolean;
-};
+import { Room } from "../../../store/types";
 const RoomList = ({
   rooms,
   className,
   hover,
 }: {
-  rooms: room[];
+  rooms: Room[];
   className?: string;
   hover?: string;
 }) => {
   const { theme } = useTheme();
   const { gameClient } = useStomp();
   const navigate = useNavigate();
-  useMount(() => {
-    if (gameClient?.connected) {
-      gameClient.subscribe("/user/queue/game/session", (message) => {
-        const data = JSON.parse(message.body);
-        if (data.host && data.host_id) {
-          //생성하고 콜백함수
-          navigate(`/wait/${data.host_id}`, {
-            state: {
-              host: `${data.host}`,
-              host_id: `${data.host_id}`,
-              players: data.players,
-              ready_player: data.ready_player,
-              max_player: data.max_player,
-              problem_level: data.problem_level,
-              timer_time: data.timer_time,
-              title: data.title,
-              chat_room_id: data.chat_room_id,
-            },
-          });
-        }
-      });
-    }
-  });
+  useMount(() => {});
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
-    //game연결되면 이 navigate는 없앨예정
+    // game연결되면 이 navigate는 없앨예정
     // navigate(`/wait/${"sfdsfsfd@123"}`, {
     //   state: {
     //     players: ["구름달"],
@@ -60,14 +30,20 @@ const RoomList = ({
     //     host: "구름달",
     //     title: "대결하실래요?",
     //     max_player: 2,
-    //     problem_level: 2,
+    //     level: 2,
     //     timer_time: 20,
     //     // is_started: true,
     //   },
     // });
     if (gameClient?.connected) {
-      joinGame(gameClient, {
-        host_id: e.currentTarget.id,
+      // joinGame(gameClient, {
+      //   host_id: e.currentTarget.id,
+      // });
+      gameClient.publish({
+        destination: "/app/game/join",
+        body: JSON.stringify({
+          host_id: e.currentTarget.id,
+        }),
       });
     }
   };
@@ -98,7 +74,8 @@ const RoomList = ({
               max_player,
               problem_level,
               timer_time,
-              is_started,
+              started,
+              players,
             },
             index
           ) => {
@@ -116,10 +93,10 @@ const RoomList = ({
                 <td className="w-[10%]">{index}</td>
                 <td className="w-[15%]">{host}</td>
                 <td className="w-[25%]">{title}</td>
-                <td className="w-[10%]">{max_player}</td>
+                <td className="w-[10%]">{`${players.length}/${max_player}`}</td>
                 <td className="w-[10%]">{`lv.${problem_level}`}</td>
                 <td className="w-[15%]">{`${timer_time} min`}</td>
-                <td className="w-[15%]"> {is_started ? "게임중" : "대기중"}</td>
+                <td className="w-[15%]"> {started ? "게임중" : "대기중"}</td>
               </tr>
             );
           }

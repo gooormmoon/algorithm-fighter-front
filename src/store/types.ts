@@ -10,7 +10,7 @@ export const initialMe = {
     id: "",
     name: "",
     nickname: "",
-    profileImageUrl: "",
+    profile_image_url: "",
     description: "",
     createdDate: "",
     loginDate: "",
@@ -22,7 +22,7 @@ export type MeType = {
     id: string;
     name: string;
     nickname: string;
-    profileImageUrl: string;
+    profile_image_url: string;
     description: string;
     createdDate: string;
     loginDate: string;
@@ -59,4 +59,20 @@ export type GlobalChatType = {
   messages: Message[];
   setMessages: (newMessage: Message) => void;
   resetMessages: () => void; // 추가
+};
+
+export type Room = {
+  host_id: string;
+  host: string;
+  title: string;
+  max_player: number;
+  problem_level: string;
+  timer_time: number;
+  started: boolean;
+  players: [];
+};
+export type RoomsType = {
+  rooms: Room[];
+  setRooms: (newRooms: Room[]) => void;
+  resetRooms: () => void;
 };

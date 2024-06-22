@@ -89,7 +89,7 @@ const Header = () => {
           <button onClick={() => setShowProfile((prev) => !prev)}>
             <ProfileIcon size="medium" />
           </button>
-          {showProfile && <Profile />}
+          {showProfile && <Profile onClose={() => setShowProfile(false)} />}
         </li>
       </ul>
     </header>

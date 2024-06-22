@@ -5,17 +5,24 @@ import styles from "./wait.module.scss";
 import CompetitorProfile from "./CompetitorProfile";
 import Chat from "../../components/Chat";
 import { Dropdown, RadioButton } from "../../components/Common";
-import { useMe, useStomp, useTheme } from "../../store/store";
+import { useMe, useRooms, useStomp, useTheme } from "../../store/store";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useMount } from "react-use";
-import { readyGame, startGame, updateGame } from "../../api/Game";
+import {
+  createGameClient,
+  readyGame,
+  startGame,
+  updateGame,
+} from "../../api/Game";
+import * as StompJs from "@stomp/stompjs";
 
 const numberOptions = [10, 20, 30, 40, 50, 60];
 
 const Wait: React.FC = () => {
   const { me } = useMe();
   const { theme } = useTheme();
-  const { gameClient } = useStomp();
+  const { gameClient, setGameClient } = useStomp();
+  const { setRooms } = useRooms();
   const navigate = useNavigate();
   const location = useLocation();
   const [roomInfo, setRoomInfo] = useState({ ...location.state });
@@ -41,6 +48,9 @@ const Wait: React.FC = () => {
           setRoomInfo({ ...data });
           return;
         }
+      });
+      gameClient.subscribe("/user/queue/game/start", (message) => {
+        const data = JSON.parse(message.body);
         if (data.AlgorithmProblem) {
           navigate(`/game/${roomInfo.host_id}`, {
             state: {
@@ -61,12 +71,40 @@ const Wait: React.FC = () => {
       startButton:
         roomInfo.host_id !== me.id
           ? true
-          : roomInfo.ready_player < 1
+          : roomInfo.ready_players.length < 1
           ? true
           : false,
     });
   }, [roomInfo, me]);
 
+  const onClickPrev = () => {
+    if (gameClient?.connected) {
+      gameClient?.deactivate();
+    }
+
+    const newGameClient: StompJs.Client = createGameClient();
+    newGameClient.activate();
+    newGameClient.onConnect = (frame: any) => {
+      console.log("connected");
+      newGameClient.subscribe("/user/queue/game/sessions", (message) => {
+        const data = JSON.parse(message.body);
+        console.log(data);
+        if (data.rooms) {
+          setRooms(data.rooms);
+          // newGameClient.unsubscribe("/user/queue/game/sessions");
+        }
+      });
+      const message = {
+        msg: "give me room list",
+      };
+      newGameClient.publish({
+        destination: "/app/game/sessions",
+        body: JSON.stringify(message),
+      });
+    };
+    setGameClient(newGameClient);
+    navigate("/");
+  };
   const onClickReady = () => {
     if (gameClient?.connected) {
       readyGame(gameClient);
@@ -75,7 +113,7 @@ const Wait: React.FC = () => {
   const onClickStart = () => {
     if (gameClient?.connected) {
       updateGame(gameClient, {
-        problem_level: selectedDifficulty,
+        level: selectedDifficulty,
         timer_time: selectedNumber,
         title: roomInfo.title,
       });
@@ -96,10 +134,7 @@ const Wait: React.FC = () => {
       >
         <div className={styles.waitHeader}>
           <div className={styles.header}>
-            <button
-              className="font-bold text-[20px]"
-              onClick={() => navigate("/")}
-            >
+            <button className="font-bold text-[20px]" onClick={onClickPrev}>
               <ArrowBackIcon />
             </button>
             <h1 className={styles.title}>{roomInfo.title}</h1>
