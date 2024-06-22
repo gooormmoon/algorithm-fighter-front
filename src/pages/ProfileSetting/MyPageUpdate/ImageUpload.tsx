@@ -1,5 +1,8 @@
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import defaultUser from "../../../components/Common/ProfileIcon/defaultUser.png";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 interface ImageUploadProps {
   profileImage: string | null;
   handleIconClick?: () => void;
@@ -13,8 +16,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
   handleFileChange,
   fileInputRef,
 }) => {
-  const hasAllProps = handleFileChange && handleIconClick && fileInputRef;
-
+  const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (handleFileChange) {
+      handleFileChange(event);
+      const file = event.target.files?.[0];
+      if (file) {
+        toast.success("이미지가 성공적으로 업로드되었습니다.");
+      } else {
+        toast.error("이미지 업로드 중 오류가 발생했습니다.");
+      }
+    }
+  };
   return (
     <div className="flex justify-center ">
       <div className="relative">
@@ -23,7 +35,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           alt="Profile"
           className="rounded-full w-28 h-28 object-cover"
         />
-        {hasAllProps && (
+        {
           <>
             {" "}
             <div
@@ -39,10 +51,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               ref={fileInputRef}
               className="hidden"
               accept="image/*"
-              onChange={handleFileChange}
+              onChange={onFileChange}
             />
           </>
-        )}
+        }
       </div>
     </div>
   );

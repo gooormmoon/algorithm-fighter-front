@@ -3,6 +3,9 @@ import { useStomp, useTheme } from "../../../store/store";
 import { useMount } from "react-use";
 import { joinGame } from "../../../api/Game";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 type room = {
   host_id: string;
   host: string;
@@ -43,6 +46,9 @@ const RoomList = ({
               chat_room_id: data.chat_room_id,
             },
           });
+          toast.success("게임에 성공적으로 참가했습니다!");
+        } else {
+          toast.error("게임 참가에 실패했습니다. 다시 시도해주세요.");
         }
       });
     }
@@ -69,6 +75,8 @@ const RoomList = ({
       joinGame(gameClient, {
         host_id: e.currentTarget.id,
       });
+    } else {
+      toast.error("게임 서버에 연결되지 않았습니다.");
     }
   };
   return (

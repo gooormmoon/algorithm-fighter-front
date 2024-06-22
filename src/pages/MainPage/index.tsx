@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./MainPage.scss";
 import { useMe } from "../../store/store";
-
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const MainPage: React.FC = () => {
   const { me } = useMe();
   useEffect(() => {
     console.log(me);
+    toast.info(`Welcome, ${me.name}!`);
   }, [me]);
 
   const navigate = useNavigate();

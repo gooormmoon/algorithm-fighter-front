@@ -11,6 +11,7 @@ import { useStomp } from "../../../../store/store";
 import { useMount } from "react-use";
 import { createGame } from "../../../../api/Game";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface CreateModalProps {
   isOpen: boolean;
@@ -51,6 +52,9 @@ const CreateModal: React.FC<CreateModalProps> = ({
               chat_room_id: data.chat_room_id,
             },
           });
+          toast.success("게임이 성공적으로 생성되었습니다!");
+        } else {
+          toast.error("게임 생성에 실패했습니다.");
         }
       });
     }
@@ -63,6 +67,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
     };
     if (gameClient?.connected) {
       createGame(gameClient, message);
+    } else {
+      toast.error("게임 클라이언트와 연결되지 않았습니다.");
     }
   };
 

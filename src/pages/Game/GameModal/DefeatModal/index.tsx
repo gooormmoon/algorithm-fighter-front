@@ -1,5 +1,6 @@
 import React from "react";
 import { Modal } from "../../../../components/Common/";
+import { toast } from "react-toastify";
 
 interface DefeatModalProps {
   isOpen: boolean;
@@ -7,6 +8,14 @@ interface DefeatModalProps {
 }
 
 const DefeatModal: React.FC<DefeatModalProps> = ({ isOpen, onClose }) => {
+  const handleExitClick = () => {
+    toast.info("게임을 종료합니다.");
+    onClose();
+  };
+  const handleContinueClick = () => {
+    toast.success("새 게임을  시작합니다.");
+    // 게임을 다시 시작하는 로직 추가
+  };
   return (
     <Modal
       isOpen={isOpen}
@@ -24,11 +33,14 @@ const DefeatModal: React.FC<DefeatModalProps> = ({ isOpen, onClose }) => {
         <div className="item-center">
           <button
             className="bg-secondary text-white px-6 py-2 rounded font-semibold mr-4"
-            onClick={onClose}
+            onClick={handleExitClick}
           >
             나가기
           </button>
-          <button className="bg-primary text-black font-semibold px-4 py-2 rounded mr-4">
+          <button
+            className="bg-primary text-black font-semibold px-4 py-2 rounded mr-4"
+            onClick={handleContinueClick}
+          >
             계속하기
           </button>
         </div>

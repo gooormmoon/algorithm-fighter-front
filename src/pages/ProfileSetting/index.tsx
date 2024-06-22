@@ -11,6 +11,8 @@ import { useMe, useTheme } from "../../store/store";
 import { modifyPassword, modifyUser, getMe } from "../../api/Users";
 import axios from "axios";
 import apiClient from "../../api/apiClient";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const MyPageRead: React.FC = () => {
   const { me, setMe } = useMe();
@@ -139,34 +141,35 @@ const MyPageRead: React.FC = () => {
         if (updatedUser.status === 200) {
           const data = updatedUser.data;
           setMe({ ...data });
+          toast.success("사용자 정보가 성공적으로 변경되었습니다!");
         }
       }
       if (passwordChanged) {
         if (!errorMessages.password && !errorMessages.passwordCheck) {
           await modifyPassword(password);
+          toast.success("비밀번호가 성공적으로 변경되었습니다!");
         } else {
-          alert("입력한 비밀번호를 확인하세요");
+          toast.error("입력한 비밀번호를 확인하세요");
           return;
         }
       }
-      alert("변경되었습니다!");
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
         if (
           error.response.status === 401 &&
           error.response.data?.description === "토큰이 없거나 잘못된 토큰임"
         ) {
-          alert("잘못된 요청입니다: " + error.message);
+          toast.error("잘못된 요청입니다: " + error.message);
         } else if (
           error.response.status === 404 &&
           error.response.data?.description === "해당하는 유저를 찾을 수 없음"
         ) {
-          alert("잘못된 사용자 입니다: " + error.message);
+          toast.error("잘못된 사용자 입니다: " + error.message);
         } else {
-          alert("예상치 못한 오류가 발생했습니다.");
+          toast.error("예상치 못한 오류가 발생했습니다.");
         }
       } else {
-        console.error("An unexpected error occurred", error);
+        toast.error("An unexpected error occurred");
       }
     }
   };

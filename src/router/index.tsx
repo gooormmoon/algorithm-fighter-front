@@ -12,7 +12,6 @@ import {
   LogoutPage,
   ProfileSettingPage,
   GamePage,
-  MyReposPage,
   WaitPage,
 } from "../pages";
 

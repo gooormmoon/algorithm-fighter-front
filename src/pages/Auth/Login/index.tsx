@@ -8,7 +8,7 @@ import { getMe } from "../../../api/Users";
 import { createGameClient } from "../../../api/Game";
 import { createChatClient } from "../../../api/Chat";
 import * as StompJs from "@stomp/stompjs";
-import { AnyCnameRecord } from "dns";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { loggedIn, setMe } = useMe();
@@ -73,6 +73,7 @@ const Login = () => {
             };
 
             navigate("/");
+            toast.success("로그인 성공!");
           }
         }
       }
@@ -81,6 +82,7 @@ const Login = () => {
       //로그인 실패시 toast 알람을 추가할지 아니면 그냥 에러메세지만 태그로 넣어줄지 고민해봐야할듯!
     } catch (err) {
       console.error(err);
+      toast.error("로그인 실패!");
       // alert("로그인 실패");
       //임시로 alert로 해놓음
     }
