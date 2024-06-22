@@ -45,10 +45,10 @@ const Game = () => {
   // After game start
   const [problemTitle, setProblemTitle] = useState<string>("");
   const [problemData, setProblemData] = useState<string>("");
-  const [problemLevel, setProblemLevel] = useState<string>("");
-  const [problemCodeTemplate, setProblemCodeTemplate] = useState<string>("");
+
   //Is Game End?
   const [gaming, setGaming] = useState<boolean>(false);
+
   //TestCase
   const [testCases, setTestCases] = useState<TestCase[]>([
     { id: uuidv4(), value: "", result: "" },
