@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Input } from "../../../components/Common";
-import { validateEmail } from "../utils";
-import { getTokens, saveTokens } from "../../../utils";
+import { getTokens, saveTokens, clearTokens } from "../../../utils";
 import { login } from "../../../api/Auth";
-import { useMe, useTheme } from "../../../store/store";
+import { useGlobalChat, useMe, useStomp } from "../../../store/store";
 import { getMe } from "../../../api/Users";
+import { createGameClient } from "../../../api/Game";
+import { createChatClient } from "../../../api/Chat";
+import * as StompJs from "@stomp/stompjs";
+import { AnyCnameRecord } from "dns";
 
 const Login = () => {
-  // const REST_API_KEY = "백엔드한테 달라하자1";
-  // const REDIRECT_URI = "백엔드한테 달라하자2";
-  // const link = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
-
-  // const onClickSocialLogin = () => {
-  //   window.location.href = link;
-  // };
-  const { theme } = useTheme();
-  const { me, loggedIn, setMe } = useMe();
+  const { loggedIn, setMe } = useMe();
+  const { setGameClient, setChatClient } = useStomp();
   const navigate = useNavigate();
-
+  const { setMessages, resetMessages } = useGlobalChat();
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -27,8 +23,9 @@ const Login = () => {
     if (loggedIn) {
       navigate("/");
     }
-  }, []);
-  const onChange = (e: any) => {
+  }, [loggedIn, navigate]);
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.target;
     setForm({
@@ -36,7 +33,7 @@ const Login = () => {
       [name]: value,
     });
   };
-  const onSubmit = async (e: any) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const loginData = {
@@ -54,29 +51,54 @@ const Login = () => {
           if (myInfoResponse.status === 200) {
             const myInfo = myInfoResponse.data;
             setMe(myInfo);
+            const gameClient: StompJs.Client = createGameClient();
+            const chatClient: StompJs.Client = createChatClient();
+            chatClient.activate();
+            chatClient.onConnect = (frame: any) => {
+              chatClient.subscribe("/topic/room/global", (message) => {
+                const receivedMessage = JSON.parse(message.body);
+                setMessages({
+                  ...receivedMessage,
+                  nickname: myInfo.nickname, // nickname 추가
+                });
+              });
+            };
+
+            setChatClient(chatClient);
+            resetMessages(); // 메시지 리셋
+            gameClient.activate();
+            gameClient.onConnect = (frame: any) => {
+              console.log("connected");
+              setGameClient(gameClient);
+            };
+
             navigate("/");
           }
         }
       }
+
       // else if(response.status ===)
       //로그인 실패시 toast 알람을 추가할지 아니면 그냥 에러메세지만 태그로 넣어줄지 고민해봐야할듯!
     } catch (err) {
       console.error(err);
-      alert("로그인 실패");
+      // alert("로그인 실패");
       //임시로 alert로 해놓음
     }
   };
+
+  // 로그아웃
+  // const onLogout = () => {
+  //   clearTokens(); // 토큰 삭제
+  //   reset(); // 사용자 상태 리셋
+  //   resetMessages(); // 메시지 리셋
+  //   navigate("/login");
+  // };
+
   return (
     <main
       className={`w-full h-[100vh] flex flex-col justify-center items-center 
-        ${
-          // theme === "dark"
-          //   ? "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
-          //   : "bg-white text-secondary"
-          "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "
-        }`}
+        ${"bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "}`}
     >
-      {/* <div className="w-[560px] h-[500px] bg-white/30 blur-lg absolute" /> */}
       <form
         className="w-[540px] h-[480px] gap-4 p-8 flex flex-col justify-center items-center  rounded-md  bg-transparent "
         onSubmit={onSubmit}
@@ -101,12 +123,6 @@ const Login = () => {
           size="large"
           border={false}
         />
-
-        {/* <div className="w-[360px] h-[56px] flex justify-center">
-        <button type="button" onClick={onClickSocialLogin}>
-          TEST-카카오 소셜로그인
-        </button>
-      </div> */}
         <Button
           type="submit"
           size="large_radius"
@@ -127,6 +143,7 @@ const Login = () => {
           </li>
         </ul>
       </form>
+      {/* <Button onClick={onLogout} size="large_radius" color="secondary" textColor="primary_font" name="로그아웃" /> */}
     </main>
   );
 };

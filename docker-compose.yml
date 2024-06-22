@@ -1,0 +1,64 @@
+version: "3.8"
+services:
+  algorithm-fighter-mysql:
+    image: bery0na/algofi-mysql:2f7bb7613269f754f0a13b57d64d305bfdd17729
+    ports:
+      - 3306:3306
+    volumes:
+      - mydata:/var/lib/mysql
+    deploy:
+      resources:
+        limits:
+          cpus: "1"
+          memory: 256M
+    restart: always
+
+  algorithm-fighter-core:
+    image: bery0na/algofi-core:391ad8301cc5e6e00b6dcdab3087b790b79ee894
+    ports:
+      - 8080:8080
+    environment:
+      - DB_URL=algorithm-fighter-mysql
+    depends_on:
+      - algorithm-fighter-mysql
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 512M
+    restart: on-failure
+
+  algorithm-fighter-compile:
+    image: bery0na/algofi-compile:391ad8301cc5e6e00b6dcdab3087b790b79ee894
+    ports:
+      - 9000:9000
+    environment:
+      - DB_URL=algorithm-fighter-mysql
+    depends_on:
+      - algorithm-fighter-mysql
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 512M
+    restart: on-failure
+
+  # algorithm-fighter-front:
+  #   build: ./algorithm-fighter-front
+  #   image: algofi-front-test:5.0.0-compose
+  #   environment:
+  #     - BACKEND_HOST=algorithm-fighter-core
+  #   ports:
+  #     - 80:3000
+  #   depends_on:
+  #     - algorithm-fighter-core
+  #     - algorithm-fighter-compile
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: "0.5"
+  #         memory: 64M
+  #   restart: on-failure
+
+volumes:
+  mydata:

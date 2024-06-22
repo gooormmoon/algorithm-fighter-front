@@ -21,11 +21,11 @@ const router = (
   <Route>
     <Route path="/" element={<Layout />}>
       <Route index element={<MainPage />} />
-      <Route path="/game" element={<GamePage />} />\
       {/* <Route path="/myRepository" element={<MyReposPage />} /> */}
       <Route path="/setting" element={<ProfileSettingPage />} />
-      <Route path="/wait" element={<WaitPage />} />
-      <Route path="/start" element={<StartPage />} />
+
+      <Route path="/wait/:id" element={<WaitPage />} />
+      <Route path="/game/:id" element={<GamePage />} />\
     </Route>
 
     <Route path="/login" element={<LoginPage />} />

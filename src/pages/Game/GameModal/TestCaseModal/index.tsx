@@ -6,63 +6,26 @@ import CloseIcon from "@mui/icons-material/Close";
 interface TestCaseModalProps {
   isOpen: boolean;
   onClose: () => void;
-  setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-interface TestCase {
-  id: string;
-  value: string;
-  result: string;
+  testCases: { id: string; value: string; result: string }[];
+  handleInputChange: (
+    id: string,
+    type: "value" | "result",
+    newValue: string
+  ) => void;
+  handleDelete: (id: string) => void;
+  handleSubmit: (e: React.FormEvent) => void;
+  addTestCase: () => void;
 }
 
 const TestCaseModal: React.FC<TestCaseModalProps> = ({
   isOpen,
   onClose,
-  setModalOpen,
+  testCases,
+  handleInputChange,
+  handleDelete,
+  handleSubmit,
+  addTestCase,
 }) => {
-  const [testCases, setTestCases] = useState<TestCase[]>([
-    { id: uuidv4(), value: "", result: "" },
-  ]);
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("test-case") as string) || [
-      { id: uuidv4(), value: "", result: "" },
-    ];
-    setTestCases(data);
-
-    return () => {};
-  }, []);
-
-  const handleInputChange = (
-    id: string,
-    type: "value" | "result",
-    newValue: string
-  ) => {
-    const newTestCases = testCases.map((testCase) => {
-      if (testCase.id === id) {
-        return { ...testCase, [type]: newValue };
-      }
-      return testCase;
-    });
-
-    setTestCases(newTestCases);
-  };
-
-  const addTestCase = () => {
-    setTestCases([...testCases, { id: uuidv4(), value: "", result: "" }]);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    localStorage.setItem("test-case", JSON.stringify(testCases));
-    setModalOpen(false);
-  };
-
-  const handleDelete = (id: string) => {
-    const newTestCases = testCases.filter((testCase) => testCase.id !== id);
-    setTestCases(newTestCases);
-  };
-
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="large">
       <div className="pb-5 text-2xl font-bold text-secondary ">
@@ -74,7 +37,7 @@ const TestCaseModal: React.FC<TestCaseModalProps> = ({
             <div key={testCase.id} className="py-3 border-b-2">
               <div className="flex ">
                 <div>Parameter {index + 1}</div>
-                <div className="ml-[250px]">Result {index + 1}</div>
+                <div className="ml-[180px]">Result {index + 1}</div>
               </div>
               <div className="flex items-center space-x-2">
                 <Input

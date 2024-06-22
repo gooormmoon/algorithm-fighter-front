@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ProfileIcon } from "../../../Common";
 import { useMe, useTheme } from "../../../../store/store";
 const Profile = () => {
   const { theme } = useTheme();
-  const { me, loggedIn } = useMe();
+  const { me } = useMe();
 
   return (
     <section

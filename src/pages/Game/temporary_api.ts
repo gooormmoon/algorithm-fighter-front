@@ -1,19 +1,22 @@
-import axios from "axios";
-import { LANGUAGE_VERSIONS } from "./Constants";
+// // 이거 이제 안써요- 타입확인용
 
-const API = axios.create({
-  baseURL: "https://emkc.org/api/v2/piston",
-});
+// import axios from "axios";
+// import { LANGUAGE_VERSIONS } from "./Constants";
 
-export const executeCode = async (language: string, sourceCode: string) => {
-  const response = await API.post("/execute", {
-    language: language,
-    version: LANGUAGE_VERSIONS[language],
-    files: [
-      {
-        content: sourceCode,
-      },
-    ],
-  });
-  return response.data;
-};
+// const API = axios.create({
+//   baseURL: "https://emkc.org/api/v2/piston",
+// });
+
+// export const executeCode = async (language: string, sourceCode: string) => {
+//   const response = await API.post("/execute", {
+//     language: language,
+//     version: LANGUAGE_VERSIONS[language],
+//     files: [
+//       {
+//         content: sourceCode,
+//       },
+//     ],
+//   });
+//   return response.data;
+// };
+export {};
