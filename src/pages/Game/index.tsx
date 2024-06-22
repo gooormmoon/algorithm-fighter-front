@@ -16,6 +16,8 @@ import { autoUserSubmitCode, submitCode, gradeCode } from "../../api/Game/";
 import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "react-router-dom";
 import { useMount } from "react-use";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 //TestCase type
 type TestCase = {
   id: string;
@@ -92,6 +94,7 @@ const Game = () => {
             }
             if (data.game_over_type === "time_over") {
               //게임 타임오버 모달
+              toast.info("시간이 초과되었습니다.");
             }
           }
 
@@ -107,6 +110,7 @@ const Game = () => {
           });
         } catch (e) {
           console.error("Failed to parse message:", e);
+          toast.error("메시지를 처리하는 동안 오류가 발생했습니다.");
         }
       });
       //채점 결과 수신 - 미완
@@ -162,6 +166,7 @@ const Game = () => {
         code: sourceCode,
         language: language,
       });
+      toast.success("코드가 성공적으로 제출되었습니다.");
     }
   };
 
@@ -198,11 +203,11 @@ const Game = () => {
       setOutput(newOutputs);
       setOutcomeMessage(newMessages.join("\n")); // join messages into one string or handle as you need
       setIsError(false);
+      toast.success("코드가 성공적으로 실행되었습니다.");
     } catch (error) {
       if (error instanceof Error) {
         setIsError(true);
-        console.log(error.message);
-        alert(error.message || "Unable to run code");
+        toast.error(error.message || "코드를 실행할 수 없습니다.");
       }
     } finally {
       setIsLoading(false);

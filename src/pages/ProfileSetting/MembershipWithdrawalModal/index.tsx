@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Modal } from "../../../components/Common";
 import { deleteUser } from "../../../api/Users";
 import { useMe } from "../../../store/store";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 interface MembershipWithdrawalModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -23,7 +26,7 @@ const MembershipWithdrawalModal: React.FC<MembershipWithdrawalModalProps> = ({
     try {
       await deleteUser({ id: userId, password: password });
       localStorage.removeItem("meStorage");
-      alert("회원탈퇴가 성공적으로 완료되었습니다");
+      toast.success("회원탈퇴가 성공적으로 완료되었습니다");
       reset();
       localStorage.clear();
       navigate("/login");
@@ -31,6 +34,7 @@ const MembershipWithdrawalModal: React.FC<MembershipWithdrawalModalProps> = ({
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message);
+        toast.error(`회원탈퇴 실패: 관리자에게 문의하세요`);
       }
     }
   };

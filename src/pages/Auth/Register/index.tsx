@@ -11,6 +11,8 @@ import { register } from "../../../api/Auth";
 import { useMe, useTheme } from "../../../store/store";
 import { useMount } from "react-use";
 import Lightmode_logo from "../../../Lightmode_logo.png";
+import { toast } from "react-toastify";
+
 const Register = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -67,7 +69,7 @@ const Register = () => {
 
     if (!validatedForm) {
       //유효성 검사 통과 - 회원가입진행
-      alert("회원가입 형식이 맞지 않습니다.");
+      toast.error("회원가입 형식이 맞지 않습니다.");
       return;
     }
     try {
@@ -79,16 +81,17 @@ const Register = () => {
 
       const response = await register(registerData);
       if (response.status === 200) {
+        toast.success("회원가입이 완료되었습니다.");
         navigate("/login");
       }
     } catch (err: any) {
       if (err.response.status === 400) {
-        console.error(err);
+        // console.error(err);
         const { msg } = err.response.data;
-        alert(msg);
+        toast.error(msg);
+      } else {
+        toast.error("회원가입에 실패했습니다.");
       }
-
-      //임시로 alert로 해놓음
     }
   };
   return (

@@ -8,9 +8,13 @@ import { getMe } from "../../../api/Users";
 import { createGameClient } from "../../../api/Game";
 import { createChatClient } from "../../../api/Chat";
 import * as StompJs from "@stomp/stompjs";
+<<<<<<< HEAD
+import { toast } from "react-toastify";
+=======
 import { AnyCnameRecord } from "dns";
 import Darkmode_logo from "../../../Darkmode_logo.png";
 import Lightmode_logo from "../../../Lightmode_logo.png";
+>>>>>>> develop
 
 const Login = () => {
   const { setRooms } = useRooms();
@@ -90,14 +94,21 @@ const Login = () => {
             setGameClient(gameClient);
 
             navigate("/");
+            toast.success("로그인 성공!");
           }
         }
       }
 
       // else if(response.status ===)
       //로그인 실패시 toast 알람을 추가할지 아니면 그냥 에러메세지만 태그로 넣어줄지 고민해봐야할듯!
+<<<<<<< HEAD
+    } catch (err) {
+      console.error(err);
+      toast.error("로그인 실패!");
+=======
     } catch (err: any) {
       console.error(err.message);
+>>>>>>> develop
       // alert("로그인 실패");
       //임시로 alert로 해놓음
     }

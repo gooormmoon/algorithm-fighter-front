@@ -8,6 +8,8 @@ import { Dropdown, RadioButton } from "../../components/Common";
 import { useMe, useRooms, useStomp, useTheme } from "../../store/store";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useMount } from "react-use";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   createGameClient,
   readyGame,
@@ -59,6 +61,7 @@ const Wait: React.FC = () => {
               algorithmProblem: { ...data.AlgorithmProblem },
             },
           });
+          toast.success("게임이 시작되었습니다!");
         }
       });
     }
@@ -108,6 +111,7 @@ const Wait: React.FC = () => {
   const onClickReady = () => {
     if (gameClient?.connected) {
       readyGame(gameClient);
+      toast.success("게임 준비가 완료되었습니다!");
     }
   };
   const onClickStart = () => {
