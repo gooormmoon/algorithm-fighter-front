@@ -10,7 +10,7 @@ import {
 import { register } from "../../../api/Auth";
 import { useMe, useTheme } from "../../../store/store";
 import { useMount } from "react-use";
-
+import Lightmode_logo from "../../../Lightmode_logo.png";
 const Register = () => {
   const { theme } = useTheme();
   const navigate = useNavigate();
@@ -93,10 +93,17 @@ const Register = () => {
   };
   return (
     <main
-      className={`w-full h-[100vh] flex flex-col justify-center items-center  ${"bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "} `}
+      className={`w-full h-[100vh] flex flex-col justify-start items-center gap-[4vh]  ${"bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "} `}
     >
+      <div className="flex justify-start w-full px-4">
+        <img
+          src={Lightmode_logo}
+          alt="Lightmode_logo"
+          className="w-[12vh] h-[12vh] object-contain"
+        />
+      </div>
       <form
-        className="w-[600px] h-[600px] gap-2 p-12 flex flex-col justify-center items-center drop-shadow-md rounded-md"
+        className="w-[52vh] h-[68vh] gap-2 flex flex-col justify-center items-center drop-shadow-md rounded-md"
         onSubmit={onSubmit}
       >
         <h1 className=" text-[64px] font-semibold">Register</h1>

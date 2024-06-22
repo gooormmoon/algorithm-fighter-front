@@ -11,6 +11,8 @@ import { useMe, useTheme } from "../../store/store";
 import { modifyPassword, modifyUser, getMe } from "../../api/Users";
 import axios from "axios";
 import apiClient from "../../api/apiClient";
+import { useMount } from "react-use";
+import mime from "mime";
 
 const MyPageRead: React.FC = () => {
   const { me, setMe } = useMe();
@@ -21,8 +23,9 @@ const MyPageRead: React.FC = () => {
   const [description, handleDescriptionChange] = useInputChange(me.description);
   const [password, handlePasswordChange, setPassword] = useInputChange("");
   const [profileImage, setProfileImage] = useState<string | null>(
-    me.profileImageUrl
+    me.profile_image_url
   );
+  const [blobUrl, setBlobUrl] = useState<string>("");
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [passwordCheck, handlePasswordCheckChange, setPasswordCheck] =
     useInputChange("");
@@ -33,7 +36,6 @@ const MyPageRead: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showPasswordUpdate, setShowPasswordUpdate] = useState(false);
-
   // useEffect(() => {
   //   const fetchUser = async () => {
   //     try {
@@ -49,12 +51,20 @@ const MyPageRead: React.FC = () => {
   //   };
   //   fetchUser();
   // }, []);
+  useEffect(() => {
+    console.log(me?.profile_image_url);
+    // const reader = new FileReader();
+    // reader.onloadend = () => {
+    //   setProfileImage(profileImage as string);
+    // };
+    // reader.readAsDataURL(profileImage);
+  }, [me]);
 
   useEffect(() => {
     if (
       nickname !== me.nickname ||
       description !== me.description ||
-      profileImage !== me.profileImageUrl
+      profileImage !== me.profile_image_url
     ) {
       setShowSaveButton(true);
     } else {
@@ -68,19 +78,44 @@ const MyPageRead: React.FC = () => {
       fileInputRef.current.click();
     }
   };
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (fileInputRef.current && fileInputRef.current.files) {
-      const file = fileInputRef.current.files[0];
-      setUploadedFile(file);
-      // const reader = new FileReader();
-      // // reader.onloadend = () => {
-      // //   setProfileImage(reader.result as string);
-      // // };
-      // reader.readAsDataURL(file);
-      const url = URL.createObjectURL(file);
-      setProfileImage(url);
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    // if (fileInputRef.current && fileInputRef.current.files) {
+    //   const file = fileInputRef.current.files[0];
+    //   setUploadedFile(file);
+    //   // const reader = new FileReader();
+    //   // // reader.onloadend = () => {
+    //   // //   setProfileImage(reader.result as string);
+    //   // // };
+    //   // reader.readAsDataURL(file);
+    //   const url = URL.createObjectURL(file);
+    //   setProfileImage(url);
 
-      window.URL.revokeObjectURL(url);
+    //   window.URL.revokeObjectURL(url);
+    // }
+
+    // 희태님 원래코드
+
+    if (event.target.files && event.target.files[0]) {
+      const file = event.target.files[0];
+
+      const fileToBlob = async (file: any) =>
+        new Blob([new Uint8Array(file)], {
+          type: "image/png",
+        });
+      const blob = await fileToBlob(file);
+      const url = URL.createObjectURL(blob);
+      setBlobUrl(url);
+
+      setUploadedFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setProfileImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+
+      // reader.readAsText(file);
     }
   };
 
@@ -93,6 +128,9 @@ const MyPageRead: React.FC = () => {
     });
   };
 
+  const handleImgSrc = (e: any) => {
+    setProfileImage(e.target.value);
+  };
   const handleBlur = (field: string) => {
     if (field === "password") {
       setErrorMessages((prev) => ({
@@ -119,7 +157,7 @@ const MyPageRead: React.FC = () => {
     if (
       nickname !== me.nickname ||
       description !== me.description ||
-      profileImage !== me.profileImageUrl
+      profileImage !== me.profile_image_url
     ) {
       userChanged = true;
     }
@@ -130,15 +168,21 @@ const MyPageRead: React.FC = () => {
 
     try {
       if (userChanged) {
+        console.log(typeof profileImage, profileImage);
+        console.log(typeof blobUrl, blobUrl);
         const updatedUser = await modifyUser({
           name: me.name,
           nickname: nickname,
-          profileImageUrl: profileImage || "",
+          // profileImageUrl: blobUrl,
+          profile_image_url: blobUrl,
+          // profile_image_url: profileImage,
           description: description || "",
         });
         if (updatedUser.status === 200) {
           const data = updatedUser.data;
+          console.log(data);
           setMe({ ...data });
+          // URL.revokeObjectURL(blobUrl);
         }
       }
       if (passwordChanged) {
@@ -189,11 +233,19 @@ const MyPageRead: React.FC = () => {
             handleFileChange={handleFileChange}
             fileInputRef={fileInputRef}
           />
+
           <div className="pb-5 mb-2">
             <div className="text-xl font-bold text-center">{me.name}</div>
             <div className="text-gray-500 text-center">{me.id}</div>
           </div>
         </div>
+        <InputField
+          label="프로필 이미지"
+          type="text"
+          placeholder="프로필 이미지 링크"
+          value={profileImage || ""}
+          onChange={handleImgSrc}
+        />
 
         <InputField
           label="닉네임"

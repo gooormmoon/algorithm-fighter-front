@@ -7,6 +7,7 @@ import {
   GlobalChatType,
   Message,
   initialMe,
+  RoomsType,
 } from "./types";
 import { createJSONStorage, persist } from "zustand/middleware";
 import Logout from "../pages/Auth/Logout";
@@ -117,6 +118,27 @@ export const useGlobalChat = create(
     }),
     {
       name: "globalMessageStorage", // 로컬 스토리지에서 사용할 키
+    }
+  )
+);
+
+export const useRooms = create(
+  persist<RoomsType>(
+    (set) => ({
+      rooms: [],
+      setRooms: (newRooms: RoomsType["rooms"]) => {
+        set((state) => {
+          const updateRooms = [...newRooms];
+          console.log("Updating rooms:", updateRooms); // 콘솔 로그 추가
+          return { rooms: updateRooms };
+        });
+      },
+      resetRooms: () => {
+        set({ rooms: [] });
+      },
+    }),
+    {
+      name: "roomsStorage",
     }
   )
 );
