@@ -1,8 +1,6 @@
 import React from "react";
 import { Editor, OnMount } from "@monaco-editor/react";
-import { useState } from "react";
 import { CODE_SNIPPETS } from "../Constants";
-import { Button } from "../../../components/Common";
 import { useTheme } from "../../../store/store";
 import { toast } from "react-toastify";
 
