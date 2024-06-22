@@ -1,7 +1,10 @@
 export { default as RegisterPage } from "./Auth/Register";
 export { default as LoginPage } from "./Auth/Login";
-export { default as MyPageUpdate } from "./MyPage/MyPageUpdate";
+export { default as LogoutPage } from "./Auth/Logout";
+export { default as MainPage } from "./Main";
 export { default as GamePage } from "./Game";
 export { default as MyReposPage } from "./MyRepository";
 export { default as GameProblem } from "./Game/GameProblem";
-export { default as MyPageRead } from "./MyPage/MyPageRead";
+export { default as ProfileSettingPage } from "./ProfileSetting";
+export { default as WaitPage } from "./Wait";
+export { default as StartPage } from "./Start";

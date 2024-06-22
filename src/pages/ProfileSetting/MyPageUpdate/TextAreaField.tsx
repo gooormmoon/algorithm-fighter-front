@@ -17,12 +17,12 @@ const TextAreaField: React.FC<TextAreaFieldProps> = ({
 }) => {
   return (
     <div className="flex items-center mb-4">
-      <label className="block text-gray-700 w-[180px]">{label}</label>
+      <label className="block text-gray-700 w-[175px]">{label}</label>
       <textarea
         value={value}
         placeholder={placeholder}
         onChange={onChange}
-        className="border-2 p-2 w-full"
+        className="border-2 p-2 w-full text-secondary"
         disabled={disabled}
       />
     </div>

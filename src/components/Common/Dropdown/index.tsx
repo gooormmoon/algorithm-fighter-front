@@ -5,6 +5,7 @@ interface DropdownProps<T> {
   selectedValue: T;
   onChange: (value: T) => void;
   showMinutes?: boolean;
+  color?: string;
 }
 
 const Dropdown = <T extends string | number>({
@@ -12,6 +13,7 @@ const Dropdown = <T extends string | number>({
   selectedValue,
   onChange,
   showMinutes,
+  color,
 }: DropdownProps<T>) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -21,12 +23,12 @@ const Dropdown = <T extends string | number>({
   };
 
   return (
-    <div className="relative  inline-block text-left z-10">
+    <div className={`${color} relative  inline-block text-left z-10 `}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-[120px] bg-white px-4 py-2 rounded-md shadow ring-1 ring-black ring-opacity-5 focus:outline-none"
+        className="w-[120px] px-4 py-2 rounded-md shadow ring-1 ring-black ring-opacity-5 focus:outline-none border border-oc_white"
       >
-        {showMinutes ? `${selectedValue}` : selectedValue}
+        {showMinutes ? `${selectedValue} minutes` : selectedValue}
       </button>
 
       {isOpen && (
@@ -36,9 +38,9 @@ const Dropdown = <T extends string | number>({
               key={index}
               onClick={() => handleChange(option)}
               //class name: block 삭제
-              className="w-[120px]  px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer flex justify-center"
+              className="w-[120px] rounded-md px-4 py-2 text-sm text-gray-700 hover:bg-gray-200 cursor-pointer flex justify-center"
             >
-              {showMinutes ? `${option} ` : option}
+              {showMinutes ? `${option} minutes` : option}
             </div>
           ))}
         </div>

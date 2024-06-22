@@ -1,71 +1,57 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import ForumIcon from "@mui/icons-material/Forum";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import Profile from "./Profile";
-import { CreateModal, EnterModal } from "../../../pages/Game/GameModal";
-import { Button, ProfileIcon } from "../../Common";
+import { ProfileIcon } from "../../Common";
 import { useTheme } from "../../../store/store";
+import Lightmode_logo from "../../../Lightmode_logo.png";
+import Darkmode_logo from "../../../Darkmode_logo.png";
 interface pathType {
   path: string;
   name: string;
 }
 const paths: pathType[] = [
   { path: "/", name: "홈" },
-  { path: "/myRepository", name: "내 저장소" },
-  { path: "/mypage", name: "마이 페이지" },
+  { path: "/setting", name: "프로필 설정" },
 ];
 const Header = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-  const [showProfile, setShowProfile] = useState(false);
   const { theme, changeTheme } = useTheme();
-
+  const [showProfile, setShowProfile] = useState(false);
   const [hover, setHover] = useState(false);
-  const [createGame, setCreateGame] = useState(false);
-  const [enterGame, setEnterGame] = useState(false);
-  const [inviteCode, setInviteCode] = useState("");
-  const [selectedDifficulty, setSelectedDifficulty] = useState("lv0");
-  const [selectedNumber, setSelectedNumber] = useState("10 minute");
-
-  useEffect(() => {
-    console.log(pathname);
-  }, [pathname]);
-
-  useEffect(() => {
-    console.log(theme);
-  }, [theme]);
-
-  const toggleModal = (
-    modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
-    isOpen: boolean
-  ) => {
-    modalSetter(isOpen);
-  };
-
-  const handleCreateSubmit = (
-    code: string,
-    difficulty: string,
-    timer: string
-  ) => {
-    setInviteCode(code);
-    setSelectedDifficulty(difficulty);
-    setSelectedNumber(timer);
-    toggleModal(setCreateGame, false);
-    toggleModal(setEnterGame, true);
-  };
 
   return (
     <header
       className={`w-full h-[70px] flex justify-between items-center gap-12 p-4 shadow-xl ${
         theme === "dark"
-          ? "bg-secondary text-gray-400 border-white"
-          : "bg-white text-gray-400 border-secondary "
+          ? "bg-secondary text-gray-400 border-b border-[#101935] "
+          : "bg-white text-gray-400  "
       }`}
     >
       <ul className="w-4/5 h-full flex gap-12 items-center ">
-        <li className="mr-12">로고</li>
+        <li>
+          <div
+            className={`w-[100px] h-full
+         relative overflow-hidden flex justify-center cursor-pointer`}
+            onClick={() => navigate("/")}
+          >
+            {theme === "dark" ? (
+              <img
+                alt="dark_logo"
+                src={Darkmode_logo}
+                className="object-cover w-full h-full"
+              />
+            ) : (
+              <img
+                alt="light_logo"
+                src={Lightmode_logo}
+                className="object-cover w-full h-full"
+              />
+            )}
+          </div>
+        </li>
         {paths.map(({ path, name }: pathType, index: number) => {
           return (
             <li
@@ -81,21 +67,10 @@ const Header = () => {
             </li>
           );
         })}
-
-        <li>
-          <button onClick={() => toggleModal(setEnterGame, true)}>
-            게임 참가
-          </button>
-        </li>
-        <li>
-          <button onClick={() => toggleModal(setCreateGame, true)}>
-            게임 생성
-          </button>
-        </li>
       </ul>
       <ul className="h-full flex gap-4 justify-center items-center">
         <li
-          className={`w-[32px] h-[32px] flex justify-center items-center text-white ${
+          className={`w-[32px] h-[32px] flex justify-center items-center  ${
             theme === "dark" ? "text-white" : "text-secondary"
           }`}
         >
@@ -114,25 +89,9 @@ const Header = () => {
           <button onClick={() => setShowProfile((prev) => !prev)}>
             <ProfileIcon size="medium" />
           </button>
-          {showProfile && <Profile />}
+          {showProfile && <Profile onClose={() => setShowProfile(false)} />}
         </li>
       </ul>
-      {createGame && (
-        <CreateModal
-          isOpen={createGame}
-          onClose={() => toggleModal(setCreateGame, false)}
-          onSubmit={handleCreateSubmit}
-        />
-      )}
-      {enterGame && (
-        <EnterModal
-          isOpen={enterGame}
-          onClose={() => toggleModal(setEnterGame, false)}
-          inviteCode={inviteCode}
-          selectedDifficulty={selectedDifficulty}
-          selectedNumber={selectedNumber}
-        />
-      )}
     </header>
   );
 };

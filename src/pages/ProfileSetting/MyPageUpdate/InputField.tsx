@@ -10,6 +10,7 @@ interface InputFieldProps {
   errorText?: string | boolean;
   disabled?: boolean;
   onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
+  size?: string;
 }
 
 const InputField: React.FC<InputFieldProps> = ({
@@ -21,8 +22,9 @@ const InputField: React.FC<InputFieldProps> = ({
   errorText,
   disabled = false,
   onBlur,
+  size = "large",
 }) => (
-  <div className="flex items-center mb-4">
+  <div className="flex items-center mb-2">
     <label className="block text-gray-700 w-32">{label}</label>
     <Input
       type={type}
@@ -30,10 +32,11 @@ const InputField: React.FC<InputFieldProps> = ({
       value={value}
       onChange={onChange}
       name="test"
-      size="large"
+      size={size}
       errorText={errorText}
       disabled={disabled}
       onBlur={onBlur}
+      border={true}
     />
   </div>
 );

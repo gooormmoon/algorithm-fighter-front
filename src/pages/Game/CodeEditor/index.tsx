@@ -1,8 +1,8 @@
 import React from "react";
 import { Editor, OnMount } from "@monaco-editor/react";
-import { useState } from "react";
 import { CODE_SNIPPETS } from "../Constants";
-import { Button } from "../../../components/Common";
+import { useTheme } from "../../../store/store";
+import { toast } from "react-toastify";
 
 interface CodeEditorProps {
   language: string;
@@ -17,14 +17,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
   setValue,
   value,
 }) => {
-  // const [theme, setTheme] = useState<string>("vs-light");
-
-  //테마 전역 설정 전 테스트
-  // const themeClick = () => {
-  //   setTheme((prevTheme) =>
-  //     prevTheme === "vs-light" ? "vs-dark" : "vs-light"
-  //   );
-  // };
+  const { theme } = useTheme();
   const setEditorTheme = (monaco: any) => {
     monaco.editor.defineTheme("onedark", {
       base: "vs-dark",
@@ -35,34 +28,34 @@ const CodeEditor: React.FC<CodeEditorProps> = ({
           foreground: "#5d7988",
           fontStyle: "italic",
         },
-        { token: "constant", foreground: "#e06c75" },
+        {
+          token: "constant",
+          foreground: "#e06c75",
+        },
       ],
       colors: {
-        "editor.background": "#19282d",
+        "editor.background": "#1f2d35",
       },
     });
   };
-
+  const handleEditorMount: OnMount = (editor, monaco) => {
+    try {
+      onMount(editor, monaco);
+    } catch (error) {
+      toast.error("에디터를 로드하는 데 문제가 발생했습니다.");
+    }
+  };
   return (
     <>
-      {/* <Button
-        type="button"
-        size={"medium_small_radius"}
-        onClick={themeClick}
-        color="secondary"
-        textColor="primary_font"
-        name={"테마 바꾸기"}
-      ></Button> */}
-      {/* <div className="flex"></div> */}
       <Editor
         width={"100%"}
         // height="75vh"
         // theme={localStorage.getItem("theme") || "vs-light"}
-        theme={"onedark"}
+        theme={theme === "dark" ? "vs-dark" : "vs-light"}
         language={language}
         defaultValue={CODE_SNIPPETS[language]}
         beforeMount={setEditorTheme}
-        onMount={onMount}
+        onMount={handleEditorMount}
         value={value}
         onChange={(value) => setValue(value || "")}
       ></Editor>

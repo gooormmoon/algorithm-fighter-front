@@ -4,27 +4,34 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Layout from "../components/Layout";
+
 import {
+  MainPage,
   LoginPage,
   RegisterPage,
-  MyPageRead,
+  LogoutPage,
+  ProfileSettingPage,
   GamePage,
-  MyReposPage,
-  MyPageUpdate,
+  WaitPage,
+  StartPage
 } from "../pages";
 
 const router = (
   <Route>
+    {/* <Route path="/" element={<StartPage />} /> */}
     <Route path="/" element={<Layout />}>
-      <Route path="/game" element={<GamePage />} />\
-      <Route path="/myRepository" element={<MyReposPage />} />
-      <Route path="/mypage" element={<MyPageRead />} />
-      <Route path="/mypageUpdate" element={<MyPageUpdate />} />
-    </Route>
-    <Route path="/login" element={<LoginPage />} />
-    <Route path="/register" element={<RegisterPage />} />
+      <Route index element={<MainPage />} />
+      <Route path="/setting" element={<ProfileSettingPage />} />
 
+      <Route path="/wait/:id" element={<WaitPage />} />
+      <Route path="/game/:id" element={<GamePage />} />\
+    </Route>
+
+    <Route path="/login" element={<LoginPage />} />
+    <Route path="/logout" element={<LogoutPage />} />
+    <Route path="/register" element={<RegisterPage />} />
   </Route>
 );
+
 const rootRouter = createBrowserRouter(createRoutesFromElements(router));
 export default rootRouter;

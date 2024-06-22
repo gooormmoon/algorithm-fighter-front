@@ -10,6 +10,7 @@ interface InputProps {
   size: string;
   errorText?: string | boolean;
   disabled?: boolean;
+  border: boolean;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -23,6 +24,7 @@ const Input: React.FC<InputProps> = ({
   size,
   errorText,
   disabled,
+  border,
 }) => {
   return (
     <div className="py-2">
@@ -35,13 +37,14 @@ const Input: React.FC<InputProps> = ({
         name={name}
         disabled={disabled}
         // onKeyPress={onKeyPress}
-        className={`outline-none p-4 rounded-md text-secondary  bg-white border-solid border-2 border-secondary 
-        drop-shadow-lg shadow-lg
+        className={`outline-none p-4 rounded-md text-secondary  bg-white  
         ${
           size === "large"
             ? "w-[360px] h-[56px] text-lg "
-            : "w-[320px] h-[48px] text-sm"
-        } ${errorText && " border-red-500"}`}
+            : "w-[250px] h-[48px] text-sm"
+        } ${errorText && " border-red-500"}
+        ${disabled && "opacity-50 cursor-not-allowed font-bold"}
+        ${border ? "border-secondary border-2" : "border-none cursor-text"}`}
       />
       {errorText && (
         <p className="w-[360px] text-red-500 text-sm  absolute">{errorText}</p>

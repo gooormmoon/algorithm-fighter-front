@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { LANGUAGE_VERSIONS } from "../Constants";
 import { Dropdown } from "../../../components/Common";
+import { toast } from "react-toastify";
+
 import "../../../styles/tailwind.scss";
 
 const languages = Object.keys(LANGUAGE_VERSIONS);
@@ -19,7 +21,9 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
   useEffect(() => {
     onSelect(lang);
+    toast.info(`언어가 ${lang}로 변경되었습니다.`);
   }, [lang]);
+
   return (
     <Dropdown
       options={langOptions}
@@ -27,7 +31,7 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
       onChange={(value) => {
         setLang(value);
       }}
-      showMinutes={true}
+      showMinutes={false}
     />
   );
 };
