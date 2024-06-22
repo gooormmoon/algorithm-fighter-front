@@ -37,7 +37,7 @@ const TestCaseModal: React.FC<TestCaseModalProps> = ({
             <div key={testCase.id} className="py-3 border-b-2">
               <div className="flex ">
                 <div>Parameter {index + 1}</div>
-                <div className="ml-[250px]">Result {index + 1}</div>
+                <div className="ml-[180px]">Result {index + 1}</div>
               </div>
               <div className="flex items-center space-x-2">
                 <Input
