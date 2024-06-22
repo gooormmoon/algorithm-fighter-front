@@ -13,14 +13,16 @@ import {
   ProfileSettingPage,
   GamePage,
   WaitPage,
+  StartPage
 } from "../pages";
 
 const router = (
   <Route>
+    {/* <Route path="/" element={<StartPage />} /> */}
     <Route path="/" element={<Layout />}>
       <Route index element={<MainPage />} />
-      {/* <Route path="/myRepository" element={<MyReposPage />} /> */}
       <Route path="/setting" element={<ProfileSettingPage />} />
+
       <Route path="/wait/:id" element={<WaitPage />} />
       <Route path="/game/:id" element={<GamePage />} />\
     </Route>

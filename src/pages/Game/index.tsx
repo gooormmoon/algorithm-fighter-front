@@ -47,10 +47,10 @@ const Game = () => {
   // After game start
   const [problemTitle, setProblemTitle] = useState<string>("");
   const [problemData, setProblemData] = useState<string>("");
-  const [problemLevel, setProblemLevel] = useState<string>("");
-  const [problemCodeTemplate, setProblemCodeTemplate] = useState<string>("");
+
   //Is Game End?
   const [gaming, setGaming] = useState<boolean>(false);
+
   //TestCase
   const [testCases, setTestCases] = useState<TestCase[]>([
     { id: uuidv4(), value: "", result: "" },
@@ -69,7 +69,7 @@ const Game = () => {
     //게임시작 => 게임대기에서 받을 예정
     const data = { ...location.state };
 
-    if (data.title && data.content && data.level) {
+    if (data.title && data.content && data.problem_level) {
       setProblemData(data.problemData);
       setProblemTitle(data.problemTitle);
       setGaming(true);
@@ -169,11 +169,7 @@ const Game = () => {
       toast.success("코드가 성공적으로 제출되었습니다.");
     }
   };
-  // 게임 코드 제출 테스트
-  // var arr1 = testCases.map((tc) => tc.value).join("\n");
-  // var arr2 = testCases.map((tc) => tc.result).join("\n");
-  // console.log(arr1);
-  // console.log(arr2);
+
   useEffect(() => {
     if (modalOpen) {
       const storedTestCases = localStorage.getItem("test-case");
@@ -184,20 +180,29 @@ const Game = () => {
       }
     }
   }, [modalOpen]);
+
   const runCode = async () => {
     const sourceCode = editorRef.current.getValue();
     if (!sourceCode) return;
     try {
       setIsLoading(true);
-      const response = await gradeCode({
-        code: sourceCode,
-        language: language,
-        input: testCases.map((tc) => tc.value).join("\n"), // 문자열로 변환
-        expected: testCases.map((tc) => tc.result).join("\n"),
-      });
-      const { output, message } = response.data;
-      setOutput(output);
-      setOutcomeMessage(message);
+      const newOutputs: string[] = [];
+      const newMessages: string[] = [];
+      for (let tc of testCases) {
+        const response = await gradeCode({
+          code: sourceCode,
+          language: language,
+          input: tc.value, // 문자열로 변환
+          expected: tc.result,
+        });
+
+        const { output: outputTemp, message: messageTemp } = response.data;
+        newOutputs.push(outputTemp);
+        newMessages.push(messageTemp);
+      }
+      setOutput(newOutputs);
+      setOutcomeMessage(newMessages.join("\n")); // join messages into one string or handle as you need
+      setIsError(false);
       toast.success("코드가 성공적으로 실행되었습니다.");
     } catch (error) {
       if (error instanceof Error) {

@@ -3,6 +3,7 @@ import { useStomp, useTheme } from "../../../store/store";
 import { useMount } from "react-use";
 import { joinGame } from "../../../api/Game";
 import { useNavigate } from "react-router-dom";
+import { Room } from "../../../store/types";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,7 +21,7 @@ const RoomList = ({
   className,
   hover,
 }: {
-  rooms: room[];
+  rooms: Room[];
   className?: string;
   hover?: string;
 }) => {
@@ -56,7 +57,7 @@ const RoomList = ({
   const onClick = (e: React.MouseEvent) => {
     e.preventDefault();
 
-    //game연결되면 이 navigate는 없앨예정
+    // game연결되면 이 navigate는 없앨예정
     // navigate(`/wait/${"sfdsfsfd@123"}`, {
     //   state: {
     //     players: ["구름달"],
@@ -66,14 +67,20 @@ const RoomList = ({
     //     host: "구름달",
     //     title: "대결하실래요?",
     //     max_player: 2,
-    //     problem_level: 2,
+    //     level: 2,
     //     timer_time: 20,
     //     // is_started: true,
     //   },
     // });
     if (gameClient?.connected) {
-      joinGame(gameClient, {
-        host_id: e.currentTarget.id,
+      // joinGame(gameClient, {
+      //   host_id: e.currentTarget.id,
+      // });
+      gameClient.publish({
+        destination: "/app/game/join",
+        body: JSON.stringify({
+          host_id: e.currentTarget.id,
+        }),
       });
     } else {
       toast.error("게임 서버에 연결되지 않았습니다.");
@@ -106,7 +113,8 @@ const RoomList = ({
               max_player,
               problem_level,
               timer_time,
-              is_started,
+              started,
+              players,
             },
             index
           ) => {
@@ -124,10 +132,10 @@ const RoomList = ({
                 <td className="w-[10%]">{index}</td>
                 <td className="w-[15%]">{host}</td>
                 <td className="w-[25%]">{title}</td>
-                <td className="w-[10%]">{max_player}</td>
+                <td className="w-[10%]">{`${players.length}/${max_player}`}</td>
                 <td className="w-[10%]">{`lv.${problem_level}`}</td>
                 <td className="w-[15%]">{`${timer_time} min`}</td>
-                <td className="w-[15%]"> {is_started ? "게임중" : "대기중"}</td>
+                <td className="w-[15%]"> {started ? "게임중" : "대기중"}</td>
               </tr>
             );
           }

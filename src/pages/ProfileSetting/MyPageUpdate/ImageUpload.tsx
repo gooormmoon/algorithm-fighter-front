@@ -35,7 +35,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
           alt="Profile"
           className="rounded-full w-28 h-28 object-cover"
         />
-        {
+
+        {/* {hasAllProps && (
           <>
             {" "}
             <div
@@ -54,7 +55,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
               onChange={onFileChange}
             />
           </>
-        }
+
+        )} */}
       </div>
     </div>
   );
