@@ -53,12 +53,12 @@ const Wait: React.FC = () => {
       });
       gameClient.subscribe("/user/queue/game/start", (message) => {
         const data = JSON.parse(message.body);
-        if (data.AlgorithmProblem) {
+        if (data.algorithm_problem) {
           navigate(`/game/${roomInfo.host_id}`, {
             state: {
               roomInfo: { ...roomInfo },
               timer_time: data.timer_time,
-              algorithmProblem: { ...data.AlgorithmProblem },
+              algorithm_problem: { ...data.algorithm_problem },
             },
           });
           toast.success("게임이 시작되었습니다!");

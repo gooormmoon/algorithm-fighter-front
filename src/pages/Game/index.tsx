@@ -18,6 +18,7 @@ import { useLocation } from "react-router-dom";
 import { useMount } from "react-use";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 //TestCase type
 type TestCase = {
   id: string;
@@ -26,6 +27,7 @@ type TestCase = {
 };
 
 const Game = () => {
+  const location = useLocation();
   const { gameClient } = useStomp();
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
@@ -63,7 +65,6 @@ const Game = () => {
   const [outcomeMessage, setOutcomeMessage] = useState<string>("");
   //Get Problem Content
 
-  const location = useLocation();
   //STOMP
   useMount(() => {
     //게임시작 => 게임대기에서 받을 예정
