@@ -18,42 +18,17 @@ const Main: React.FC = () => {
   const { gameClient, chatClient } = useStomp();
   const { theme } = useTheme();
 
-  useMount(() => {
-    if (gameClient?.connected) {
-      gameClient.unsubscribe("joinGame");
-      gameClient.subscribe(
-        "/user/queue/game/join",
-        (message) => {
-          const data = JSON.parse(message.body);
-          console.log("메세지옴");
-          if (data.host_id) {
-            //생성하고 콜백함수
-            navigate(`/wait/${data.host_id}`, {
-              state: {
-                host: `${data.host}`,
-                host_id: `${data.host_id}`,
-                players: data.players,
-                ready_players: data.ready_players,
-                max_player: data.max_player,
-                problem_level: data.problem_level,
-                timer_time: data.timer_time,
-                title: data.title,
-                chatroom_id: data.chatroom_id,
-              },
-            });
-          } else {
-            alert(data.msg);
-          }
-        },
-        { id: "joinGame" }
-      );
-    }
-  });
+  // useMount(() => {
+
+  // });
   useEffect(() => {
     if (!loggedIn) {
       navigate("/login");
     } else {
-      if (gameClient?.connected) {
+      if (gameClient === null) {
+        console.log("null");
+      } else {
+        console.log("연결됨? ", gameClient.connected);
       }
     }
     // if (gameClient?.connected) {

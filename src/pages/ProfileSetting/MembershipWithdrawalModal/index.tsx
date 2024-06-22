@@ -56,7 +56,7 @@ const MembershipWithdrawalModal: React.FC<MembershipWithdrawalModalProps> = ({
           </button>
           <button
             onClick={handleWithdraw}
-            className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+            className="bg-red hover:bg-red/90 text-white font-bold py-2 px-4 rounded"
           >
             회원탈퇴
           </button>
