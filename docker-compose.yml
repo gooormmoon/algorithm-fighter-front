@@ -14,7 +14,7 @@ services:
     restart: always
 
   algorithm-fighter-core:
-    image: bery0na/algofi-core:7ca2cddcbafcc5195af62d8ee4ace8e3a35201ed
+    image: bery0na/algofi-core:0aa54535f240cc6a9d6c987223ce73322f8ac3f2
     ports:
       - 8080:8080
     environment:

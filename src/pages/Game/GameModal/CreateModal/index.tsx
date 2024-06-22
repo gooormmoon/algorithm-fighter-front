@@ -34,29 +34,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
   useMount(() => {
     if (gameClient?.connected) {
-      gameClient.subscribe("/user/queue/game/session", (message) => {
-        const data = JSON.parse(message.body);
-        if (data.host_id) {
-          //생성하고 콜백함수
-          onClose();
-          navigate(`/wait/${data.host_id}`, {
-            state: {
-              host: `${data.host}`,
-              host_id: `${data.host_id}`,
-              players: data.players,
-              ready_player: data.ready_player,
-              max_player: data.max_player,
-              problem_level: data.problem_level,
-              timer_time: data.timer_time,
-              title: data.title,
-              chat_room_id: data.chat_room_id,
-            },
-          });
-          toast.success("게임이 성공적으로 생성되었습니다!");
-        } else {
-          toast.error("게임 생성에 실패했습니다.");
-        }
-      });
       gameClient.unsubscribe("createModal");
       gameClient.subscribe(
         "/user/queue/game/join",
