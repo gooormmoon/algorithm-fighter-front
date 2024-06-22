@@ -7,3 +7,4 @@ export { default as MyReposPage } from "./MyRepository";
 export { default as GameProblem } from "./Game/GameProblem";
 export { default as ProfileSettingPage } from "./ProfileSetting";
 export { default as WaitPage } from "./Wait";
+export { default as StartPage } from "./Start";
