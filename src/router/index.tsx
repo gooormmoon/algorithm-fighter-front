@@ -14,6 +14,7 @@ import {
   GamePage,
   MyReposPage,
   WaitPage,
+  StartPage
 } from "../pages";
 
 const router = (
@@ -24,6 +25,7 @@ const router = (
       {/* <Route path="/myRepository" element={<MyReposPage />} /> */}
       <Route path="/setting" element={<ProfileSettingPage />} />
       <Route path="/wait" element={<WaitPage />} />
+      <Route path="/start" element={<StartPage />} />
     </Route>
 
     <Route path="/login" element={<LoginPage />} />
