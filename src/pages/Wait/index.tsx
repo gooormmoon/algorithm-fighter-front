@@ -82,30 +82,9 @@ const Wait: React.FC = () => {
 
   const onClickPrev = () => {
     if (gameClient?.connected) {
-      gameClient?.deactivate();
+      // gameClient?.deactivate();
+      // gameClient?.activate();
     }
-
-    const newGameClient: StompJs.Client = createGameClient();
-    newGameClient.activate();
-    newGameClient.onConnect = (frame: any) => {
-      console.log("connected");
-      newGameClient.subscribe("/user/queue/game/sessions", (message) => {
-        const data = JSON.parse(message.body);
-        console.log(data);
-        if (data.rooms) {
-          setRooms(data.rooms);
-          // newGameClient.unsubscribe("/user/queue/game/sessions");
-        }
-      });
-      const message = {
-        msg: "give me room list",
-      };
-      newGameClient.publish({
-        destination: "/app/game/sessions",
-        body: JSON.stringify(message),
-      });
-    };
-    setGameClient(newGameClient);
     navigate("/");
   };
   const onClickReady = () => {
