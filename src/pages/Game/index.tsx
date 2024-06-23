@@ -7,7 +7,6 @@ import LanguageSelector from "./LanguageSelector";
 import { CODE_SNIPPETS } from "./Constants";
 import { Button } from "../../components/Common";
 import GameProblem from "./GameProblem";
-import TimerIcon from "@mui/icons-material/Timer";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Chat from "../../components/Chat";
 import { VictoryModal, DefeatModal, TestCaseModal } from "./GameModal";
@@ -18,6 +17,8 @@ import { useLocation } from "react-router-dom";
 import { useMount } from "react-use";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Timer from "./Timer/timer";
+
 //TestCase type
 type TestCase = {
   id: string;
@@ -63,15 +64,17 @@ const Game = () => {
   const [outcomeMessage, setOutcomeMessage] = useState<string>("");
   //Get Problem Content
 
+  let timer_time = "";
   const location = useLocation();
   //STOMP
   useMount(() => {
     //게임시작 => 게임대기에서 받을 예정
     const data = { ...location.state };
 
-    if (data.title && data.content && data.problem_level) {
-      setProblemData(data.problemData);
-      setProblemTitle(data.problemTitle);
+    if (data.roomInfo && data.algorithmProblem) {
+      setProblemData(data.algorithmProblem.problemData);
+      setProblemTitle(data.algorithmProblem.problemTitle);
+      timer_time = data.algorithmProblem.timer_time;
       setGaming(true);
       console.log("game start");
     }
@@ -102,14 +105,13 @@ const Game = () => {
           console.log(data.game_over_type);
           setGaming(false);
 
-          //게임 종료시 자동으로 보내기
+          //게임 종료 후 코드 송신
           const sourceCode = editorRef.current.getValue();
           autoUserSubmitCode(gameClient, {
             code: sourceCode,
             language: language,
           });
         } catch (e) {
-          console.error("Failed to parse message:", e);
           toast.error("메시지를 처리하는 동안 오류가 발생했습니다.");
         }
       });
@@ -181,6 +183,7 @@ const Game = () => {
     }
   }, [modalOpen]);
 
+  //코드 실행 결과 출력
   const runCode = async () => {
     const sourceCode = editorRef.current.getValue();
     if (!sourceCode) return;
@@ -316,9 +319,8 @@ const Game = () => {
               <div className="w-full h-16 bg-transparent flex justify-between items-center p-4 gap-2">
                 <div className=" flex justify-start items-center gap-2 ">
                   <LanguageSelector language={language} onSelect={onSelect} />
-                  <TimerIcon />
-                  <span className="text-xl">59:59</span>
-
+                  {/* <TimerIcon /> */}
+                  <Timer timer_time={timer_time} />
                   <Button
                     type="button"
                     size="medium_big_radius"
