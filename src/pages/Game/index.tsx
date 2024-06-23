@@ -18,7 +18,7 @@ import { useMount } from "react-use";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Timer from "./Timer/timer";
-
+import { useResizeStore } from "../../store/store";
 
 //TestCase type
 type TestCase = {
@@ -30,12 +30,27 @@ type TestCase = {
 const Game = () => {
   const location = useLocation();
   const { gameClient } = useStomp();
-  const [isResizingX, setIsResizingX] = useState(false);
-  const [isResizingY, setIsResizingY] = useState(false);
-  const [initialX, setInitialX] = useState(0);
-  const [initialY, setInitialY] = useState(0);
-  const [width, setWidth] = useState(window.innerWidth / 3);
-  const [height, setHeight] = useState(window.innerHeight / 1.5);
+  // const [isResizingX, setIsResizingX] = useState(false);
+  // const [isResizingY, setIsResizingY] = useState(false);
+  // const [initialX, setInitialX] = useState(0);
+  // const [initialY, setInitialY] = useState(0);
+  // const [width, setWidth] = useState(window.innerWidth / 3);
+  // const [height, setHeight] = useState(window.innerHeight / 1.5);
+
+  const {
+    isResizingX,
+    isResizingY,
+    initialX,
+    initialY,
+    width,
+    height,
+    setIsResizingX,
+    setIsResizingY,
+    setInitialX,
+    setInitialY,
+    setWidth,
+    setHeight,
+  } = useResizeStore();
 
   // codeEditor
   const [language, setLanguage] = useState<string>("javascript");
@@ -67,7 +82,6 @@ const Game = () => {
   //Get Problem Content
 
   let timer_time = "";
-  const location = useLocation();
 
   //STOMP
   useMount(() => {
