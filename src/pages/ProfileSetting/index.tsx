@@ -177,15 +177,10 @@ const MyPageRead: React.FC = () => {
       }`}
     >
       <form onSubmit={handleSubmit}>
+
         <div className="items-center justify-center text-center bold">
           <div className="flex justify-center w-full">
-            {/* <button
-              type="button"
-              className="px-4 py-2 bg-primary_border text-secondary_color_font rounded-md flex items-center justify-center"
-              onClick={() => setIsProfileIconModalOpen(true)}
-            >
-              {selectedIcon}
-            </button> */}
+
             <ProfileIconModal
               isOpen={isProfileIconModalOpen}
               onClose={() => setIsProfileIconModalOpen(false)}
@@ -193,8 +188,9 @@ const MyPageRead: React.FC = () => {
             />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center m-0">
+        <div className='flex flex-col items-center justify-center m-0'>
           <div className={styles.iconsWrapper}>
+
             <ProfileIcon
               onClick={() => setIsProfileIconModalOpen(true)}
               size="large"
@@ -205,23 +201,23 @@ const MyPageRead: React.FC = () => {
             <SettingsIcon className={styles.modifyIcon} />
           </div>
 
-          <div className="pb-5 mb-2">
-            <div className="text-xl font-bold text-center">{me.name}</div>
-            <div className="text-gray-500 text-center">{me.id}</div>
+          <div className='pb-5 mb-2'>
+            <div className='text-xl font-bold text-center'>{me.name}</div>
+            <div className='text-gray-500 text-center'>{me.id}</div>
           </div>
         </div>
 
         <InputField
-          label="닉네임"
-          type="text"
-          placeholder="닉네임"
+          label='닉네임'
+          type='text'
+          placeholder='닉네임'
           value={nickname}
           onChange={handleNicknameChange}
         />
 
         <TextAreaField
-          label="소개"
-          placeholder="소개"
+          label='소개'
+          placeholder='소개'
           value={description || ""}
           onChange={handleDescriptionChange}
         />
@@ -229,9 +225,9 @@ const MyPageRead: React.FC = () => {
         {showPasswordUpdate && (
           <>
             <InputField
-              label="변경할 비밀번호"
-              type="password"
-              placeholder="변경할 비밀번호"
+              label='변경할 비밀번호'
+              type='password'
+              placeholder='변경할 비밀번호'
               value={password}
               onChange={(e) => {
                 handlePasswordChange(e);
@@ -241,9 +237,9 @@ const MyPageRead: React.FC = () => {
               errorText={errorMessages.password}
             />
             <InputField
-              label="비밀번호 확인"
-              type="password"
-              placeholder="비밀번호 확인"
+              label='비밀번호 확인'
+              type='password'
+              placeholder='비밀번호 확인'
               value={passwordCheck}
               onChange={(e) => {
                 handlePasswordCheckChange(e);
@@ -254,50 +250,50 @@ const MyPageRead: React.FC = () => {
             />
           </>
         )}
-        <div className="flex items-center justify-between">
+        <div className='flex items-center justify-between'>
           {!showPasswordUpdate && (
             <InputField
-              label="비밀번호"
-              type="password"
-              placeholder="비밀번호"
+              label='비밀번호'
+              type='password'
+              placeholder='비밀번호'
               value={"00000000000"}
               onChange={handlePasswordChange}
               disabled={true}
-              size="small"
+              size='small'
             />
           )}
 
           <button
-            type="button"
-            className="flex text-gray-500  ml-auto items-center  w-[40px] h-[40px]"
+            type='button'
+            className='flex text-gray-500  ml-auto items-center  w-[40px] h-[40px]'
             onClick={() => setShowPasswordUpdate(!showPasswordUpdate)}
           >
             {showPasswordUpdate ? "취소" : "수정"}
           </button>
         </div>
-        <div className="m-2 p-2 flex flex-col gap-2 items-center">
+        <div className='m-2 p-2 flex flex-col gap-2 items-center'>
           <Button
-            type="submit"
-            size="medium_big_radius"
-            color="primary"
-            textColor="primary_font"
-            name="저장"
+            type='submit'
+            size='medium_big_radius'
+            color='primary'
+            textColor='primary_font'
+            name='저장'
             disabled={!showSaveButton}
           />
 
           <Button
-            type="button"
-            size="medium_big_radius"
-            color="primary_border"
-            textColor="secondary_color_font"
-            name="취소"
+            type='button'
+            size='medium_big_radius'
+            color='primary_border'
+            textColor='secondary_color_font'
+            name='취소'
             onClick={handleCancel}
           />
         </div>
       </form>
 
       <button
-        className="flex text-gray-500 underline ml-auto"
+        className='flex text-gray-500 underline ml-auto'
         onClick={() => {
           setIsModalOpen(true);
         }}

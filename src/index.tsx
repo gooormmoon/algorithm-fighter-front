@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <>
-    <ToastContainer />
+    <ToastContainer limit={1} closeOnClick />
     <RouterProvider router={rootRouter} />
   </>
 );
