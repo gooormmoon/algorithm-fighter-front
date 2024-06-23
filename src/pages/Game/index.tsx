@@ -78,6 +78,7 @@ const Game = () => {
       setProblemData(data.algorithmProblem.problemData);
       setProblemTitle(data.algorithmProblem.problemTitle);
       timer_time = data.algorithmProblem.timer_time;
+
       setGaming(true);
       console.log("game start");
     }
@@ -101,6 +102,7 @@ const Game = () => {
             if (data.game_over_type === "time_over") {
               //게임 타임오버 모달
               toast.info("시간이 초과되었습니다.");
+              setDefeatModalOpen(true);
             }
           }
 
@@ -119,7 +121,18 @@ const Game = () => {
         }
       });
       //채점 결과 수신 - 미완
-      gameClient.subscribe("/app/game/submit", (message) => {});
+      gameClient.subscribe("/user/queue/game/result", (message) => {
+        try {
+          const data = JSON.parse(message.body);
+          // 정상: 맞았습니다., 컴파일 에러, 메모리 초과, 런타임 에러, 시간 초과, 틀렸습니다.
+          //data 전달
+          const newMessages: string[] = [];
+          newMessages.push(data);
+          setOutcomeMessage(newMessages.join("\n"));
+        } catch (e) {
+          toast.error(" 오류가 발생했습니다. 다시 제출해 주세요");
+        }
+      });
     }
   }, [gameClient]);
 
