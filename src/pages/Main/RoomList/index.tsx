@@ -30,28 +30,35 @@ const RoomList = ({
   const navigate = useNavigate();
   useMount(() => {
     if (gameClient?.connected) {
-      gameClient.subscribe("/user/queue/game/session", (message) => {
-        const data = JSON.parse(message.body);
-        if (data.host && data.host_id) {
-          //생성하고 콜백함수
-          navigate(`/wait/${data.host_id}`, {
-            state: {
-              host: `${data.host}`,
-              host_id: `${data.host_id}`,
-              players: data.players,
-              ready_player: data.ready_player,
-              max_player: data.max_player,
-              problem_level: data.problem_level,
-              timer_time: data.timer_time,
-              title: data.title,
-              chat_room_id: data.chat_room_id,
-            },
-          });
-          toast.success("게임에 성공적으로 참가했습니다!");
-        } else {
-          toast.error("게임 참가에 실패했습니다. 다시 시도해주세요.");
+      gameClient.unsubscribe("enterWait");
+      gameClient.subscribe(
+        "/user/queue/game/session",
+        (message) => {
+          const data = JSON.parse(message.body);
+          if (data.host && data.host_id) {
+            //생성하고 콜백함수
+            navigate(`/wait/${data.host_id}`, {
+              state: {
+                host: `${data.host}`,
+                host_id: `${data.host_id}`,
+                players: data.players,
+                ready_player: data.ready_player,
+                max_player: data.max_player,
+                problem_level: data.problem_level,
+                timer_time: data.timer_time,
+                title: data.title,
+                chat_room_id: data.chat_room_id,
+              },
+            });
+            toast.success("게임에 성공적으로 참가했습니다!");
+          } else {
+            toast.error("게임 참가에 실패했습니다. 다시 시도해주세요.");
+          }
+        },
+        {
+          id: "enterWait",
         }
-      });
+      );
     }
   });
   const onClick = (e: React.MouseEvent) => {
@@ -134,7 +141,7 @@ const RoomList = ({
                 <td className="w-[25%]">{title}</td>
                 <td className="w-[10%]">{`${players.length}/${max_player}`}</td>
                 <td className="w-[10%]">{`lv.${problem_level}`}</td>
-                <td className="w-[15%]">{`${timer_time} min`}</td>
+                <td className="w-[15%]">{`${timer_time / 60} min`}</td>
                 <td className="w-[15%]"> {started ? "게임중" : "대기중"}</td>
               </tr>
             );

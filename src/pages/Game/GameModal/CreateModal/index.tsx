@@ -29,7 +29,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const [selectedNumber, setSelectedNumber] = useState<number>(
     numberOptions[0]
   );
-  const [selectedDifficulty, setSelectedDifficulty] = useState<number>(0);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("1");
   const [title, setTitle] = useState("");
 
   useMount(() => {
@@ -58,7 +58,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
             });
           }
           if (data.msg) {
-            alert(data.msg);
+            toast.info(data.msg);
           }
         },
         { id: "createModal" }
@@ -68,8 +68,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const handleSubmit = () => {
     const message = {
       title: title || "알고리즘 대결할래?",
-      difficulty: selectedDifficulty,
-      timer: selectedNumber,
+      level: selectedDifficulty,
+      timer_time: selectedNumber * 60,
     };
     if (gameClient?.connected) {
       createGame(gameClient, message);
