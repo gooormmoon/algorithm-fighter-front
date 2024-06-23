@@ -16,7 +16,7 @@ import styles from "./login.module.scss";
 
 const Login = () => {
   const { setRooms } = useRooms();
-  const { loggedIn, setMe } = useMe();
+  const { loggedIn, setMe, me } = useMe();
   const { setGameClient, setChatClient } = useStomp();
   const navigate = useNavigate();
   const { setMessages, resetMessages } = useGlobalChat();
@@ -56,6 +56,7 @@ const Login = () => {
           if (myInfoResponse.status === 200) {
             const myInfo = myInfoResponse.data;
             setMe(myInfo);
+            toast.info(`환영해요, ${myInfo.nickname} 님!`);
             const gameClient: StompJs.Client = createGameClient();
             const chatClient: StompJs.Client = createChatClient();
             chatClient.activate();
@@ -80,13 +81,13 @@ const Login = () => {
             resetMessages(); // 메시지 리셋
             gameClient.activate();
             gameClient.onConnect = (frame: any) => {
-              console.log("connected");
+              console.log("Game Client connected");
               gameClient.unsubscribe("rooms");
               gameClient.subscribe(
                 "/user/queue/game/sessions",
                 (message) => {
                   const data = JSON.parse(message.body);
-                  console.log(data);
+                  // console.log(data);
                   if (data.rooms) {
                     setRooms(data.rooms);
                     // gameClient.unsubscribe("/user/queue/game/sessions");
@@ -109,7 +110,7 @@ const Login = () => {
                 "/user/queue/game/join",
                 (message) => {
                   const data = JSON.parse(message.body);
-                  console.log("메세지옴");
+
                   if (data.host_id) {
                     //생성하고 콜백함수
                     navigate(`/wait/${data.host_id}`, {

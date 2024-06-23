@@ -28,7 +28,6 @@ type TestCase = {
 };
 
 const Game = () => {
-  const location = useLocation();
   const { gameClient } = useStomp();
   // const [isResizingX, setIsResizingX] = useState(false);
   // const [isResizingY, setIsResizingY] = useState(false);
@@ -81,17 +80,18 @@ const Game = () => {
   const [outcomeMessage, setOutcomeMessage] = useState<string>("");
   //Get Problem Content
 
-  let timer_time = "";
+  const [timer_time, setTimer_Time] = useState<string>("0");
+  const location = useLocation();
 
   //STOMP
   useMount(() => {
     //게임시작 => 게임대기에서 받을 예정
     const data = { ...location.state };
 
-    if (data.roomInfo && data.algorithmProblem) {
-      setProblemData(data.algorithmProblem.problemData);
-      setProblemTitle(data.algorithmProblem.problemTitle);
-      timer_time = data.algorithmProblem.timer_time;
+    if (data.roomInfo && data.algorithm_problem && data.timer_time) {
+      setProblemData(data.algorithm_problem.content);
+      setProblemTitle(data.algorithm_problem.title);
+      setTimer_Time(data.algorithm_problem.timer_time);
 
       setGaming(true);
       console.log("game start");
@@ -100,7 +100,7 @@ const Game = () => {
 
   useEffect(() => {
     if (gameClient?.connected) {
-      gameClient.subscribe("/user/queue/game/session", (message) => {
+      gameClient.subscribe("/user/queue/game/over", (message) => {
         try {
           const data = JSON.parse(message.body);
 
@@ -126,15 +126,21 @@ const Game = () => {
 
           //게임 종료 후 코드 송신
           const sourceCode = editorRef.current.getValue();
-          autoUserSubmitCode(gameClient, {
-            code: sourceCode,
-            language: language,
-          });
+          if (gameClient) {
+            gameClient.publish({
+              destination: "/app/game/save",
+              body: JSON.stringify({
+                code: sourceCode,
+                language: language,
+              }),
+            });
+          }
         } catch (e) {
           toast.error("메시지를 처리하는 동안 오류가 발생했습니다.");
         }
       });
-      //채점 결과 수신 - 미완
+      //제출결과 확인
+
       gameClient.subscribe("/user/queue/game/result", (message) => {
         try {
           const data = JSON.parse(message.body);
@@ -194,13 +200,32 @@ const Game = () => {
     if (!sourceCode) return;
     setIsLoading(true);
     if (gameClient) {
-      submitCode(gameClient, {
-        code: sourceCode,
-        language: language,
+      gameClient.publish({
+        destination: "/app/game/submit",
+        body: JSON.stringify({
+          code: sourceCode,
+          language: language,
+        }),
       });
       toast.success("코드가 성공적으로 제출되었습니다.");
     }
   };
+
+  // const onClickStart = () => {
+  //   if (gameClient?.connected) {
+  //     gameClient.publish({
+  //       destination: "/app/game/updates",
+  //       body: JSON.stringify({
+  //         level: selectedDifficulty,
+  //         timer_time: selectedNumber * 60,
+  //         title: roomInfo.title,
+  //       }),
+  //     });
+  //     gameClient.publish({
+  //       destination: "/app/game/start",
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
     if (modalOpen) {

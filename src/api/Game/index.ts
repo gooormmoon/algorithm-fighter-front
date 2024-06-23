@@ -3,6 +3,7 @@ import * as StompJs from "@stomp/stompjs";
 import { getTokens } from "../../utils";
 import apiClient from "../apiClient";
 import { useRooms } from "../../store/store";
+import compileClient from "../compileClient";
 
 export const createGameClient = () => {
   return new StompJs.Client({
@@ -103,11 +104,11 @@ export const autoUserSubmitCode = (
 };
 
 // 코드채점
-export const gradeCode = (body: {
+export const gradeCode = async (body: {
   code: string;
   language: string;
   input: string;
   expected: string;
 }) => {
-  return apiClient.post("/api/judge-input", body);
+  return compileClient.post("/api/judge-input", body);
 };
