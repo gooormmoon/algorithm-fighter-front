@@ -1,10 +1,10 @@
 .iconsWrapper {
   .profileIcon {
     cursor: pointer;
-    // > svg {
-    //   width: 140px;
-    //   height: 140px;
-    // }
+    > svg {
+      width: 112px;
+      height: 112px;
+    }
     &:hover {
       > svg {
         fill: rgba(0, 0, 0, 0.5);
@@ -36,5 +36,6 @@
   }
   .profileIcon:hover + .modifyIcon {
     fill: white;
+    // pointer-events: all;
   }
 }

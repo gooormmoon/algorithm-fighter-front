@@ -15,11 +15,12 @@ import {
   SantaIcon,
   QueenIcon,
 } from "../../../assets/profileIcons";
+import { IconType } from "..";
 
 interface ProfileIconModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSelect: (icon: React.ReactNode) => void;
+  onSelect: (icon: IconType) => void;
 }
 
 const ProfileIconModal: React.FC<ProfileIconModalProps> = ({
@@ -40,17 +41,16 @@ const ProfileIconModal: React.FC<ProfileIconModalProps> = ({
     { id: 10, name: "SantaIcon", icon: <SantaIcon /> },
     { id: 11, name: "AlienIcon", icon: <AlienIcon /> },
     { id: 12, name: "FairyIcon", icon: <FairyIcon /> },
-    { id: 13, name: "DefaultIcon", icon: <DefaultIcon /> },
   ];
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="medium">
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-3 gap-3 ">
         {icons.map((icon) => (
           <div
             key={icon.id}
-            onClick={() => onSelect(icon.icon)}
-            className="cursor-pointer"
+            onClick={() => onSelect(icon)}
+            className="cursor-pointer flex justify-center items-center"
           >
             {icon.icon}
           </div>

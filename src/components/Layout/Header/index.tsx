@@ -87,7 +87,7 @@ const Header = () => {
         </li>
         <li className="w-[32px] h-[32px] flex justify-center items-center">
           <button onClick={() => setShowProfile((prev) => !prev)}>
-            <ProfileIcon size="medium" />
+            <ProfileIcon size="small" />
           </button>
           {showProfile && <Profile onClose={() => setShowProfile(false)} />}
         </li>
