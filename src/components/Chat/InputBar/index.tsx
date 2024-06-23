@@ -29,39 +29,47 @@ const InputBar = ({ roomId }: { roomId: string }) => {
       }
     } else {
       console.log("Chat client is not connected");
+
       const chatClient: StompJs.Client = createChatClient();
       chatClient.activate();
       chatClient.onConnect = (frame: any) => {
-        chatClient.subscribe("/topic/room/global", (message) => {
-          const receivedMessage = JSON.parse(message.body);
-          setMessages({
-            ...receivedMessage,
-            // nickname: myInfo.nickname, // nickname 추가
-          });
-        });
+        chatClient.unsubscribe("globalChat");
+        chatClient.subscribe(
+          `/topic/room/global`,
+          (message) => {
+            const receivedMessage = JSON.parse(message.body);
+            setMessages({
+              ...receivedMessage,
+              // nickname: myInfo.nickname, // nickname 추가
+            });
+          },
+          {
+            id: "globalChat",
+          }
+        );
+        setChatClient(chatClient);
       };
-      setChatClient(chatClient);
     }
   };
 
   return (
     <form
-      name='inputForm'
+      name="inputForm"
       onSubmit={handleMessageSubmit}
-      className='w-full h-full px-4 bg-transparent flex justify-between items-center gap-2'
+      className="w-full h-full px-4 bg-transparent flex justify-between items-center gap-2"
     >
       <input
         value={message}
         onChange={handleMessageChange}
         className={`bg-transparent w-full h-3/4 outline-none resize-none `}
-        placeholder='메시지를 입력하세요'
+        placeholder="메시지를 입력하세요"
       />
       <Button
-        type='submit'
-        size='small_radius'
-        color='chat'
-        textColor='primary_font'
-        name='SEND'
+        type="submit"
+        size="small_radius"
+        color="chat"
+        textColor="primary_font"
+        name="SEND"
       />
     </form>
   );

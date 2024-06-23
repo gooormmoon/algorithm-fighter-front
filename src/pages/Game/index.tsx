@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Timer from "./Timer/timer";
 
+
 //TestCase type
 type TestCase = {
   id: string;
@@ -27,6 +28,7 @@ type TestCase = {
 };
 
 const Game = () => {
+  const location = useLocation();
   const { gameClient } = useStomp();
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
@@ -66,6 +68,7 @@ const Game = () => {
 
   let timer_time = "";
   const location = useLocation();
+
   //STOMP
   useMount(() => {
     //게임시작 => 게임대기에서 받을 예정
