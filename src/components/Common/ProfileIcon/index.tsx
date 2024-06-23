@@ -9,10 +9,18 @@ const iconSize: Record<IconSize, string> = {
   x_large: "h-[200px] w-[200px]",
 };
 
-const ProfileIcon = ({ src, size }: { src?: string; size: IconSize }) => {
+const ProfileIcon = ({
+  src,
+  size,
+  className,
+}: {
+  src?: string;
+  size: IconSize;
+  className?: string;
+}) => {
   return (
     <div
-      className={`${iconSize[size]}
+      className={`${iconSize[size]} ${className}
          relative overflow-hidden rounded-[70%] shadow-md drop-shadow-2xl`}
     >
       <img

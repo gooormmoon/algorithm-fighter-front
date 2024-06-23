@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/Common";
+import { Button, ProfileIcon } from "../../components/Common";
 import ImageUpload from "./MyPageUpdate/ImageUpload";
 import InputField from "./MyPageUpdate/InputField";
 import TextAreaField from "./MyPageUpdate/TextAreaField";
@@ -10,13 +10,13 @@ import { validatePassword, validateCheckpassword } from "../Auth/utils";
 import { useMe, useTheme } from "../../store/store";
 import { modifyPassword, modifyUser, getMe } from "../../api/Users";
 import axios from "axios";
-import apiClient from "../../api/apiClient";
-import { useMount } from "react-use";
-import mime from "mime";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AngelIcon, DefaultIcon } from "../../assets/profileIcons";
 import ProfileIconModal from "./ProfileIconModal";
+import SettingsIcon from "@mui/icons-material/Settings";
+import styles from "./profileSetting.module.scss";
+
 
 const MyPageRead: React.FC = () => {
   const { me, setMe } = useMe();
@@ -40,32 +40,14 @@ const MyPageRead: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showPasswordUpdate, setShowPasswordUpdate] = useState(false);
+
   const [isProfileIconModalOpen, setIsProfileIconModalOpen] = useState(false);
   const [selectedIcon, setSelectedIcon] = useState<React.ReactNode>(
     <DefaultIcon />
   );
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const response = await getMe();
-  //       setMe(response.data);
-  //       if (response.data.profileImageUrl) {
-  //         const filename = response.data.profileImageUrl;
-  //         setProfileImage(filename);
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to fetch user data", error);
-  //     }
-  //   };
-  //   fetchUser();
-  // }, []);
+
   useEffect(() => {
     console.log(me?.profile_image_url);
-    // const reader = new FileReader();
-    // reader.onloadend = () => {
-    //   setProfileImage(profileImage as string);
-    // };
-    // reader.readAsDataURL(profileImage);
   }, [me]);
 
   useEffect(() => {
@@ -79,6 +61,7 @@ const MyPageRead: React.FC = () => {
       setShowSaveButton(false);
     }
   }, [nickname, description, profileImage]);
+
 
   const handleIconClick = () => {
     setIsProfileIconModalOpen(true);
@@ -118,6 +101,8 @@ const MyPageRead: React.FC = () => {
     }
   };
 
+
+
   // 유효성 검사
   const validateAndSetError = () => {
     setErrorMessages({
@@ -127,9 +112,6 @@ const MyPageRead: React.FC = () => {
     });
   };
 
-  const handleImgSrc = (e: any) => {
-    setProfileImage(e.target.value);
-  };
   const handleBlur = (field: string) => {
     if (field === "password") {
       setErrorMessages((prev) => ({
@@ -167,8 +149,6 @@ const MyPageRead: React.FC = () => {
 
     try {
       if (userChanged) {
-        console.log(typeof profileImage, profileImage);
-        console.log(typeof blobUrl, blobUrl);
         const updatedUser = await modifyUser({
           name: me.name,
           nickname: nickname,
@@ -226,6 +206,7 @@ const MyPageRead: React.FC = () => {
       }`}
     >
       <form onSubmit={handleSubmit}>
+
         <div className='items-center justify-center text-center bold'>
           <div className='flex justify-center w-full'>
             <button
@@ -240,6 +221,12 @@ const MyPageRead: React.FC = () => {
               onClose={() => setIsProfileIconModalOpen(false)}
               onSelect={handleIconSelect}
             />
+
+        <div className="flex flex-col items-center justify-center m-0">
+          <div className={styles.iconsWrapper}>
+            <ProfileIcon size="large" className={styles.profileIcon} />
+            <SettingsIcon className={styles.modifyIcon} />
+
           </div>
 
           <div className='pb-5 mb-2'>
@@ -247,13 +234,6 @@ const MyPageRead: React.FC = () => {
             <div className='text-gray-500 text-center'>{me.id}</div>
           </div>
         </div>
-        {/* <InputField
-          label="프로필 이미지"
-          type="text"
-          placeholder="프로필 이미지 링크"
-          value={profileImage || ""}
-          onChange={handleImgSrc}
-        /> */}
 
         <InputField
           label='닉네임'

@@ -51,7 +51,7 @@ const Wait: React.FC = () => {
             setRoomInfo({ ...data });
             if (data.ready_players.length > 0) {
             }
-            toast.success("게임 설정이 변경되었습니다.");
+            // toast.success("게임 설정이 변경되었습니다.");
             return;
           }
         },
