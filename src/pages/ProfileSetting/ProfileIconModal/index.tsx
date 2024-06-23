@@ -44,13 +44,13 @@ const ProfileIconModal: React.FC<ProfileIconModalProps> = ({
   ];
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size='medium'>
-      <div className='grid grid-cols-4 gap-4'>
+    <Modal isOpen={isOpen} onClose={onClose} size="medium">
+      <div className="grid grid-cols-4 gap-4">
         {icons.map((icon) => (
           <div
             key={icon.id}
             onClick={() => onSelect(icon.icon)}
-            className='cursor-pointer'
+            className="cursor-pointer"
           >
             {icon.icon}
           </div>
