@@ -32,10 +32,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const [selectedDifficulty, setSelectedDifficulty] = useState<string>("1");
   const [title, setTitle] = useState("");
 
-  useEffect(() => {
-    console.log(selectedDifficulty);
-  }, [selectedDifficulty]);
-
   useMount(() => {
     if (gameClient?.connected) {
       gameClient.unsubscribe("createModal");
@@ -46,7 +42,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
           if (data.host_id) {
             //생성하고 콜백함수
             onClose();
-            console.log("modal close");
             navigate(`/wait/${data.host_id}`, {
               state: {
                 host: `${data.host}`,
@@ -76,7 +71,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
       problem_level: selectedDifficulty,
       timer_time: selectedNumber * 60,
     };
-    console.log(message.timer_time);
+    // console.log(message.timer_time);
     if (gameClient?.connected) {
       createGame(gameClient, message);
     } else {

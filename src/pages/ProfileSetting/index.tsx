@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../../components/Common";
+import { Button, ProfileIcon } from "../../components/Common";
 import ImageUpload from "./MyPageUpdate/ImageUpload";
 import InputField from "./MyPageUpdate/InputField";
 import TextAreaField from "./MyPageUpdate/TextAreaField";
@@ -10,11 +10,10 @@ import { validatePassword, validateCheckpassword } from "../Auth/utils";
 import { useMe, useTheme } from "../../store/store";
 import { modifyPassword, modifyUser, getMe } from "../../api/Users";
 import axios from "axios";
-import apiClient from "../../api/apiClient";
-import { useMount } from "react-use";
-import mime from "mime";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SettingsIcon from "@mui/icons-material/Settings";
+import styles from "./profileSetting.module.scss";
 
 const MyPageRead: React.FC = () => {
   const { me, setMe } = useMe();
@@ -38,28 +37,9 @@ const MyPageRead: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showPasswordUpdate, setShowPasswordUpdate] = useState(false);
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const response = await getMe();
-  //       setMe(response.data);
-  //       if (response.data.profileImageUrl) {
-  //         const filename = response.data.profileImageUrl;
-  //         setProfileImage(filename);
-  //       }
-  //     } catch (error) {
-  //       console.error("Failed to fetch user data", error);
-  //     }
-  //   };
-  //   fetchUser();
-  // }, []);
+
   useEffect(() => {
     console.log(me?.profile_image_url);
-    // const reader = new FileReader();
-    // reader.onloadend = () => {
-    //   setProfileImage(profileImage as string);
-    // };
-    // reader.readAsDataURL(profileImage);
   }, [me]);
 
   useEffect(() => {
@@ -74,53 +54,6 @@ const MyPageRead: React.FC = () => {
     }
   }, [nickname, description, profileImage]);
 
-  // 사진 추가 icon 클릭
-  const handleIconClick = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
-    }
-  };
-  const handleFileChange = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    // if (fileInputRef.current && fileInputRef.current.files) {
-    //   const file = fileInputRef.current.files[0];
-    //   setUploadedFile(file);
-    //   // const reader = new FileReader();
-    //   // // reader.onloadend = () => {
-    //   // //   setProfileImage(reader.result as string);
-    //   // // };
-    //   // reader.readAsDataURL(file);
-    //   const url = URL.createObjectURL(file);
-    //   setProfileImage(url);
-
-    //   window.URL.revokeObjectURL(url);
-    // }
-
-    // 희태님 원래코드
-
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-
-      const fileToBlob = async (file: any) =>
-        new Blob([new Uint8Array(file)], {
-          type: "image/png",
-        });
-      const blob = await fileToBlob(file);
-      const url = URL.createObjectURL(blob);
-      setBlobUrl(url);
-
-      setUploadedFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setProfileImage(reader.result as string);
-      };
-      reader.readAsDataURL(file);
-
-      // reader.readAsText(file);
-    }
-  };
-
   // 유효성 검사
   const validateAndSetError = () => {
     setErrorMessages({
@@ -130,9 +63,6 @@ const MyPageRead: React.FC = () => {
     });
   };
 
-  const handleImgSrc = (e: any) => {
-    setProfileImage(e.target.value);
-  };
   const handleBlur = (field: string) => {
     if (field === "password") {
       setErrorMessages((prev) => ({
@@ -170,8 +100,6 @@ const MyPageRead: React.FC = () => {
 
     try {
       if (userChanged) {
-        console.log(typeof profileImage, profileImage);
-        console.log(typeof blobUrl, blobUrl);
         const updatedUser = await modifyUser({
           name: me.name,
           nickname: nickname,
@@ -229,26 +157,17 @@ const MyPageRead: React.FC = () => {
       }`}
     >
       <form onSubmit={handleSubmit}>
-        <div className="items-center justify-center m-0">
-          <ImageUpload
-            profileImage={profileImage}
-            handleIconClick={handleIconClick}
-            handleFileChange={handleFileChange}
-            fileInputRef={fileInputRef}
-          />
+        <div className="flex flex-col items-center justify-center m-0">
+          <div className={styles.iconsWrapper}>
+            <ProfileIcon size="large" className={styles.profileIcon} />
+            <SettingsIcon className={styles.modifyIcon} />
+          </div>
 
           <div className="pb-5 mb-2">
             <div className="text-xl font-bold text-center">{me.name}</div>
             <div className="text-gray-500 text-center">{me.id}</div>
           </div>
         </div>
-        <InputField
-          label="프로필 이미지"
-          type="text"
-          placeholder="프로필 이미지 링크"
-          value={profileImage || ""}
-          onChange={handleImgSrc}
-        />
 
         <InputField
           label="닉네임"

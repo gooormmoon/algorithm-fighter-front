@@ -75,7 +75,6 @@ const Game = () => {
       setProblemData(data.algorithm_problem.content);
       setProblemTitle(data.algorithm_problem.title);
       setTimer_Time(data.algorithm_problem.timer_time);
-
       setGaming(true);
       console.log("game start");
     }
