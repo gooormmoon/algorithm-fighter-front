@@ -16,7 +16,11 @@ import { AngelIcon, DefaultIcon } from "../../assets/profileIcons";
 import ProfileIconModal from "./ProfileIconModal";
 import SettingsIcon from "@mui/icons-material/Settings";
 import styles from "./profileSetting.module.scss";
-
+export type IconType = {
+  id: number;
+  name: string;
+  icon: React.ReactNode;
+};
 const MyPageRead: React.FC = () => {
   const { me, setMe } = useMe();
   const navigate = useNavigate();
@@ -41,9 +45,11 @@ const MyPageRead: React.FC = () => {
   const [showPasswordUpdate, setShowPasswordUpdate] = useState(false);
 
   const [isProfileIconModalOpen, setIsProfileIconModalOpen] = useState(false);
-  const [selectedIcon, setSelectedIcon] = useState<React.ReactNode>(
-    <DefaultIcon />
-  );
+  const [selectedIcon, setSelectedIcon] = useState({
+    id: 100,
+    name: "none",
+    icon: <DefaultIcon />,
+  });
 
   useEffect(() => {
     console.log(me?.profile_image_url);
@@ -53,7 +59,7 @@ const MyPageRead: React.FC = () => {
     if (
       nickname !== me.nickname ||
       description !== me.description ||
-      profileImage !== me.profile_image_url
+      selectedIcon?.name !== me.profile_image_url
     ) {
       setShowSaveButton(true);
     } else {
@@ -65,7 +71,7 @@ const MyPageRead: React.FC = () => {
     setIsProfileIconModalOpen(true);
   };
 
-  const handleIconSelect = (icon: React.ReactNode) => {
+  const handleIconSelect = (icon: any) => {
     setSelectedIcon(icon); // 선택한 아이콘을 상태로 설정
     setIsProfileIconModalOpen(false); // 모달 닫기
   };
@@ -119,9 +125,7 @@ const MyPageRead: React.FC = () => {
         const updatedUser = await modifyUser({
           name: me.name,
           nickname: nickname,
-          // profileImageUrl: blobUrl,
-          profile_image_url: blobUrl,
-          // profile_image_url: profileImage,
+          profile_image_url: selectedIcon.name,
           description: description || "",
         });
         if (updatedUser.status === 200) {
@@ -173,15 +177,10 @@ const MyPageRead: React.FC = () => {
       }`}
     >
       <form onSubmit={handleSubmit}>
-        <div className='items-center justify-center text-center bold'>
-          <div className='flex justify-center w-full'>
-            <button
-              type='button'
-              className='px-4 py-2 bg-primary_border text-secondary_color_font rounded-md flex items-center justify-center'
-              onClick={() => setIsProfileIconModalOpen(true)}
-            >
-              {selectedIcon}
-            </button>
+
+        <div className="items-center justify-center text-center bold">
+          <div className="flex justify-center w-full">
+
             <ProfileIconModal
               isOpen={isProfileIconModalOpen}
               onClose={() => setIsProfileIconModalOpen(false)}
@@ -191,7 +190,14 @@ const MyPageRead: React.FC = () => {
         </div>
         <div className='flex flex-col items-center justify-center m-0'>
           <div className={styles.iconsWrapper}>
-            <ProfileIcon size='large' className={styles.profileIcon} />
+
+            <ProfileIcon
+              onClick={() => setIsProfileIconModalOpen(true)}
+              size="large"
+              className={styles.profileIcon}
+              src={me?.profile_image_url}
+              icon={selectedIcon}
+            />
             <SettingsIcon className={styles.modifyIcon} />
           </div>
 
