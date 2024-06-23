@@ -57,7 +57,7 @@ export const Modal: React.FC<ModalProps> = ({
     <div className={`flex absolute `}>
       {isOpen && (
         <div
-          className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 overflow-scroll"
+          className='fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50 overflow-scroll'
           onClick={onClose}
         >
           <div
@@ -69,16 +69,16 @@ export const Modal: React.FC<ModalProps> = ({
             >
               {closeButton && (
                 <button
-                  type="button"
+                  type='button'
                   onClick={onClose}
-                  className="absolute top-4 right-4 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-2xl w-8 h-8 flex flex-col justify-center items-center text-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  className='absolute top-4 right-4 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-2xl w-8 h-8 flex flex-col justify-center items-center text-center dark:hover:bg-gray-600 dark:hover:text-white'
                 >
                   <CloseIcon />
                 </button>
               )}
 
-              <div className="mt-6 text-lg text-[#213363] font-semibold"></div>
-              <div className="mt-4">{children}</div>
+              <div className='mt-6 text-lg text-[#213363] font-semibold'></div>
+              <div className='mt-4'>{children}</div>
             </div>
           </div>
         </div>
