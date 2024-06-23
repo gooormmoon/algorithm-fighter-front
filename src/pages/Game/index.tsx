@@ -74,7 +74,7 @@ const Game = () => {
     if (data.roomInfo && data.algorithm_problem && data.timer_time) {
       setProblemData(data.algorithm_problem.content);
       setProblemTitle(data.algorithm_problem.title);
-      setTimer_Time(data.algorithm_problem.timer_time);
+      setTimer_Time(data.timer_time);
 
       setGaming(true);
       console.log("game start");
@@ -83,7 +83,7 @@ const Game = () => {
 
   useEffect(() => {
     if (gameClient?.connected) {
-      gameClient.subscribe("/user/queue/game/session", (message) => {
+      gameClient.subscribe("/user/queue/game/over", (message) => {
         try {
           const data = JSON.parse(message.body);
 
@@ -109,14 +109,21 @@ const Game = () => {
 
           //게임 종료 후 코드 송신
           const sourceCode = editorRef.current.getValue();
-          autoUserSubmitCode(gameClient, {
-            code: sourceCode,
-            language: language,
-          });
+          if (gameClient) {
+            gameClient.publish({
+              destination: "/app/game/save",
+              body: JSON.stringify({
+                code: sourceCode,
+                language: language,
+              }),
+            });
+          }
         } catch (e) {
           toast.error("메시지를 처리하는 동안 오류가 발생했습니다.");
         }
       });
+      //제출결과 확인
+
       gameClient.subscribe("/user/queue/game/result", (message) => {
         try {
           const data = JSON.parse(message.body);
