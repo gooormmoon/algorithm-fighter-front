@@ -70,9 +70,9 @@ const Game = () => {
     //게임시작 => 게임대기에서 받을 예정
     const data = { ...location.state };
 
-    if (data.title && data.content && data.problem_level) {
-      setProblemData(data.problemData);
-      setProblemTitle(data.problemTitle);
+    if (data.algorithm_problem && data.timer_time && data.roomInfo) {
+      setProblemData(data.algorithm_problem.content);
+      setProblemTitle(data.algorithm_problem.title);
       setGaming(true);
       console.log("game start");
     }
