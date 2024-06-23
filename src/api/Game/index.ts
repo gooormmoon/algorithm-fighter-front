@@ -3,6 +3,7 @@ import * as StompJs from "@stomp/stompjs";
 import { getTokens } from "../../utils";
 import apiClient from "../apiClient";
 import { useRooms } from "../../store/store";
+import complieClient from "../complieClient";
 
 export const createGameClient = () => {
   return new StompJs.Client({
@@ -109,5 +110,5 @@ export const gradeCode = (body: {
   input: string;
   expected: string;
 }) => {
-  return apiClient.post("/api/judge-input", body);
+  return complieClient.post("/api/judge-input", body);
 };
