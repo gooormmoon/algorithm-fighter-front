@@ -62,7 +62,7 @@ const Chat = ({ roomId }: { roomId: string }) => {
         <span>전체</span>
         <SearchBar />
       </div>
-      <div className="w-full h-full p-4 flex flex-col items-start justify-start gap-1 overflow-scroll">
+      <div className='w-full h-full p-4 flex flex-col items-start justify-start gap-1 overflow-scroll'>
         {roomId === "global"
           ? messages.map((msg, index) => (
               <ChatMessage
