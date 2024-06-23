@@ -22,11 +22,7 @@ const Output: React.FC<OutputProps> = ({ isError, output, outcomeMessage }) => {
       <p className="mb-2 text-lg font-semibold ">Output</p>
 
       <div
-        className={` p-2 mt-4 w-full flex-1 overflow-auto  shadow-sm rounded-lg ${
-          isError
-            ? "border-red-500 text-red-400 line-through"
-            : "border-white/10"
-        } rounded`}
+        className={` p-2 mt-4 w-full flex-1 overflow-auto  shadow-sm rounded-lg  rounded`}
       >
         {output
           ? output.map((line: string, i: number) => <p key={i}>{line}</p>)

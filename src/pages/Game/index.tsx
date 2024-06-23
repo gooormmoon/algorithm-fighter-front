@@ -18,8 +18,7 @@ import { useMount } from "react-use";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Timer from "./Timer/timer";
-import { useResizeStore } from "../../store/store";
-
+import { TimeoutModal } from "./GameModal";
 //TestCase type
 type TestCase = {
   id: string;
@@ -35,21 +34,12 @@ const Game = () => {
   // const [initialY, setInitialY] = useState(0);
   // const [width, setWidth] = useState(window.innerWidth / 3);
   // const [height, setHeight] = useState(window.innerHeight / 1.5);
-
-  const {
-    isResizingX,
-    isResizingY,
-    initialX,
-    initialY,
-    width,
-    height,
-    setIsResizingX,
-    setIsResizingY,
-    setInitialX,
-    setInitialY,
-    setWidth,
-    setHeight,
-  } = useResizeStore();
+  const [isResizingX, setIsResizingX] = useState(false);
+  const [isResizingY, setIsResizingY] = useState(false);
+  const [initialX, setInitialX] = useState(0);
+  const [initialY, setInitialY] = useState(0);
+  const [width, setWidth] = useState(window.innerWidth / 3);
+  const [height, setHeight] = useState(window.innerHeight / 1.5);
 
   // codeEditor
   const [language, setLanguage] = useState<string>("javascript");
@@ -81,8 +71,8 @@ const Game = () => {
   //Get Problem Content
 
   const [timer_time, setTimer_Time] = useState<string>("0");
+  const [timeOutModal, setTimeOutModal] = useState<boolean>(false);
   const location = useLocation();
-
   //STOMP
   useMount(() => {
     //게임시작 => 게임대기에서 받을 예정
@@ -91,7 +81,7 @@ const Game = () => {
     if (data.roomInfo && data.algorithm_problem && data.timer_time) {
       setProblemData(data.algorithm_problem.content);
       setProblemTitle(data.algorithm_problem.title);
-      setTimer_Time(data.algorithm_problem.timer_time);
+      setTimer_Time(data.timer_time);
 
       setGaming(true);
       console.log("game start");
@@ -115,8 +105,8 @@ const Game = () => {
             }
             if (data.game_over_type === "time_over") {
               //게임 타임오버 모달
-              toast.info("시간이 초과되었습니다.");
-              setDefeatModalOpen(true);
+              // toast.info("시간이 초과되었습니다.");
+              setTimeOutModal(true);
             }
           }
 
@@ -409,7 +399,7 @@ const Game = () => {
                     color="primary"
                     textColor="secondary_color_font"
                     name={"Run Code"}
-                    isLoading={isLoading}
+                    isLoading={false}
                     icon={<PlayArrowIcon />}
                   />
                   <Button
@@ -469,6 +459,9 @@ const Game = () => {
       )}
       {defeatModalOpen && (
         <DefeatModal isOpen={true} onClose={() => setDefeatModalOpen(false)} />
+      )}
+      {timeOutModal && (
+        <TimeoutModal isOpen={true} onClose={() => setTimeOutModal(false)} />
       )}
       {/* <Footer runCode={runCode} isLoading={isLoading} /> */}
     </main>
