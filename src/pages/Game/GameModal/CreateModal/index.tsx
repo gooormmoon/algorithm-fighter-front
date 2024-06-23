@@ -72,9 +72,11 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const handleSubmit = () => {
     const message = {
       title: title || "알고리즘 대결할래?",
+
       problem_level: selectedDifficulty,
       timer_time: selectedNumber * 60,
     };
+    console.log(message.timer_time);
     if (gameClient?.connected) {
       createGame(gameClient, message);
     } else {
