@@ -140,7 +140,7 @@ const Main: React.FC = () => {
             `${theme === "light" && "border border-gray-300"}`
           )}
         >
-          <Chat roomId="global" />
+          <Chat roomId='global' />
         </div>
         <div
           className={cx(
@@ -150,12 +150,12 @@ const Main: React.FC = () => {
           )}
         >
           <button
-            className="w-1/2 h-full bg-primary text-[36px] text-white font-semibold rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out"
+            className='w-1/2 h-full bg-primary text-[36px] text-white font-semibold rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out'
             onClick={() => toggleModal(setCreateGameModal, true)}
           >
             게임 생성
           </button>
-          <button className="w-1/2 h-full bg-tertiary text-[36px] text-white font-semibold  rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out">
+          <button className='w-1/2 h-full bg-tertiary text-[36px] text-white font-semibold  rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out'>
             게임 시작
           </button>
         </div>

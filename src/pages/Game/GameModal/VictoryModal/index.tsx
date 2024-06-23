@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Modal } from "../../../../components/Common/";
 import confetti from "canvas-confetti";
+import { useNavigate } from "react-router-dom";
 
 interface VictoryModalProps {
   isOpen: boolean;
@@ -12,7 +13,12 @@ const VictoryModal: React.FC<VictoryModalProps> = ({ isOpen, onClose }) => {
     if (isOpen) {
       const duration = 2 * 1000;
       const animationEnd = Date.now() + duration;
-      const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+      const defaults = {
+        startVelocity: 30,
+        spread: 360,
+        ticks: 60,
+        zIndex: 9999,
+      };
 
       // 함수 표현식 사용
       const randomInRange = function (min: number, max: number) {
@@ -67,33 +73,35 @@ const VictoryModal: React.FC<VictoryModalProps> = ({ isOpen, onClose }) => {
       }, 250);
     }
   }, [isOpen]);
+  const navigate = useNavigate();
+  const handleExitClick = () => {
+    onClose();
+    navigate("/");
+  };
 
   return (
-    <div className="relative">
+    <>
       <Modal
         isOpen={isOpen}
         onClose={onClose}
-        size="large"
+        size='large'
         closeButton={false}
-        classNames="bg-transparent text-white"
+        classNames='bg-transparent text-white'
       >
-        <div className="text-center">
-          <h2 className="text-7xl font-bold mb-10">You Win!</h2>
-          <div className="item-center">
+        <div className='text-center'>
+          <h2 className='text-7xl font-bold mb-10'>You Win!</h2>
+          <div className='flex justify-center'>
             <button
-              className="bg-secondary text-white px-6 py-2 rounded font-semibold mr-4"
-              onClick={onClose}
+              className='bg-secondary text-white px-6 py-2 rounded font-semibold'
+              onClick={handleExitClick}
             >
               나가기
             </button>
-            <button className="bg-primary text-black font-semibold px-4 py-2 rounded mr-4">
-              계속하기
-            </button>
           </div>
         </div>
+        <div id='confetti-container'></div>
       </Modal>
-      <div id="confetti-container"></div>
-    </div>
+    </>
   );
 };
 
