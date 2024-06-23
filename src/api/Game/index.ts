@@ -2,6 +2,7 @@
 import * as StompJs from "@stomp/stompjs";
 import { getTokens } from "../../utils";
 import apiClient from "../apiClient";
+import { useRooms } from "../../store/store";
 
 export const createGameClient = () => {
   return new StompJs.Client({
@@ -24,6 +25,7 @@ export const createGameClient = () => {
     onWebSocketError: (error: Error) => {
       console.error("WebSocket Error:", error);
     },
+
     // onConnect:()=>{}
   });
 };
