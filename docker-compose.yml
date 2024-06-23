@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   algorithm-fighter-mysql:
-    image: bery0na/algofi-mysql:c5510edfc5e255057abd88608c3b1a660b1f99d3
+    image: bery0na/algofi-mysql:1f5e93202a311a39840bd11a568bcc025c4f4bf6
     ports:
       - 3306:3306
     volumes:
@@ -14,7 +14,7 @@ services:
     restart: always
 
   algorithm-fighter-core:
-    image: bery0na/algofi-core:d6fe02b703c55f62b43530b928270fb7fcf21328
+    image: bery0na/algofi-core:51bad95f39e634af4efcefa92c51e6c0837b036b
     ports:
       - 8080:8080
     environment:
@@ -29,7 +29,7 @@ services:
     restart: on-failure
 
   algorithm-fighter-compile:
-    image: bery0na/algofi-compile:887c996b2747ac127e89c3c5704f65af6652d1a7
+    image: bery0na/algofi-compile:60ca8493392045d066d8bcf1676f41480de48f00
     ports:
       - 9000:9000
     environment:
