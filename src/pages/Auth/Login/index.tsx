@@ -60,13 +60,20 @@ const Login = () => {
             const chatClient: StompJs.Client = createChatClient();
             chatClient.activate();
             chatClient.onConnect = (frame: any) => {
-              chatClient.subscribe("/topic/room/global", (message) => {
-                const receivedMessage = JSON.parse(message.body);
-                setMessages({
-                  ...receivedMessage,
-                  nickname: myInfo.nickname, // nickname 추가
-                });
-              });
+              chatClient.unsubscribe("globalChat");
+              chatClient.subscribe(
+                "/topic/room/global",
+                (message) => {
+                  const receivedMessage = JSON.parse(message.body);
+                  setMessages({
+                    ...receivedMessage,
+                    nickname: myInfo.nickname, // nickname 추가
+                  });
+                },
+                {
+                  id: "globalChat",
+                }
+              );
             };
 
             setChatClient(chatClient);
@@ -74,19 +81,27 @@ const Login = () => {
             gameClient.activate();
             gameClient.onConnect = (frame: any) => {
               console.log("connected");
-              gameClient.subscribe("/user/queue/game/sessions", (message) => {
-                const data = JSON.parse(message.body);
-                console.log(data);
-                if (data.rooms) {
-                  setRooms(data.rooms);
-                  // gameClient.unsubscribe("/user/queue/game/sessions");
+              gameClient.unsubscribe("rooms");
+              gameClient.subscribe(
+                "/user/queue/game/sessions",
+                (message) => {
+                  const data = JSON.parse(message.body);
+                  console.log(data);
+                  if (data.rooms) {
+                    setRooms(data.rooms);
+                    // gameClient.unsubscribe("/user/queue/game/sessions");
+                  }
+                },
+                {
+                  id: "rooms",
                 }
+              );
+              const message = JSON.stringify({
+                message: "give me room list",
               });
               gameClient.publish({
                 destination: "/app/game/sessions",
-                body: JSON.stringify({
-                  message: "give me room list",
-                }),
+                body: message,
               });
 
               gameClient.unsubscribe("joinGame");

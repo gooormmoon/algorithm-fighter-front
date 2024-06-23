@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useInputChange from "../../../../hooks/useInputChange";
 import {
   RadioButton,
@@ -29,8 +29,12 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const [selectedNumber, setSelectedNumber] = useState<number>(
     numberOptions[0]
   );
-  const [selectedDifficulty, setSelectedDifficulty] = useState<number>(0);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("1");
   const [title, setTitle] = useState("");
+
+  useEffect(() => {
+    console.log(selectedDifficulty);
+  }, [selectedDifficulty]);
 
   useMount(() => {
     if (gameClient?.connected) {
@@ -58,7 +62,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
             });
           }
           if (data.msg) {
-            alert(data.msg);
+            toast.info(data.msg);
           }
         },
         { id: "createModal" }
@@ -68,9 +72,11 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const handleSubmit = () => {
     const message = {
       title: title || "알고리즘 대결할래?",
-      difficulty: selectedDifficulty,
-      timer: selectedNumber,
+
+      problem_level: selectedDifficulty,
+      timer_time: selectedNumber * 60,
     };
+    console.log(message.timer_time);
     if (gameClient?.connected) {
       createGame(gameClient, message);
     } else {

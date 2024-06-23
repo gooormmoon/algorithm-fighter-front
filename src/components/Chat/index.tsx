@@ -24,11 +24,18 @@ const Chat = ({ roomId }: { roomId: string }) => {
 
   useMount(() => {
     if (chatClient?.connected && roomId !== "global") {
-      chatClient.subscribe(`/user/queue/chat/${roomId}`, (message) => {
-        // setGameMessage(JSON.parse(message.body));
-        const newMessage = JSON.parse(message.body);
-        setGameMessage((prevMessages) => [...prevMessages, newMessage]);
-      });
+      chatClient.unsubscribe("gameChat");
+      chatClient.subscribe(
+        `/topic/room/${roomId}`,
+        (message) => {
+          // setGameMessage(JSON.parse(message.body));
+          const newMessage = JSON.parse(message.body);
+          setGameMessage((prevMessages) => [...prevMessages, newMessage]);
+        },
+        {
+          id: "gameChat",
+        }
+      );
     }
   });
   const scrollToBottom = () => {

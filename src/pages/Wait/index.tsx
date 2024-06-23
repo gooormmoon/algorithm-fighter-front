@@ -31,9 +31,7 @@ const Wait: React.FC = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState(
     location.state.problem_level
   );
-  const [selectedNumber, setSelectedNumber] = useState(
-    location.state.timer_time
-  );
+  const [selectedNumber, setSelectedNumber] = useState(10);
 
   const [disabled, setDisabled] = useState({
     readyButton: true,
@@ -43,31 +41,48 @@ const Wait: React.FC = () => {
   useMount(() => {
     console.log(roomInfo);
     if (gameClient?.connected) {
-      gameClient.subscribe("/user/queue/game/session", (message) => {
-        const data = JSON.parse(message.body);
-        if (data.host_id) {
-          //게임 세션 업데이트
-          setRoomInfo({ ...data });
-          return;
+      gameClient.unsubscribe("gameSession");
+      gameClient.subscribe(
+        "/user/queue/game/session",
+        (message) => {
+          const data = JSON.parse(message.body);
+          if (data.host_id) {
+            //게임 세션 업데이트
+            setRoomInfo({ ...data });
+            if (data.ready_players.length > 0) {
+            }
+            toast.success("게임 설정이 변경되었습니다.");
+            return;
+          }
+        },
+        {
+          id: "gameSession",
         }
-      });
-      gameClient.subscribe("/user/queue/game/start", (message) => {
-        const data = JSON.parse(message.body);
-        if (data.AlgorithmProblem) {
-          navigate(`/game/${roomInfo.host_id}`, {
-            state: {
-              roomInfo: { ...roomInfo },
-              timer_time: data.timer_time,
-              algorithmProblem: { ...data.AlgorithmProblem },
-            },
-          });
-          toast.success("게임이 시작되었습니다!");
+      );
+      gameClient.unsubscribe("gameStart");
+      gameClient.subscribe(
+        "/user/queue/game/start",
+        (message) => {
+          const data = JSON.parse(message.body);
+          if (data.algorithm_problem) {
+            navigate(`/game/${roomInfo.host_id}`, {
+              state: {
+                roomInfo: { ...roomInfo },
+                timer_time: data.timer_time,
+                algorithm_problem: { ...data.algorithm_problem },
+              },
+            });
+            toast.success("게임이 시작되었습니다!");
+          }
+        },
+        {
+          id: "gameStart",
         }
-      });
+      );
     }
   });
   useEffect(() => {
-    setSelectedNumber(roomInfo.timer_time);
+    setSelectedNumber(roomInfo.timer_time / 60);
     setSelectedDifficulty(roomInfo.problem_level);
     setDisabled({
       readyButton: roomInfo.host_id === me.id && true,
@@ -82,25 +97,31 @@ const Wait: React.FC = () => {
 
   const onClickPrev = () => {
     if (gameClient?.connected) {
-      // gameClient?.deactivate();
-      // gameClient?.activate();
+      gameClient.unsubscribe("gameSession");
     }
     navigate("/");
   };
   const onClickReady = () => {
     if (gameClient?.connected) {
-      readyGame(gameClient);
-      toast.success("게임 준비가 완료되었습니다!");
+      gameClient.publish({
+        destination: "/app/game/ready",
+      });
+      toast.success("게임 준비");
     }
   };
   const onClickStart = () => {
     if (gameClient?.connected) {
-      updateGame(gameClient, {
-        level: selectedDifficulty,
-        timer_time: selectedNumber,
-        title: roomInfo.title,
+      gameClient.publish({
+        destination: "/app/game/updates",
+        body: JSON.stringify({
+          level: selectedDifficulty,
+          timer_time: selectedNumber * 60,
+          title: roomInfo.title,
+        }),
       });
-      startGame(gameClient);
+      gameClient.publish({
+        destination: "/app/game/start",
+      });
     }
   };
   return (

@@ -7,7 +7,6 @@ import LanguageSelector from "./LanguageSelector";
 import { CODE_SNIPPETS } from "./Constants";
 import { Button } from "../../components/Common";
 import GameProblem from "./GameProblem";
-import TimerIcon from "@mui/icons-material/Timer";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Chat from "../../components/Chat";
 import { VictoryModal, DefeatModal, TestCaseModal } from "./GameModal";
@@ -18,6 +17,8 @@ import { useLocation } from "react-router-dom";
 import { useMount } from "react-use";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Timer from "./Timer/timer";
+
 //TestCase type
 type TestCase = {
   id: string;
@@ -62,16 +63,19 @@ const Game = () => {
   // Runcode response
   const [outcomeMessage, setOutcomeMessage] = useState<string>("");
   //Get Problem Content
-
+  const [timer_time, setTimer_Time] = useState<string>("0");
   const location = useLocation();
+
   //STOMP
   useMount(() => {
     //게임시작 => 게임대기에서 받을 예정
     const data = { ...location.state };
 
-    if (data.title && data.content && data.problem_level) {
-      setProblemData(data.problemData);
-      setProblemTitle(data.problemTitle);
+    if (data.roomInfo && data.algorithm_problem && data.timer_time) {
+      setProblemData(data.algorithm_problem.content);
+      setProblemTitle(data.algorithm_problem.title);
+      setTimer_Time(data.algorithm_problem.timer_time);
+
       setGaming(true);
       console.log("game start");
     }
@@ -95,6 +99,7 @@ const Game = () => {
             if (data.game_over_type === "time_over") {
               //게임 타임오버 모달
               toast.info("시간이 초과되었습니다.");
+              setDefeatModalOpen(true);
             }
           }
 
@@ -102,19 +107,28 @@ const Game = () => {
           console.log(data.game_over_type);
           setGaming(false);
 
-          //게임 종료시 자동으로 보내기
+          //게임 종료 후 코드 송신
           const sourceCode = editorRef.current.getValue();
           autoUserSubmitCode(gameClient, {
             code: sourceCode,
             language: language,
           });
         } catch (e) {
-          console.error("Failed to parse message:", e);
           toast.error("메시지를 처리하는 동안 오류가 발생했습니다.");
         }
       });
-      //채점 결과 수신 - 미완
-      gameClient.subscribe("/app/game/submit", (message) => {});
+      gameClient.subscribe("/user/queue/game/result", (message) => {
+        try {
+          const data = JSON.parse(message.body);
+          // 정상: 맞았습니다., 컴파일 에러, 메모리 초과, 런타임 에러, 시간 초과, 틀렸습니다.
+          //data 전달
+          const newMessages: string[] = [];
+          newMessages.push(data);
+          setOutcomeMessage(newMessages.join("\n"));
+        } catch (e) {
+          toast.error(" 오류가 발생했습니다. 다시 제출해 주세요");
+        }
+      });
     }
   }, [gameClient]);
 
@@ -162,13 +176,32 @@ const Game = () => {
     if (!sourceCode) return;
     setIsLoading(true);
     if (gameClient) {
-      submitCode(gameClient, {
-        code: sourceCode,
-        language: language,
+      gameClient.publish({
+        destination: "/app/game/submit",
+        body: JSON.stringify({
+          code: sourceCode,
+          language: language,
+        }),
       });
       toast.success("코드가 성공적으로 제출되었습니다.");
     }
   };
+
+  // const onClickStart = () => {
+  //   if (gameClient?.connected) {
+  //     gameClient.publish({
+  //       destination: "/app/game/updates",
+  //       body: JSON.stringify({
+  //         level: selectedDifficulty,
+  //         timer_time: selectedNumber * 60,
+  //         title: roomInfo.title,
+  //       }),
+  //     });
+  //     gameClient.publish({
+  //       destination: "/app/game/start",
+  //     });
+  //   }
+  // };
 
   useEffect(() => {
     if (modalOpen) {
@@ -181,6 +214,7 @@ const Game = () => {
     }
   }, [modalOpen]);
 
+  //코드 실행 결과 출력
   const runCode = async () => {
     const sourceCode = editorRef.current.getValue();
     if (!sourceCode) return;
@@ -316,9 +350,8 @@ const Game = () => {
               <div className="w-full h-16 bg-transparent flex justify-between items-center p-4 gap-2">
                 <div className=" flex justify-start items-center gap-2 ">
                   <LanguageSelector language={language} onSelect={onSelect} />
-                  <TimerIcon />
-                  <span className="text-xl">59:59</span>
-
+                  {/* <TimerIcon /> */}
+                  <Timer timer_time={timer_time} />
                   <Button
                     type="button"
                     size="medium_big_radius"

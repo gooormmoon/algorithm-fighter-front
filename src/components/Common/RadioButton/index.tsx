@@ -1,8 +1,8 @@
 import React from "react";
 
 interface RadioButtonProps {
-  selectedValue: number;
-  onChange: (value: number) => void;
+  selectedValue: string;
+  onChange: (value: string) => void;
   readOnly?: boolean;
 }
 
@@ -12,12 +12,12 @@ export function RadioButton({
   readOnly,
 }: RadioButtonProps) {
   // const levels = ["lv0", "lv1", "lv2", "lv3", "lv4"];
-  const levels = [0, 1, 2, 3, 4];
+  const levels = ["1", "2", "3", "4", "5"];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!readOnly) {
       // onChange(parseInt(e.target.value));
-      onChange(parseInt(e.target.value));
+      onChange(e.target.value);
     }
   };
 
