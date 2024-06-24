@@ -4,10 +4,11 @@ import { getTokens } from "../../utils";
 import apiClient from "../apiClient";
 import { useRooms } from "../../store/store";
 import compileClient from "../compileClient";
+import config from "../../config";
 
 export const createGameClient = () => {
   return new StompJs.Client({
-    brokerURL: "ws://localhost:8080/game",
+    brokerURL: `ws:${config.API_URL}/game`,
     connectHeaders: {
       Authorization: `Bearer ${getTokens()}`,
     },
