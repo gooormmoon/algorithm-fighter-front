@@ -21,7 +21,6 @@ const LanguageSelector: React.FC<LanguageSelectorProps> = ({
 
   useEffect(() => {
     onSelect(lang);
-    toast.info(`언어가 ${lang}로 변경되었습니다.`);
   }, [lang]);
 
   return (

@@ -10,6 +10,7 @@ import { useMount } from "react-use";
 import { createGame, createGameClient, sendGetRooms } from "../../api/Game";
 import * as StompJs from "@stomp/stompjs";
 import { toast } from "react-toastify";
+import Timer from "../Game/Timer/timer";
 
 const Main: React.FC = () => {
   const { me, loggedIn } = useMe();

@@ -80,7 +80,8 @@ const VictoryModal: React.FC<VictoryModalProps> = ({ isOpen, onClose }) => {
   };
 
   return (
-    <>
+    <div onClick={handleExitClick}>
+      {" "}
       <Modal
         isOpen={isOpen}
         onClose={onClose}
@@ -90,6 +91,7 @@ const VictoryModal: React.FC<VictoryModalProps> = ({ isOpen, onClose }) => {
       >
         <div className='text-center'>
           <h2 className='text-7xl font-bold mb-10'>You Win!</h2>
+
           <div className='flex justify-center'>
             <button
               className='bg-secondary text-white px-6 py-2 rounded font-semibold'
@@ -101,7 +103,7 @@ const VictoryModal: React.FC<VictoryModalProps> = ({ isOpen, onClose }) => {
         </div>
         <div id='confetti-container'></div>
       </Modal>
-    </>
+    </div>
   );
 };
 

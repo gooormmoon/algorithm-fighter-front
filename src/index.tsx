@@ -14,7 +14,12 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <>
-    <ToastContainer limit={1} closeOnClick />
+    <ToastContainer
+      limit={2}
+      closeOnClick
+      hideProgressBar={true}
+      autoClose={1200}
+    />
     <RouterProvider router={rootRouter} />
   </>
 );
