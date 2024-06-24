@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   algorithm-fighter-mysql:
-    image: bery0na/algofi-mysql:12a7ae55ae0ecb311ce382444e8452544230ac56
+    image: bery0na/algofi-mysql:72ee07cb269008104bc6f1114849b23f8b54822f
     # build: ./kp-deploy-algofi-mysql-k8s
     ports:
       - 3306:3306
@@ -17,7 +17,7 @@ services:
     restart: always
 
   algorithm-fighter-core:
-    image: bery0na/algofi-core:629ef54b5288a4836bd0201383acf84802fcbba8
+    image: bery0na/algofi-core:4977f2a17e42fa280e1dfaba7c7e626b2387c5fc
     # build: ./kp-deploy-algofi-core
     ports:
       - 8080:8080
@@ -36,7 +36,7 @@ services:
     restart: on-failure
 
   algorithm-fighter-compile:
-    image: bery0na/algofi-compile:60ca8493392045d066d8bcf1676f41480de48f00
+    image: bery0na/algofi-compile:c9f965863abf8606ce7ecc6bd2b087b868a456cf
     # build: ./kp-deploy-algofi-compile
     ports:
       - 9000:9000
