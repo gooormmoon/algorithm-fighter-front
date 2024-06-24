@@ -37,7 +37,7 @@ const TestCaseModal: React.FC<TestCaseModalProps> = ({
 
   const handleSaveTestCases = (e: React.FormEvent) => {
     handleSubmit(e);
-    toast.success("테스트 케이스가 저장되었습니다.");
+    // toast.success("테스트 케이스가 저장되었습니다.");
   };
 
   return (

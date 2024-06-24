@@ -2,15 +2,11 @@ import React, { useEffect, useState } from "react";
 
 interface TimerProps {
   timer_time: number;
-  onTimeout: () => void;
 }
-
-const Timer: React.FC<TimerProps> = ({ timer_time, onTimeout }) => {
-  const [timeLeft, setTimeLeft] = useState<number>(timer_time);
-
-  useEffect(() => {
-    setTimeLeft(timer_time);
-  }, [timer_time]);
+const Timer: React.FC<TimerProps> = ({ timer_time }) => {
+  // 시간을 담을 변수
+  const initialTime = Number(timer_time);
+  const [timeLeft, setTimeLeft] = useState<number>(initialTime);
 
   useEffect(() => {
     if (timeLeft > 0) {
@@ -19,10 +15,8 @@ const Timer: React.FC<TimerProps> = ({ timer_time, onTimeout }) => {
       }, 1000);
 
       return () => clearInterval(id);
-    } else {
-      onTimeout();
     }
-  }, [timeLeft, onTimeout]);
+  }, [timeLeft]);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -32,12 +26,10 @@ const Timer: React.FC<TimerProps> = ({ timer_time, onTimeout }) => {
       "0"
     )}`;
   };
-
   return (
-    <div className='text-lg font-bold text-red-600'>
+    <div className='text-lg font-bold'>
       <span>{formatTime(timeLeft)}</span>
     </div>
   );
 };
-
 export default Timer;

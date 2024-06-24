@@ -50,7 +50,7 @@ const RoomList = ({
                 chat_room_id: data.chat_room_id,
               },
             });
-            toast.success("게임에 성공적으로 참가했습니다!");
+            // toast.success("게임에 성공적으로 참가했습니다!");
           } else {
             toast.error("게임 참가에 실패했습니다. 다시 시도해주세요.");
           }
@@ -99,18 +99,18 @@ const RoomList = ({
         theme === "dark" && "bg-dark_box"
       }`}
     >
-      <thead className="w-full flex flex-col">
-        <tr className="w-full flex flex-start items-center bg-[#212C4D] text-white h-8 rounded-t-lg">
-          <th className="w-[10%]">No.</th>
-          <th className="w-[15%]">닉네임</th>
-          <th className="w-[25%]">방 제목</th>
-          <th className="w-[10%]">인원</th>
-          <th className="w-[10%]">난이도</th>
-          <th className="w-[15%]"> 타이머</th>
-          <th className="w-[15%]"> 상태</th>
+      <thead className='w-full flex flex-col'>
+        <tr className='w-full flex flex-start items-center bg-[#212C4D] text-white h-8 rounded-t-lg'>
+          <th className='w-[10%]'>No.</th>
+          <th className='w-[15%]'>닉네임</th>
+          <th className='w-[25%]'>방 제목</th>
+          <th className='w-[10%]'>인원</th>
+          <th className='w-[10%]'>난이도</th>
+          <th className='w-[15%]'> 타이머</th>
+          <th className='w-[15%]'> 상태</th>
         </tr>
       </thead>
-      <tbody className="mt-2 w-full h-full flex flex-col justify-start  items-center border-collapse">
+      <tbody className='mt-2 w-full h-full flex flex-col justify-start  items-center border-collapse'>
         {rooms.map(
           (
             {
@@ -136,13 +136,13 @@ const RoomList = ({
                     : "hover:bg-[#DFE1E9]  border-gray-300"
                 }`}
               >
-                <td className="w-[10%]">{index}</td>
-                <td className="w-[15%]">{host}</td>
-                <td className="w-[25%]">{title}</td>
-                <td className="w-[10%]">{`${players.length}/${max_player}`}</td>
-                <td className="w-[10%]">{`lv.${problem_level}`}</td>
-                <td className="w-[15%]">{`${timer_time / 60} min`}</td>
-                <td className="w-[15%]"> {started ? "게임중" : "대기중"}</td>
+                <td className='w-[10%]'>{index}</td>
+                <td className='w-[15%]'>{host}</td>
+                <td className='w-[25%]'>{title}</td>
+                <td className='w-[10%]'>{`${players.length}/${max_player}`}</td>
+                <td className='w-[10%]'>{`lv.${problem_level}`}</td>
+                <td className='w-[15%]'>{`${timer_time / 60} min`}</td>
+                <td className='w-[15%]'> {started ? "게임중" : "대기중"}</td>
               </tr>
             );
           }
