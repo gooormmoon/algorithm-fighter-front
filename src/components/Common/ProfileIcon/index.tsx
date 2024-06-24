@@ -21,6 +21,7 @@ import {
 } from "../../../assets/profileIcons";
 import styles from "./profileIcon.module.scss";
 import { useMe } from "../../../store/store";
+import { useMount } from "react-use";
 // type IconSize = "small" | "medium" | "large" | "x_large";
 const ProfileIcon = ({
   src,
@@ -36,6 +37,9 @@ const ProfileIcon = ({
   icon?: { icon: ReactNode; name: string; id: number };
 }) => {
   const { me } = useMe();
+  useMount(() => {
+    console.log(me?.profile_image_url);
+  });
   const icons = [
     { id: 1, name: "AngelIcon", icon: <AngelIcon /> },
     { id: 2, name: "AssasinIcon", icon: <AssasinIcon /> },
@@ -62,6 +66,7 @@ const ProfileIcon = ({
         className={`${styles[size]} ${className}
    rounded-full flex justify-center items-center  drop-shadow-2xl`}
         onClick={onClick}
+        id={me?.id}
       >
         {icon.icon}
       </div>
@@ -77,6 +82,7 @@ const ProfileIcon = ({
           className
         )}
         onClick={onClick}
+        id={me?.id}
       >
         {src ? getIcon(src) : getIcon(me?.profile_image_url) || <DefaultIcon />}
       </div>

@@ -293,8 +293,9 @@ const Game = () => {
   };
   // 에디터 언어 선택
   const onSelect = (language: string) => {
-    // setLanguage(language);
+    setLanguage(language);
     setValue(CODE_SNIPPETS[language]);
+    console.log("onselect", language);
   };
 
   // Layout handling
@@ -348,11 +349,11 @@ const Game = () => {
   }, [isResizingX, isResizingY]);
 
   return (
-    <main className='w-full h-full flex flex-col '>
-      <div className='flex justify-start items-center w-full h-full  overflow-hidden'>
-        <div className='w-3/4 h-full flex '>
-          <div className='h-full' style={{ width }}>
-            <section className='w-full h-full'>
+    <main className="w-full h-full flex flex-col ">
+      <div className="flex justify-start items-center w-full h-full  overflow-hidden">
+        <div className="w-3/4 h-full flex ">
+          <div className="h-full" style={{ width }}>
+            <section className="w-full h-full">
               <GameProblem
                 problemTitle={problemTitle}
                 problemData={problemData}
@@ -360,7 +361,7 @@ const Game = () => {
             </section>
           </div>
           <div
-            className='flex justify-center items-center w-4 bg-black/20 cursor-col-resize hover:bg-black/50 '
+            className="flex justify-center items-center w-4 bg-black/20 cursor-col-resize hover:bg-black/50 "
             onMouseDown={onMouseDownX}
           />
 
@@ -379,32 +380,31 @@ const Game = () => {
                   <Timer timer_time={timertime} />
 
                   <Button
-                    type='button'
-                    size='medium_big_radius'
-                    color='secondary'
-                    textColor='primary_font'
-                    name='테스트 케이스'
+                    type="button"
+                    size="medium_big_radius"
+                    color="secondary"
+                    textColor="primary_font"
+                    name="테스트 케이스"
                     onClick={() => setModalOpen(true)}
                   />
-
                 </div>
-                <div className='flex justify-start items-center gap-4'>
+                <div className="flex justify-start items-center gap-4">
                   <Button
-                    type='button'
+                    type="button"
                     size={"small_radius"}
                     onClick={runCode}
-                    color='primary'
-                    textColor='secondary_color_font'
+                    color="primary"
+                    textColor="secondary_color_font"
                     name={"Run Code"}
                     isLoading={false}
                     icon={<PlayArrowIcon />}
                   />
                   <Button
-                    type='button'
+                    type="button"
                     size={"small_radius"}
                     onClick={handleSubmit}
-                    color='primary'
-                    textColor='secondary_color_font'
+                    color="primary"
+                    textColor="secondary_color_font"
                     name={"SUBMIT"}
                     isLoading={false}
                   />
@@ -418,13 +418,13 @@ const Game = () => {
               />
             </section>
             <div
-              className='flex flex-col justify-center items-center w-full h-3
+              className="flex flex-col justify-center items-center w-full h-3
            bg-black/20  hover:bg-black/50
-            cursor-row-resize '
+            cursor-row-resize "
               onMouseDown={onMouseDownY}
             />
 
-            <section className='w-full flex-1 flex overflow-hidden p-2'>
+            <section className="w-full flex-1 flex overflow-hidden p-2">
               <Output
                 isError={isError}
                 output={output}
@@ -433,8 +433,8 @@ const Game = () => {
             </section>
           </div>
         </div>
-        <div className='w-1/4 h-full bg-transparent p-4 '>
-          <Chat roomId='global' />
+        <div className="w-1/4 h-full bg-transparent p-4 ">
+          <Chat roomId="global" />
         </div>
       </div>
       {modalOpen && (

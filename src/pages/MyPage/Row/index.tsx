@@ -90,7 +90,8 @@ const Row = ({
   };
   useEffect(() => {
     console.log(gameResult);
-  }, [gameResult]);
+    console.log(competitorResult);
+  }, [gameResult, competitorResult]);
   const getUserInfo = async () => {
     try {
       setMyResult((prev) => ({
@@ -99,6 +100,7 @@ const Row = ({
         profile_image_url: me?.profile_image_url,
       }));
       // const responseMe = await getUser(me?.id);
+
       const responseCompetitior = await getUser(competitorResult?.id);
 
       // const responseMe = {
@@ -168,7 +170,7 @@ const Row = ({
   return (
     <div
       //   key={gameResult.gameresult_id}s
-      className={`w-2/3 h-[140px] flex flex-col justify-start items-center gap-4 py-4 rounded-md  border-gray-300 border  ${
+      className={`w-4/5 h-[140px] flex flex-col justify-start items-center gap-4 py-4 rounded-md  border-gray-300 border  ${
         // theme === "dark"
         //   ? "border bg-dark_box hover:bg-primary/40 border-oc_white"
         //   : "border hover:bg-[#DFE1E9]  border-gray-300"
@@ -182,20 +184,19 @@ const Row = ({
       <div className="w-full h-[20px] flex items-center gap-10 px-2">
         <span className="font-bold text-lg">{`문제 : ${gameResult?.title}`}</span>
         <span>/</span>
-        <span>{`진행 시간: ${String(gameResult?.running_time / 60).padStart(
-          2,
-          "0"
-        )}:${String(gameResult?.running_time % 60).padStart(2, "0")}`}</span>
+        <span>{`진행 시간: ${String(
+          gameResult?.running_time / 1000
+        )} sec`}</span>
       </div>
       <div className="w-full flex ">
-        <div className="w-[160px] flex justify-center items-center text-3xl">
+        <div className="w-[180px] flex justify-center items-center text-3xl">
           {myResult?.type}
         </div>
         <div className="w-2/5  flex  justify-center items-start gap-2 border-r">
           <ProfileIcon size="mediumLarge" src={myResult?.profile_image_url} />
           <div className="flex flex-col justify-start items-start">
-            <p>{`${myResult?.nickname} 님`}</p>
-            <p>{`언어: ${myResult?.code_language}`}</p>
+            <p>{`${myResult?.id}`}</p>
+            {/* <p>{`언어: ${myResult?.code_language}`}</p> */}
             <p
               className="cursor-pointer font-semibold"
               onClick={() => onClick(myResult?.code)}
@@ -210,8 +211,8 @@ const Row = ({
             src={competitorResult?.profile_image_url}
           />
           <div className="flex flex-col justify-start items-start ">
-            <p>{`${competitorResult?.nickname} 님`}</p>
-            <p>{`언어: ${competitorResult?.code_language}`}</p>
+            <p>{`${competitorResult?.id}`}</p>
+            {/* <p>{`언어: ${competitorResult?.code_language}`}</p> */}
             <p
               className="cursor-pointer font-semibold"
               onClick={() => onClick(competitorResult?.code)}
