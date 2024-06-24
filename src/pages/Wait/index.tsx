@@ -72,7 +72,7 @@ const Wait: React.FC = () => {
                 algorithm_problem: { ...data.algorithm_problem },
               },
             });
-            toast.success("게임이 시작되었습니다!");
+            // toast.success("게임이 시작되었습니다!");
           }
         },
         {
@@ -138,7 +138,7 @@ const Wait: React.FC = () => {
       >
         <div className={styles.waitHeader}>
           <div className={styles.header}>
-            <button className="font-bold text-[20px]" onClick={onClickPrev}>
+            <button className='font-bold text-[20px]' onClick={onClickPrev}>
               <ArrowBackIcon />
             </button>
             <h1 className={styles.title}>{roomInfo.title}</h1>

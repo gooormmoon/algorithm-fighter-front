@@ -29,82 +29,85 @@ const TestCaseModal: React.FC<TestCaseModalProps> = ({
 }) => {
   const handleAddTestCase = () => {
     addTestCase();
-    toast.success("테스트 케이스가 추가되었습니다.");
   };
 
   const handleDeleteTestCase = (id: string) => {
     handleDelete(id);
-    toast.info("테스트 케이스가 삭제되었습니다.");
   };
 
   const handleSaveTestCases = (e: React.FormEvent) => {
     handleSubmit(e);
-    toast.success("테스트 케이스가 저장되었습니다.");
+    // toast.success("테스트 케이스가 저장되었습니다.");
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="large">
-      <div className="pb-5 text-2xl font-bold text-secondary ">
-        테스트 케이스 추가하기
+    <Modal isOpen={isOpen} onClose={onClose} size='large'>
+      <div className='flex'>
+        <div className='flex pb-5 text-2xl font-bold text-secondary'>
+          테스트 케이스 추가하기
+        </div>
+        <div className='flex pb-5 px-4 text-2xl text-gray-500'>
+          ※테스트케이스 하나 이상 추가 필수
+        </div>
       </div>
-      <div className="pt-3 overflow-auto">
+      <div className='pt-3 overflow-auto'>
         <form onSubmit={handleSaveTestCases}>
           {testCases.map((testCase, index) => (
-            <div key={testCase.id} className="py-3 border-b-2">
-              <div className="flex ">
+            <div key={testCase.id} className='py-3 border-b-2'>
+              <div className='flex '>
                 <div>Parameter {index + 1}</div>
-                <div className="ml-[180px]">Result {index + 1}</div>
+                <div className='ml-[180px]'>Result {index + 1}</div>
               </div>
-              <div className="flex items-center space-x-2">
+              <div className='flex items-center space-x-2'>
                 <Input
                   border={true}
-                  type="text"
-                  name="value input"
-                  placeholder="value Input"
+                  type='text'
+                  name='value input'
+                  placeholder='value Input'
                   value={testCase.value}
                   onChange={(e) =>
                     handleInputChange(testCase.id, "value", e.target.value)
                   }
-                  size="small"
+                  size='small'
                 />
 
                 <Input
                   border={true}
-                  name="result input"
-                  type="text"
-                  placeholder="Result Input"
+                  name='result input'
+                  type='text'
+                  placeholder='Result Input'
                   value={testCase.result}
                   onChange={(e) =>
                     handleInputChange(testCase.id, "result", e.target.value)
                   }
-                  size="small"
+                  size='small'
                 />
                 <button
-                  type="button"
+                  type='button'
                   onClick={() => handleDeleteTestCase(testCase.id)}
                   // className="absolute top-4 right-4 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-2xl w-8 h-8 flex flex-col justify-center items-center text-center dark:hover:bg-gray-600 dark:hover:text-white"
-                  className="ml-2 px-2 py-1  text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-2xl w-8 h-8 flex flex-col justify-center items-center text-center dark:hover:bg-gray-600 dark:hover:text-white"
+                  className='ml-2 px-2 py-1  text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-2xl w-8 h-8 flex flex-col justify-center items-center text-center dark:hover:bg-gray-600 dark:hover:text-white'
                 >
                   <CloseIcon />
                 </button>
               </div>
             </div>
           ))}
-          <div className="flex justify-end items-end space-x-4 p-3">
+          <div className='flex justify-end items-end space-x-4 p-3'>
             <Button
-              type="button"
-              size="medium_big_radius"
-              color="secondary"
-              textColor="primary_font"
-              name="추가"
+              type='button'
+              size='medium_big_radius'
+              color='secondary'
+              textColor='primary_font'
+              name='추가'
               onClick={handleAddTestCase}
             />
             <Button
-              size="medium_big_radius"
-              color="secondary"
-              textColor="primary_font"
-              name="저장"
-              type="submit"
+              size='medium_big_radius'
+              color='secondary'
+              textColor='primary_font'
+              name='저장'
+              type='submit'
             />
           </div>
         </form>
