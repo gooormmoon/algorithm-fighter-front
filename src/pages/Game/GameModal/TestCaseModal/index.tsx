@@ -46,7 +46,9 @@ const TestCaseModal: React.FC<TestCaseModalProps> = ({
         <div className='pb-5 text-2xl font-bold text-secondary'>
           테스트 케이스 추가하기
         </div>
-        <div className='pb-5 px-4 text-2xl text-gray-500'>result 하나 이상</div>
+        <div className='pb-5 px-4 text-2xl text-gray-500 bg-gray-200 '>
+          result 하나 이상
+        </div>
       </div>
       <div className='pt-3 overflow-auto'>
         <form onSubmit={handleSaveTestCases}>

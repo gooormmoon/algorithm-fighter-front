@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 
 interface TimerProps {
   timer_time: number;
+  onTimeout: () => void;
 }
 
-const Timer: React.FC<TimerProps> = ({ timer_time }) => {
+const Timer: React.FC<TimerProps> = ({ timer_time, onTimeout }) => {
   const [timeLeft, setTimeLeft] = useState<number>(timer_time);
 
   useEffect(() => {
@@ -18,8 +19,10 @@ const Timer: React.FC<TimerProps> = ({ timer_time }) => {
       }, 1000);
 
       return () => clearInterval(id);
+    } else {
+      onTimeout();
     }
-  }, [timeLeft]);
+  }, [timeLeft, onTimeout]);
 
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
@@ -30,7 +33,11 @@ const Timer: React.FC<TimerProps> = ({ timer_time }) => {
     )}`;
   };
 
-  return <div className='text-2xl font-bold'>{formatTime(timeLeft)}</div>;
+  return (
+    <div className='text-lg font-bold text-red-600'>
+      <span>{formatTime(timeLeft)}</span>
+    </div>
+  );
 };
 
 export default Timer;

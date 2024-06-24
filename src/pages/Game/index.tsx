@@ -75,7 +75,7 @@ const Game = () => {
   const [outcomeMessage, setOutcomeMessage] = useState<string>("");
   //Get Problem Content
 
-  const [timertime, setTimerTime] = useState(0);
+  const [timertime, setTimerTime] = useState(1);
   const [timeOutModal, setTimeOutModal] = useState<boolean>(false);
   const location = useLocation();
 
@@ -349,6 +349,10 @@ const Game = () => {
     };
   }, [isResizingX, isResizingY]);
 
+  const handleTimeout = () => {
+    setTimeOutModal(true);
+  };
+
   return (
     <main className='w-full h-full flex flex-col '>
       <div className='flex justify-start items-center w-full h-full  overflow-hidden'>
@@ -372,7 +376,7 @@ const Game = () => {
                   <LanguageSelector language={language} onSelect={onSelect} />
                   {/* <TimerIcon /> */}
 
-                  <Timer timer_time={timertime} />
+                  <Timer timer_time={timertime} onTimeout={handleTimeout} />
 
                   <Button
                     type='button'
