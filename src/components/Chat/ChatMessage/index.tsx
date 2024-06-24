@@ -17,7 +17,7 @@ const ChatMessage = ({ message }: { message: GameMessage }) => {
       className={`w-full text-primary flex justify-start gap-2 items-center`}
     >
       <div className={` flex justify-start items-center p-1 rounded gap-1`}>
-        {profileImageUrl && <ProfileIcon size="medium" src={profileImageUrl} />}
+        <ProfileIcon size="medium" src={profileImageUrl || ""} />
         <span className="">{userName}</span>
         <span className="">:</span>
       </div>

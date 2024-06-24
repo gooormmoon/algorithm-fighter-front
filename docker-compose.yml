@@ -17,7 +17,7 @@ services:
     restart: always
 
   algorithm-fighter-core:
-    image: bery0na/algofi-core:4977f2a17e42fa280e1dfaba7c7e626b2387c5fc
+    image: bery0na/algofi-core:4e36c6c576fbd9f20a1de1a1a3fb4315910bc1b6
     # build: ./kp-deploy-algofi-core
     ports:
       - 8080:8080

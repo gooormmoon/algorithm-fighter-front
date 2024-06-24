@@ -78,10 +78,12 @@ const Register = () => {
         id: form.email,
         password: form.password,
         name: form.name,
+        profile_image_url: "DefaultIcon",
       };
 
       const response = await register(registerData);
       if (response.status === 200) {
+        console.log(response);
         toast.success("회원가입이 완료되었습니다.");
         navigate("/login");
       }
