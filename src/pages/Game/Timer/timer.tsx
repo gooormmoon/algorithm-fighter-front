@@ -4,9 +4,11 @@ interface TimerProps {
   timer_time: number;
 }
 const Timer: React.FC<TimerProps> = ({ timer_time }) => {
-  // 시간을 담을 변수
-  const initialTime = Number(timer_time);
-  const [timeLeft, setTimeLeft] = useState<number>(initialTime);
+  const [timeLeft, setTimeLeft] = useState<number>(timer_time);
+
+  useEffect(() => {
+    setTimeLeft(timer_time);
+  }, [timer_time]);
 
   useEffect(() => {
     if (timeLeft > 0) {
