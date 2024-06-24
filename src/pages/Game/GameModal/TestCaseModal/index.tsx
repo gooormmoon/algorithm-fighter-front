@@ -43,11 +43,11 @@ const TestCaseModal: React.FC<TestCaseModalProps> = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} size='large'>
       <div className='flex'>
-        <div className='pb-5 text-2xl font-bold text-secondary'>
+        <div className='flex pb-5 text-2xl font-bold text-secondary'>
           테스트 케이스 추가하기
         </div>
-        <div className='pb-5 px-4 text-2xl text-gray-500 bg-gray-200 '>
-          result 하나 이상
+        <div className='flex pb-5 px-4 text-2xl text-gray-500'>
+          ※테스트케이스 하나 이상 추가 필수
         </div>
       </div>
       <div className='pt-3 overflow-auto'>
