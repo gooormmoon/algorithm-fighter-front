@@ -10,6 +10,7 @@ const CompetitorProfile = ({ userId }: { userId: string }) => {
   const [user, setUser] = useState({
     nickname: "",
     description: "",
+    profile_image_url: "",
   });
   useMount(async () => {
     try {
@@ -21,7 +22,7 @@ const CompetitorProfile = ({ userId }: { userId: string }) => {
   });
   return (
     <div className="w-full h-full bg-gray-900 rounded-lg flex justify-evenly gap-4 items-center p-4 py-8 opacity-90 transition-all ease-in-out">
-      <ProfileIcon size="x_large" />
+      <ProfileIcon size="x_large" src={user?.profile_image_url} />
       <div
         className="flex flex-col gap-4 h-full justify-center items-start
       transition-all duration-500
