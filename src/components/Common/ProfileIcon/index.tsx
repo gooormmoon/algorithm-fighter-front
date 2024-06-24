@@ -16,6 +16,8 @@ import {
   PrincessIcon,
   SantaIcon,
   QueenIcon,
+  MimoIcon,
+  SurecIcon,
 } from "../../../assets/profileIcons";
 import styles from "./profileIcon.module.scss";
 import { useMe } from "../../../store/store";
@@ -33,9 +35,6 @@ const ProfileIcon = ({
   onClick?: () => void;
   icon?: { icon: ReactNode; name: string; id: number };
 }) => {
-  useEffect(() => {
-    console.log(src, icon, me.profile_image_url);
-  }, []);
   const { me } = useMe();
   const icons = [
     { id: 1, name: "AngelIcon", icon: <AngelIcon /> },
@@ -57,7 +56,7 @@ const ProfileIcon = ({
     return icons.find((i) => i.name === icon)?.icon;
   };
   if (icon && icon.name !== "DefaultIcon") {
-    console.log(icon);
+    // console.log(icon);
     return (
       <div
         className={`${styles[size]} ${className}
@@ -68,8 +67,8 @@ const ProfileIcon = ({
       </div>
     );
   } else {
-    console.log(src);
-    console.log(me?.profile_image_url);
+    // console.log(src);
+    // console.log(me?.profile_image_url);
     return (
       <div
         className={cx(

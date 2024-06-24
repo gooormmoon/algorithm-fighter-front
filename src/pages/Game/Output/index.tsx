@@ -24,9 +24,11 @@ const Output: React.FC<OutputProps> = ({ isError, output, outcomeMessage }) => {
       <div
         className={` p-2 mt-4 w-full flex-1 overflow-auto  shadow-sm rounded-lg  rounded`}
       >
-        {output
-          ? output.map((line: string, i: number) => <p key={i}>{line}</p>)
-          : "코드를 실행하세요!"}
+        {output === null && outcomeMessage === null && (
+          <span>"코드를 실행하세요!"</span>
+        )}
+        {output &&
+          output.map((line: string, i: number) => <p key={i}>{line}</p>)}
         {outcomeMessage}
       </div>
     </div>

@@ -33,12 +33,6 @@ type TestCase = {
 
 const Game = () => {
   const { gameClient } = useStomp();
-  // const [isResizingX, setIsResizingX] = useState(false);
-  // const [isResizingY, setIsResizingY] = useState(false);
-  // const [initialX, setInitialX] = useState(0);
-  // const [initialY, setInitialY] = useState(0);
-  // const [width, setWidth] = useState(window.innerWidth / 3);
-  // const [height, setHeight] = useState(window.innerHeight / 1.5);
   const [isResizingX, setIsResizingX] = useState(false);
   const [isResizingY, setIsResizingY] = useState(false);
   const [initialX, setInitialX] = useState(0);
@@ -102,14 +96,14 @@ const Game = () => {
 
           //게임종료
           if (data.running_time && data.game_over_type) {
-            if (data.game_over_type === "win") {
+            if (data.game_over_type === "WIN") {
               //게임 승리 모달
               setVictoryModalOpen(true);
             }
-            if (data.game_over_type === "lose") {
+            if (data.game_over_type === "LOSE") {
               setDefeatModalOpen(true);
             }
-            if (data.game_over_type === "time_over") {
+            if (data.game_over_type === "TIME_OVER") {
               //게임 타임오버 모달
               // toast.info("시간이 초과되었습니다.");
               setTimeOutModal(true);
@@ -123,6 +117,7 @@ const Game = () => {
           //게임 종료 후 코드 송신
           const sourceCode = editorRef.current.getValue();
           if (gameClient) {
+            console.log("언어", language);
             gameClient.publish({
               destination: "/app/game/save",
               body: JSON.stringify({
@@ -140,11 +135,14 @@ const Game = () => {
       gameClient.subscribe("/user/queue/game/result", (message) => {
         try {
           const data = JSON.parse(message.body);
+
           // 정상: 맞았습니다., 컴파일 에러, 메모리 초과, 런타임 에러, 시간 초과, 틀렸습니다.
           //data 전달
-          const newMessages: string[] = [];
-          newMessages.push(data);
-          setOutcomeMessage(newMessages.join("\n"));
+          // const newMessages: string[] = [];
+          // newMessages.push(data.message);
+          // console.log(newMessages);
+          // setOutcomeMessage(newMessages.join("\n"));
+          setOutcomeMessage(data.message);
         } catch (e) {
           toast.error(" 오류가 발생했습니다. 다시 제출해 주세요");
         }
@@ -295,7 +293,7 @@ const Game = () => {
   };
   // 에디터 언어 선택
   const onSelect = (language: string) => {
-    setLanguage(language);
+    // setLanguage(language);
     setValue(CODE_SNIPPETS[language]);
   };
 
@@ -365,11 +363,17 @@ const Game = () => {
             className='flex justify-center items-center w-4 bg-black/20 cursor-col-resize hover:bg-black/50 '
             onMouseDown={onMouseDownX}
           />
-          <div className='w-full h-full flex flex-col overflow-hidden'>
-            <section className='w-full overflow-hidden' style={{ height }}>
-              <div className='w-full h-16 bg-transparent flex justify-between items-center p-4 gap-2'>
-                <div className=' flex justify-start items-center gap-2 '>
-                  <LanguageSelector language={language} onSelect={onSelect} />
+
+          <div className="w-full h-full flex flex-col overflow-hidden">
+            <section className="w-full overflow-hidden" style={{ height }}>
+              <div className="w-full h-16 bg-transparent flex justify-between items-center p-4 gap-2">
+                <div className=" flex justify-start items-center gap-2 ">
+                  <LanguageSelector
+                    language={language}
+                    onSelect={onSelect}
+                    setLanguage={setLanguage}
+                  />
+
                   {/* <TimerIcon /> */}
 
                   <Timer timer_time={timertime} />
@@ -382,22 +386,7 @@ const Game = () => {
                     name='테스트 케이스'
                     onClick={() => setModalOpen(true)}
                   />
-                  <Button
-                    type='button'
-                    size='medium_small_radius'
-                    color='secondary'
-                    textColor='primary_font'
-                    name='승리'
-                    onClick={() => setVictoryModalOpen(true)}
-                  />
-                  <Button
-                    type='button'
-                    size='medium_small_radius'
-                    color='secondary'
-                    textColor='primary_font'
-                    name='패배'
-                    onClick={() => setDefeatModalOpen(true)}
-                  />
+
                 </div>
                 <div className='flex justify-start items-center gap-4'>
                   <Button

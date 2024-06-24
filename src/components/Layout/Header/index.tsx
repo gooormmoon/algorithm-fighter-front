@@ -13,7 +13,7 @@ interface pathType {
 }
 const paths: pathType[] = [
   { path: "/", name: "홈" },
-  { path: "/setting", name: "프로필 설정" },
+  { path: "/mypage", name: "마이 페이지" },
 ];
 const Header = () => {
   const navigate = useNavigate();

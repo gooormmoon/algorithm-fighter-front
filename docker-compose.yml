@@ -54,8 +54,10 @@ services:
     restart: on-failure
 
   # algorithm-fighter-front:
-  #   # image: bery0na/algofi-front:v1
-  #   build: ./kp-deploy-algofi-front
+
+  #   image: bery0na/algofi-front:dev
+  #   # build: ./kp-deploy-algofi-front
+
   #   ports:
   #     - 3000:3000
   #   networks:

@@ -10,6 +10,12 @@
     height: 32px !important;
   }
 }
+.mediumLarge {
+  > svg {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
 .large {
   > svg {
     width: 112px !important;

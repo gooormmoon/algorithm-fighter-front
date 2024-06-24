@@ -52,10 +52,6 @@ const MyPageRead: React.FC = () => {
   });
 
   useEffect(() => {
-    console.log(me?.profile_image_url);
-  }, [me]);
-
-  useEffect(() => {
     if (
       nickname !== me.nickname ||
       description !== me.description ||
@@ -100,6 +96,20 @@ const MyPageRead: React.FC = () => {
     }
   };
 
+  const getProfileIcon = () => {
+    if (selectedIcon.name === "DefaultIcon" && !profileImage) {
+      return "";
+    }
+    if (selectedIcon.name !== "DefaultIcon" && !profileImage) {
+      return selectedIcon.icon;
+    }
+    if (selectedIcon.name !== "DefaultIcon" && profileImage) {
+      return selectedIcon.name;
+    }
+    if (selectedIcon.name === "DefaultIcon" && profileImage) {
+      return profileImage;
+    }
+  };
   // 제출
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -125,7 +135,7 @@ const MyPageRead: React.FC = () => {
         const updatedUser = await modifyUser({
           name: me.name,
           nickname: nickname,
-          profile_image_url: selectedIcon.name,
+          profile_image_url: getProfileIcon(),
           description: description || "",
         });
         if (updatedUser.status === 200) {
