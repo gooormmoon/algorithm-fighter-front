@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 interface TimerProps {
-  timer_time: string;
+  timer_time: number;
 }
 const Timer: React.FC<TimerProps> = ({ timer_time }) => {
   // 시간을 담을 변수
@@ -27,7 +27,7 @@ const Timer: React.FC<TimerProps> = ({ timer_time }) => {
     )}`;
   };
   return (
-    <div>
+    <div className='text-lg font-bold'>
       <span>{formatTime(timeLeft)}</span>
     </div>
   );
