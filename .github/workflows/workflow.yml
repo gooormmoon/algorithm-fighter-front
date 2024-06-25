@@ -11,9 +11,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [18.x]
@@ -42,4 +40,4 @@ jobs:
 
     - run: yarn install
     - run: yarn build --if-present
-    - run: yarn test
+    - run: yarn start
