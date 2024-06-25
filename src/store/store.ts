@@ -12,6 +12,21 @@ import {
 import { createJSONStorage, persist } from "zustand/middleware";
 import Logout from "../pages/Auth/Logout";
 
+interface ResizeState {
+  isResizingX: boolean;
+  isResizingY: boolean;
+  initialX: number;
+  initialY: number;
+  width: number;
+  height: number;
+  setIsResizingX: (isResizingX: boolean) => void;
+  setIsResizingY: (isResizingY: boolean) => void;
+  setInitialX: (initialX: number) => void;
+  setInitialY: (initialY: number) => void;
+  setWidth: (width: number) => void;
+  setHeight: (height: number) => void;
+}
+
 export const useTheme = create(
   persist<ThemeType>(
     (set) => ({
@@ -142,3 +157,18 @@ export const useRooms = create(
     }
   )
 );
+
+export const useResizeStore = create<ResizeState>((set) => ({
+  isResizingX: false,
+  isResizingY: false,
+  initialX: 0,
+  initialY: 0,
+  width: window.innerWidth / 3,
+  height: window.innerHeight / 1.5,
+  setIsResizingX: (isResizingX) => set({ isResizingX }),
+  setIsResizingY: (isResizingY) => set({ isResizingY }),
+  setInitialX: (initialX) => set({ initialX }),
+  setInitialY: (initialY) => set({ initialY }),
+  setWidth: (width) => set({ width }),
+  setHeight: (height) => set({ height }),
+}));

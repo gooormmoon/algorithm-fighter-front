@@ -18,19 +18,17 @@ const Output: React.FC<OutputProps> = ({ isError, output, outcomeMessage }) => {
     }
   }, [output, isError]);
   return (
-    <div className="p-4 rounded-lg w-[100%] h-full flex flex-col ">
-      <p className="mb-2 text-lg font-semibold ">Output</p>
+    <div className='p-4 rounded-lg w-[100%] h-full flex flex-col '>
+      <p className='mb-2 text-lg font-semibold '>Output</p>
 
       <div
-        className={` p-2 mt-4 w-full flex-1 overflow-auto  shadow-sm rounded-lg ${
-          isError
-            ? "border-red-500 text-red-400 line-through"
-            : "border-white/10"
-        } rounded`}
+        className={` p-2 mt-4 w-full flex-1 overflow-auto  shadow-sm rounded-lg  rounded`}
       >
-        {output
-          ? output.map((line: string, i: number) => <p key={i}>{line}</p>)
-          : "코드를 실행하세요!"}
+        {output === null && outcomeMessage === null && (
+          <span>"코드를 실행하세요!"</span>
+        )}
+        {output &&
+          output.map((line: string, i: number) => <p key={i}>{line}</p>)}
         {outcomeMessage}
       </div>
     </div>

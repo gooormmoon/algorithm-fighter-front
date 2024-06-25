@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useInputChange from "../../../../hooks/useInputChange";
 import {
   RadioButton,
@@ -29,7 +29,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const [selectedNumber, setSelectedNumber] = useState<number>(
     numberOptions[0]
   );
-  const [selectedDifficulty, setSelectedDifficulty] = useState<number>(0);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string>("1");
   const [title, setTitle] = useState("");
 
   useMount(() => {
@@ -42,7 +42,6 @@ const CreateModal: React.FC<CreateModalProps> = ({
           if (data.host_id) {
             //생성하고 콜백함수
             onClose();
-            console.log("modal close");
             navigate(`/wait/${data.host_id}`, {
               state: {
                 host: `${data.host}`,
@@ -58,7 +57,7 @@ const CreateModal: React.FC<CreateModalProps> = ({
             });
           }
           if (data.msg) {
-            alert(data.msg);
+            toast.info(data.msg);
           }
         },
         { id: "createModal" }
@@ -68,9 +67,11 @@ const CreateModal: React.FC<CreateModalProps> = ({
   const handleSubmit = () => {
     const message = {
       title: title || "알고리즘 대결할래?",
-      difficulty: selectedDifficulty,
-      timer: selectedNumber,
+
+      problem_level: selectedDifficulty,
+      timer_time: selectedNumber * 60,
     };
+    // console.log(message.timer_time);
     if (gameClient?.connected) {
       createGame(gameClient, message);
     } else {
@@ -80,22 +81,22 @@ const CreateModal: React.FC<CreateModalProps> = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="mt-6 flex flex-col item-center">
-        <span className="text-lg text-[#213363] font-semibold">방 제목</span>
+      <div className='mt-6 flex flex-col item-center'>
+        <span className='text-lg text-[#213363] font-semibold'>방 제목</span>
         <Input
-          type="text"
+          type='text'
           value={title}
-          name="title"
+          name='title'
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="입력하세요"
-          size="small"
+          placeholder='입력하세요'
+          size='small'
           disabled={false}
           border={true}
         />
       </div>
 
-      <div className="flex flex-col gap-2 ">
-        <span className="text-lg text-[#213363] font-semibold mt-6 flex item-center">
+      <div className='flex flex-col gap-2 '>
+        <span className='text-lg text-[#213363] font-semibold mt-6 flex item-center'>
           난이도 설정
         </span>
         <RadioButton
@@ -103,8 +104,8 @@ const CreateModal: React.FC<CreateModalProps> = ({
           onChange={(value) => setSelectedDifficulty(value)}
         />
       </div>
-      <div className="mt-6 flex flex-col gap-2 item-center">
-        <span className="text-lg text-[#213363] font-semibold">
+      <div className='mt-6 flex flex-col gap-2 item-center'>
+        <span className='text-lg text-[#213363] font-semibold'>
           타이머 설정
         </span>
         <Dropdown
@@ -116,13 +117,13 @@ const CreateModal: React.FC<CreateModalProps> = ({
         />
       </div>
 
-      <div className="mt-9 flex justify-center">
+      <div className='mt-9 flex justify-center'>
         <Button
-          type="submit"
-          size="medium_big_radius"
-          color="primary"
-          textColor="secondary_font"
-          name="게임 시작!"
+          type='submit'
+          size='medium_big_radius'
+          color='primary'
+          textColor='secondary_font'
+          name='게임 시작!'
           onClick={handleSubmit}
         />
       </div>

@@ -1,9 +1,12 @@
 version: "3.8"
 services:
   algorithm-fighter-mysql:
-    image: bery0na/algofi-mysql:9a7dae9579225db5197545f1d338f199896ca6ee
+    image: bery0na/algofi-mysql:72ee07cb269008104bc6f1114849b23f8b54822f
+    # build: ./kp-deploy-algofi-mysql-k8s
     ports:
       - 3306:3306
+    networks:
+      - algofi-network
     volumes:
       - mydata:/var/lib/mysql
     deploy:
@@ -14,11 +17,15 @@ services:
     restart: always
 
   algorithm-fighter-core:
-    image: bery0na/algofi-core:0aa54535f240cc6a9d6c987223ce73322f8ac3f2
+    image: bery0na/algofi-core:4e36c6c576fbd9f20a1de1a1a3fb4315910bc1b6
+    # build: ./kp-deploy-algofi-core
     ports:
       - 8080:8080
+    networks:
+      - algofi-network
     environment:
       - DB_URL=algorithm-fighter-mysql
+      - COMPILE_URL=algorithm-fighter-compile
     depends_on:
       - algorithm-fighter-mysql
     deploy:
@@ -29,9 +36,12 @@ services:
     restart: on-failure
 
   algorithm-fighter-compile:
-    image: bery0na/algofi-compile:391ad8301cc5e6e00b6dcdab3087b790b79ee894
+    image: bery0na/algofi-compile:c9f965863abf8606ce7ecc6bd2b087b868a456cf
+    # build: ./kp-deploy-algofi-compile
     ports:
       - 9000:9000
+    networks:
+      - algofi-network
     environment:
       - DB_URL=algorithm-fighter-mysql
     depends_on:
@@ -44,21 +54,26 @@ services:
     restart: on-failure
 
   # algorithm-fighter-front:
-  #   build: ./algorithm-fighter-front
-  #   image: algofi-front-test:5.0.0-compose
-  #   environment:
-  #     - BACKEND_HOST=algorithm-fighter-core
+
+  #   image: bery0na/algofi-front:dev
+  #   # build: ./kp-deploy-algofi-front
+
   #   ports:
-  #     - 80:3000
+  #     - 3000:3000
+  #   networks:
+  #     - algofi-network
   #   depends_on:
   #     - algorithm-fighter-core
   #     - algorithm-fighter-compile
   #   deploy:
   #     resources:
   #       limits:
-  #         cpus: "0.5"
-  #         memory: 64M
+  #         cpus: "1"
+  #         memory: 1g
   #   restart: on-failure
 
 volumes:
   mydata:
+
+networks:
+  algofi-network:

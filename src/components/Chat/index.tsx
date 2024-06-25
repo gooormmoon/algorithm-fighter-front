@@ -24,11 +24,18 @@ const Chat = ({ roomId }: { roomId: string }) => {
 
   useMount(() => {
     if (chatClient?.connected && roomId !== "global") {
-      chatClient.subscribe(`/user/queue/chat/${roomId}`, (message) => {
-        // setGameMessage(JSON.parse(message.body));
-        const newMessage = JSON.parse(message.body);
-        setGameMessage((prevMessages) => [...prevMessages, newMessage]);
-      });
+      chatClient.unsubscribe("gameChat");
+      chatClient.subscribe(
+        `/topic/room/${roomId}`,
+        (message) => {
+          // setGameMessage(JSON.parse(message.body));
+          const newMessage = JSON.parse(message.body);
+          setGameMessage((prevMessages) => [...prevMessages, newMessage]);
+        },
+        {
+          id: "gameChat",
+        }
+      );
     }
   });
   const scrollToBottom = () => {
@@ -55,7 +62,7 @@ const Chat = ({ roomId }: { roomId: string }) => {
         <span>전체</span>
         <SearchBar />
       </div>
-      <div className="w-full h-full p-4 flex flex-col items-start justify-start gap-1 overflow-scroll">
+      <div className='w-full h-full p-4 flex flex-col items-start justify-start gap-1 overflow-scroll'>
         {roomId === "global"
           ? messages.map((msg, index) => (
               <ChatMessage

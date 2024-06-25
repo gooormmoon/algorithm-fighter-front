@@ -16,7 +16,7 @@ import styles from "./login.module.scss";
 
 const Login = () => {
   const { setRooms } = useRooms();
-  const { loggedIn, setMe } = useMe();
+  const { loggedIn, setMe, me } = useMe();
   const { setGameClient, setChatClient } = useStomp();
   const navigate = useNavigate();
   const { setMessages, resetMessages } = useGlobalChat();
@@ -56,37 +56,53 @@ const Login = () => {
           if (myInfoResponse.status === 200) {
             const myInfo = myInfoResponse.data;
             setMe(myInfo);
+            toast.info(`환영해요, ${myInfo.nickname} 님!`);
             const gameClient: StompJs.Client = createGameClient();
             const chatClient: StompJs.Client = createChatClient();
             chatClient.activate();
             chatClient.onConnect = (frame: any) => {
-              chatClient.subscribe("/topic/room/global", (message) => {
-                const receivedMessage = JSON.parse(message.body);
-                setMessages({
-                  ...receivedMessage,
-                  nickname: myInfo.nickname, // nickname 추가
-                });
-              });
+              chatClient.unsubscribe("globalChat");
+              chatClient.subscribe(
+                "/topic/room/global",
+                (message) => {
+                  const receivedMessage = JSON.parse(message.body);
+                  setMessages({
+                    ...receivedMessage,
+                    nickname: myInfo.nickname, // nickname 추가
+                  });
+                },
+                {
+                  id: "globalChat",
+                }
+              );
             };
 
             setChatClient(chatClient);
             resetMessages(); // 메시지 리셋
             gameClient.activate();
             gameClient.onConnect = (frame: any) => {
-              console.log("connected");
-              gameClient.subscribe("/user/queue/game/sessions", (message) => {
-                const data = JSON.parse(message.body);
-                console.log(data);
-                if (data.rooms) {
-                  setRooms(data.rooms);
-                  // gameClient.unsubscribe("/user/queue/game/sessions");
+              console.log("Game Client connected");
+              gameClient.unsubscribe("rooms");
+              gameClient.subscribe(
+                "/user/queue/game/sessions",
+                (message) => {
+                  const data = JSON.parse(message.body);
+                  // console.log(data);
+                  if (data.rooms) {
+                    setRooms(data.rooms);
+                    // gameClient.unsubscribe("/user/queue/game/sessions");
+                  }
+                },
+                {
+                  id: "rooms",
                 }
+              );
+              const message = JSON.stringify({
+                message: "give me room list",
               });
               gameClient.publish({
                 destination: "/app/game/sessions",
-                body: JSON.stringify({
-                  message: "give me room list",
-                }),
+                body: message,
               });
 
               gameClient.unsubscribe("joinGame");
@@ -94,7 +110,7 @@ const Login = () => {
                 "/user/queue/game/join",
                 (message) => {
                   const data = JSON.parse(message.body);
-                  console.log("메세지옴");
+
                   if (data.host_id) {
                     //생성하고 콜백함수
                     navigate(`/wait/${data.host_id}`, {
@@ -120,7 +136,6 @@ const Login = () => {
             setGameClient(gameClient);
 
             navigate("/");
-            toast.success("로그인 성공!");
           }
         }
       }
@@ -142,51 +157,51 @@ const Login = () => {
         className={`w-full h-[100vh] flex flex-col justify-start items-center gap-[6vh]
         ${"bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C] text-white "}`}
       >
-        <div className="flex justify-start w-full px-4">
+        <div className='flex justify-start w-full px-4'>
           <img
             src={Lightmode_logo}
-            alt="Lightmode_logo"
-            className="w-[12vh] h-[12vh] object-contain"
+            alt='Lightmode_logo'
+            className='w-[12vh] h-[12vh] object-contain'
           />
         </div>
         <form
-          className="w-[52vh] h-[60vh] gap-4 flex flex-col justify-center items-center  rounded-md  bg-transparent "
+          className='w-[52vh] h-[60vh] gap-4 flex flex-col justify-center items-center  rounded-md  bg-transparent '
           onSubmit={onSubmit}
         >
-          <h1 className=" text-[68px] font-semibold">Login</h1>
+          <h1 className=' text-[68px] font-semibold'>Login</h1>
 
           <Input
-            type="email"
-            placeholder="Email"
+            type='email'
+            placeholder='Email'
             value={form?.email}
             onChange={onChange}
-            name="email"
-            size="large"
+            name='email'
+            size='large'
             border={false}
           />
           <Input
-            type="password"
-            placeholder="Password"
+            type='password'
+            placeholder='Password'
             value={form?.password}
             onChange={onChange}
-            name="password"
-            size="large"
+            name='password'
+            size='large'
             border={false}
           />
           <Button
-            type="submit"
-            size="large_radius"
-            color="secondary"
-            textColor="primary_font"
-            name="로그인"
+            type='submit'
+            size='large_radius'
+            color='secondary'
+            textColor='primary_font'
+            name='로그인'
           />
-          <ul className="mt-4 flex gap-2 text-sm">
-            <li className="cursor-pointer">아이디 찾기</li>
+          <ul className='mt-4 flex gap-2 text-sm'>
+            <li className='cursor-pointer'>아이디 찾기</li>
             <li>|</li>
-            <li className="cursor-pointer">비밀번호 찾기</li>
+            <li className='cursor-pointer'>비밀번호 찾기</li>
             <li>|</li>
             <li
-              className="font-semibold cursor-pointer"
+              className='font-semibold cursor-pointer'
               onClick={() => navigate("/register")}
             >
               회원가입

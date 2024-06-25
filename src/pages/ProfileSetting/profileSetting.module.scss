@@ -1,0 +1,41 @@
+.iconsWrapper {
+  .profileIcon {
+    cursor: pointer;
+    > svg {
+      width: 112px;
+      height: 112px;
+    }
+    &:hover {
+      > svg {
+        fill: rgba(0, 0, 0, 0.5);
+        > path {
+          fill: rgba(0, 0, 0, 0.5);
+        }
+        > circle {
+          fill: rgba(0, 0, 0, 0.5);
+        }
+      }
+
+      img {
+        fill: rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+  .modifyIcon {
+    cursor: pointer;
+    z-index: 20;
+    position: relative;
+    top: -64px;
+    right: -43px;
+    pointer-events: none;
+    fill: transparent;
+    > svg {
+      width: 100px;
+      height: 100px;
+    }
+  }
+  .profileIcon:hover + .modifyIcon {
+    fill: white;
+    // pointer-events: all;
+  }
+}

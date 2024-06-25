@@ -1,13 +1,14 @@
 import { Client } from "@stomp/stompjs";
 import { getTokens } from "../../utils";
 import * as StompJs from "@stomp/stompjs";
+import config from "../../config";
 
 // import { WebSocket } from "ws";
 // Object.assign(global, { WebSocket });
 
 export const createChatClient = () => {
   return new StompJs.Client({
-    brokerURL: "ws://localhost:8080/chat",
+    brokerURL: `ws://54.180.228.221:8080/chat`,
     connectHeaders: {
       Authorization: `Bearer ${getTokens()}`,
     },

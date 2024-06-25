@@ -13,7 +13,7 @@ interface pathType {
 }
 const paths: pathType[] = [
   { path: "/", name: "홈" },
-  { path: "/setting", name: "프로필 설정" },
+  { path: "/mypage", name: "마이 페이지" },
 ];
 const Header = () => {
   const navigate = useNavigate();
@@ -87,7 +87,7 @@ const Header = () => {
         </li>
         <li className="w-[32px] h-[32px] flex justify-center items-center">
           <button onClick={() => setShowProfile((prev) => !prev)}>
-            <ProfileIcon size="medium" />
+            <ProfileIcon size="small" />
           </button>
           {showProfile && <Profile onClose={() => setShowProfile(false)} />}
         </li>

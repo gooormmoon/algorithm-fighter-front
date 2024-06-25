@@ -2,10 +2,13 @@
 import * as StompJs from "@stomp/stompjs";
 import { getTokens } from "../../utils";
 import apiClient from "../apiClient";
+import { useRooms } from "../../store/store";
+import compileClient from "../compileClient";
+import config from "../../config";
 
 export const createGameClient = () => {
   return new StompJs.Client({
-    brokerURL: "ws://localhost:8080/game",
+    brokerURL: `ws://54.180.228.221:8080/game`,
     connectHeaders: {
       Authorization: `Bearer ${getTokens()}`,
     },
@@ -24,6 +27,7 @@ export const createGameClient = () => {
     onWebSocketError: (error: Error) => {
       console.error("WebSocket Error:", error);
     },
+
     // onConnect:()=>{}
   });
 };
@@ -101,11 +105,11 @@ export const autoUserSubmitCode = (
 };
 
 // 코드채점
-export const gradeCode = (body: {
+export const gradeCode = async (body: {
   code: string;
   language: string;
   input: string;
   expected: string;
 }) => {
-  return apiClient.post("/api/judge-input", body);
+  return compileClient.post("/api/judge-input", body);
 };

@@ -13,10 +13,15 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <ToastContainer />
+  <>
+    <ToastContainer
+      limit={2}
+      closeOnClick
+      hideProgressBar={true}
+      autoClose={1200}
+    />
     <RouterProvider router={rootRouter} />
-  </React.StrictMode>
+  </>
 );
 
 // If you want to start measuring performance in your app, pass a function

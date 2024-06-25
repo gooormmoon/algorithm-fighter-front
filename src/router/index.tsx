@@ -13,7 +13,8 @@ import {
   ProfileSettingPage,
   GamePage,
   WaitPage,
-  StartPage
+  StartPage,
+  MyPage,
 } from "../pages";
 
 const router = (
@@ -22,9 +23,10 @@ const router = (
     <Route path="/" element={<Layout />}>
       <Route index element={<MainPage />} />
       <Route path="/setting" element={<ProfileSettingPage />} />
+      <Route path="/mypage" element={<MyPage />} />
 
       <Route path="/wait/:id" element={<WaitPage />} />
-      <Route path="/game/:id" element={<GamePage />} />\
+      <Route path="/game/:id" element={<GamePage />} />
     </Route>
 
     <Route path="/login" element={<LoginPage />} />

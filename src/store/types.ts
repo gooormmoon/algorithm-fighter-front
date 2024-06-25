@@ -61,6 +61,12 @@ export type GlobalChatType = {
   resetMessages: () => void; // 추가
 };
 
+export type GameChatType = {
+  messages: Message[];
+  setMessages: (newMessage: Message) => void;
+  resetMessages: () => void; // 추가
+};
+
 export type Room = {
   host_id: string;
   host: string;
