@@ -15,20 +15,23 @@ const CompetitorProfile = ({ userId }: { userId: string }) => {
   useMount(async () => {
     try {
       const response = await getUser(userId);
+      console.log(response.data);
       setUser(response.data);
     } catch (err) {
       toast.error("회원 정보 조회 실패");
     }
   });
   return (
-
     <div className="w-full h-full bg-gray-900 rounded-lg flex justify-evenly gap-4 items-center p-4 py-8 opacity-90 transition-all ease-in-out">
-      <ProfileIcon size="x_large" src={user?.profile_image_url} />
+      <ProfileIcon
+        size="x_large"
+        src={user?.profile_image_url || "DefaultIcon"}
+      />
 
       <div
-        className='flex flex-col gap-4 h-full justify-center items-start
+        className="flex flex-col gap-4 h-full justify-center items-start
       transition-all duration-500
-      '
+      "
       >
         <p
           className={`transition-all duration-500 text-white

@@ -8,7 +8,7 @@ import config from "../../config";
 
 export const createChatClient = () => {
   return new StompJs.Client({
-    brokerURL: `ws:${config.API_URL}/chat`,
+    brokerURL: `ws://54.180.228.221:8080/chat`,
     connectHeaders: {
       Authorization: `Bearer ${getTokens()}`,
     },

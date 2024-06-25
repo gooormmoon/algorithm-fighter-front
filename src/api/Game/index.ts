@@ -8,7 +8,7 @@ import config from "../../config";
 
 export const createGameClient = () => {
   return new StompJs.Client({
-    brokerURL: `ws:${config.API_URL}/game`,
+    brokerURL: `ws://54.180.228.221:8080/game`,
     connectHeaders: {
       Authorization: `Bearer ${getTokens()}`,
     },
