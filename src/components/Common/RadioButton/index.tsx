@@ -11,12 +11,10 @@ export function RadioButton({
   onChange,
   readOnly,
 }: RadioButtonProps) {
-  // const levels = ["lv0", "lv1", "lv2", "lv3", "lv4"];
   const levels = ["1", "2", "3", "4", "5"];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!readOnly) {
-      // onChange(parseInt(e.target.value));
       onChange(e.target.value);
     }
   };

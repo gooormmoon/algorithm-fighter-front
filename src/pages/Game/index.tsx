@@ -16,7 +16,7 @@ import {
   TimeoutModal,
 } from "./GameModal";
 import { useStomp } from "../../store/store";
-import { autoUserSubmitCode, submitCode, gradeCode } from "../../api/Game/";
+import { gradeCode } from "../../api/Game/";
 import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "react-router-dom";
 import { useMount } from "react-use";
@@ -106,13 +106,10 @@ const Game = () => {
             }
             if (data.game_over_type === "TIME_OVER") {
               //게임 타임오버 모달
-              // toast.info("시간이 초과되었습니다.");
               setTimeOutModal(true);
             }
           }
 
-          // 게임 끝났음요
-          console.log(data.game_over_type);
           setGaming(false);
 
           //게임 종료 후 코드 송신
@@ -136,13 +133,6 @@ const Game = () => {
       gameClient.subscribe("/user/queue/game/result", (message) => {
         try {
           const data = JSON.parse(message.body);
-
-          // 정상: 맞았습니다., 컴파일 에러, 메모리 초과, 런타임 에러, 시간 초과, 틀렸습니다.
-          //data 전달
-          // const newMessages: string[] = [];
-          // newMessages.push(data.message);
-          // console.log(newMessages);
-          // setOutcomeMessage(newMessages.join("\n"));
           setOutcomeMessage(data.message);
         } catch (e) {
           toast.error(" 오류가 발생했습니다. 다시 제출해 주세요");
@@ -181,14 +171,6 @@ const Game = () => {
     setModalOpen(false);
   };
 
-  //테스트 케이스 모달 => 왜 안쓰일까? 어디서 삭제됐는지 몰라서 남겨둠
-  // const toggleModal = (
-  //   modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
-  //   isOpen: boolean
-  // ) => {
-  //   modalSetter(isOpen);
-  // };
-
   //게임 코드 제출
   const handleSubmit = () => {
     const sourceCode = editorRef.current.getValue();
@@ -205,22 +187,6 @@ const Game = () => {
       toast.success("코드가 성공적으로 제출되었습니다.");
     }
   };
-
-  // const onClickStart = () => {
-  //   if (gameClient?.connected) {
-  //     gameClient.publish({
-  //       destination: "/app/game/updates",
-  //       body: JSON.stringify({
-  //         level: selectedDifficulty,
-  //         timer_time: selectedNumber * 60,
-  //         title: roomInfo.title,
-  //       }),
-  //     });
-  //     gameClient.publish({
-  //       destination: "/app/game/start",
-  //     });
-  //   }
-  // };
 
   useEffect(() => {
     if (modalOpen) {
@@ -266,26 +232,6 @@ const Game = () => {
       setIsLoading(false);
     }
   };
-  // 기존 api
-  // const runCode = async () => {
-  //   const sourceCode = editorRef.current?.getValue();
-  //   console.log(typeof sourceCode);
-  //   if (!sourceCode) return;
-  //   try {
-  //     setIsLoading(true);
-  //     const { run: result } = await executeCode(language, sourceCode);
-  //     if (result.stderr) {
-  //       throw new Error(result.stderr);
-  //     }
-  //     setOutput(result.output.split("\n"));
-  //     setIsError(false);
-  //     console.log(result);
-  //   } catch (error) {
-  //     setIsError(true);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   //에디터 마운트 시 focus
   const onMount: OnMount = (editor) => {
@@ -461,7 +407,6 @@ const Game = () => {
       {timeOutModal && (
         <TimeoutModal isOpen={true} onClose={() => setTimeOutModal(false)} />
       )}
-      {/* <Footer runCode={runCode} isLoading={isLoading} /> */}
     </main>
   );
 };

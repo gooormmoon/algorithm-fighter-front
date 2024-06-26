@@ -103,22 +103,6 @@ const Row = ({
 
       const responseCompetitior = await getUser(competitorResult?.id);
 
-      // const responseMe = {
-      //   data: {
-      //     id: "host@test.com",
-      //     nickname: "host",
-      //     profile_image_url: "PrincessIcon",
-      //   },
-      // };
-
-      // const responseCompetitior = {
-      //   data: {
-      //     id: "sjj2@naver.com",
-      //     nickname: "sjj2",
-      //     profile_image_url: "DevilIcon",
-      //   },
-      // };
-
       setCompetitorResult((prev) => ({
         ...prev,
         nickname: responseCompetitior.data.nickname,

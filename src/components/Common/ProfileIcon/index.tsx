@@ -1,6 +1,4 @@
 import React, { ReactNode, useEffect } from "react";
-import defaultImage from "./defaultUser.png";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import cx from "classnames";
 import {
   AlienIcon,
@@ -16,8 +14,6 @@ import {
   PrincessIcon,
   SantaIcon,
   QueenIcon,
-  MimoIcon,
-  SurecIcon,
 } from "../../../assets/profileIcons";
 import styles from "./profileIcon.module.scss";
 import { useMe } from "../../../store/store";

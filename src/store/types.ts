@@ -40,13 +40,8 @@ export type StompType = {
   setGameClient: (newClient: StompType["gameClient"]) => void;
   chatClient: Client | null;
   setChatClient: (newClient: StompType["chatClient"]) => void;
-  // allChatClient: Client | null;
-  // setAllChatClient: (newClient: StompType["allChatClient"]) => void;
-  // gameChatClient: Client | null;
-  // setGameChatClient: (newClient: StompType["gameChatClient"]) => void;
 };
 
-//"type":"TALK","chatroom_id":"global","content":"hihi","sender_id":"sjj@naver.com","created_date":"2024-06-21T05:28:43.524011295"}
 export type Message = {
   nickname: string;
   type: string;

@@ -38,7 +38,6 @@ const Main: React.FC = () => {
               console.log(data);
               if (data.rooms) {
                 setRooms(data.rooms);
-                // gameClient.unsubscribe("/user/queue/game/sessions");
               }
             },
             { id: "rooms" }
@@ -51,7 +50,6 @@ const Main: React.FC = () => {
             body: message,
           });
 
-          // newGameClient?.unsubscribe("joinGame");
           newGameClient?.subscribe(
             "/user/queue/game/join",
             (message) => {
@@ -72,6 +70,7 @@ const Main: React.FC = () => {
                     chatroom_id: data.chatroom_id,
                   },
                 });
+                toast.success("게임방 생성 완료!");
               } else {
                 alert(data.msg);
               }
@@ -87,23 +86,6 @@ const Main: React.FC = () => {
       }
     }
   });
-  // useEffect(() => {
-  //   if (!loggedIn) {
-  //     navigate("/login");
-  //   } else {
-  //     if (gameClient === null) {
-  //       console.log("null");
-  //     } else {
-  //       console.log("연결됨? ", gameClient.connected);
-  //     }
-  //   }
-  //   // if (gameClient?.connected) {
-  //   //   // sendGetRooms(gameClient, {
-  //   //   //   message: "give me room list",
-  //   //   // });
-
-  //   // }
-  // }, []);
 
   const toggleModal = (
     modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
@@ -111,13 +93,6 @@ const Main: React.FC = () => {
   ) => {
     modalSetter(isOpen);
   };
-
-  // useEffect(() => {
-  //   toggleModal(setCreateGameModal, false);
-  //   if (gameClient?.connected && gameSettings.title !== "") {
-  //     createGame(gameClient, gameSettings);
-  //   }
-  // }, [gameSettings]);
 
   return (
     <main className={styles.mainLayout}>
@@ -141,7 +116,7 @@ const Main: React.FC = () => {
             `${theme === "light" && "border border-gray-300"}`
           )}
         >
-          <Chat roomId='global' />
+          <Chat roomId="global" />
         </div>
         <div
           className={cx(
@@ -151,12 +126,12 @@ const Main: React.FC = () => {
           )}
         >
           <button
-            className='w-1/2 h-full bg-primary text-[36px] text-white font-semibold rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out'
+            className="w-1/2 h-full bg-primary text-[36px] text-white font-semibold rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out"
             onClick={() => toggleModal(setCreateGameModal, true)}
           >
             게임 생성
           </button>
-          <button className='w-1/2 h-full bg-tertiary text-[36px] text-white font-semibold  rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out'>
+          <button className="w-1/2 h-full bg-tertiary text-[36px] text-white font-semibold  rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out">
             게임 시작
           </button>
         </div>

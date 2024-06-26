@@ -15,12 +15,6 @@ module.exports = {
 
         chat_text: "#49A0A7",
         chat_border: "#2a4e7d",
-        // chat_border_light:,
-        // chat_bg_dark:
-        // "bg-gradient-to-br from-[#327074] via-[#2a4e7d] to-[#22264C]",
-        // chat_background_light:,
-        // chat_text_dark: "#49A0A7",
-        // chat_text_light:,
 
         border: "#101935",
         green: "#159464",
