@@ -78,12 +78,12 @@ const Game = () => {
   useMount(() => {
     //게임시작 => 게임대기에서 받을 예정
     const data = { ...location.state };
-    setChatRoomId(data.roomInfo.chatroom_id);
+
     if (data.roomInfo && data.algorithm_problem && data.timer_time) {
       setProblemData(data.algorithm_problem.content);
       setProblemTitle(data.algorithm_problem.title);
       setTimerTime(data.timer_time);
-
+      setChatRoomId(data.roomInfo.chatroom_id);
       setGaming(true);
       console.log("game start");
       console.log(data);
@@ -137,13 +137,6 @@ const Game = () => {
       gameClient.subscribe("/user/queue/game/result", (message) => {
         try {
           const data = JSON.parse(message.body);
-
-          // 정상: 맞았습니다., 컴파일 에러, 메모리 초과, 런타임 에러, 시간 초과, 틀렸습니다.
-          //data 전달
-          // const newMessages: string[] = [];
-          // newMessages.push(data.message);
-          // console.log(newMessages);
-          // setOutcomeMessage(newMessages.join("\n"));
           setOutcomeMessage(data.message);
         } catch (e) {
           toast.error(" 오류가 발생했습니다. 다시 제출해 주세요");
@@ -182,14 +175,6 @@ const Game = () => {
     setModalOpen(false);
   };
 
-  //테스트 케이스 모달 => 왜 안쓰일까? 어디서 삭제됐는지 몰라서 남겨둠
-  // const toggleModal = (
-  //   modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
-  //   isOpen: boolean
-  // ) => {
-  //   modalSetter(isOpen);
-  // };
-
   //게임 코드 제출
   const handleSubmit = () => {
     const sourceCode = editorRef.current.getValue();
@@ -206,22 +191,6 @@ const Game = () => {
       toast.success("코드가 성공적으로 제출되었습니다.");
     }
   };
-
-  // const onClickStart = () => {
-  //   if (gameClient?.connected) {
-  //     gameClient.publish({
-  //       destination: "/app/game/updates",
-  //       body: JSON.stringify({
-  //         level: selectedDifficulty,
-  //         timer_time: selectedNumber * 60,
-  //         title: roomInfo.title,
-  //       }),
-  //     });
-  //     gameClient.publish({
-  //       destination: "/app/game/start",
-  //     });
-  //   }
-  // };
 
   useEffect(() => {
     if (modalOpen) {
@@ -351,11 +320,11 @@ const Game = () => {
   }, [isResizingX, isResizingY]);
 
   return (
-    <main className='w-full h-full flex flex-col '>
-      <div className='flex justify-start items-center w-full h-full  overflow-hidden'>
-        <div className='w-3/4 h-full flex '>
-          <div className='h-full' style={{ width }}>
-            <section className='w-full h-full'>
+    <main className="w-full h-full flex flex-col ">
+      <div className="flex justify-start items-center w-full h-full  overflow-hidden">
+        <div className="w-3/4 h-full flex ">
+          <div className="h-full" style={{ width }}>
+            <section className="w-full h-full">
               <GameProblem
                 problemTitle={problemTitle}
                 problemData={problemData}
@@ -363,14 +332,14 @@ const Game = () => {
             </section>
           </div>
           <div
-            className='flex justify-center items-center w-4 bg-black/20 cursor-col-resize hover:bg-black/50 '
+            className="flex justify-center items-center w-4 bg-black/20 cursor-col-resize hover:bg-black/50 "
             onMouseDown={onMouseDownX}
           />
 
-          <div className='w-full h-full flex flex-col overflow-hidden'>
-            <section className='w-full overflow-hidden' style={{ height }}>
-              <div className='w-full h-16 bg-transparent flex justify-between items-center p-4 gap-2'>
-                <div className=' flex justify-start items-center gap-2 '>
+          <div className="w-full h-full flex flex-col overflow-hidden">
+            <section className="w-full overflow-hidden" style={{ height }}>
+              <div className="w-full h-16 bg-transparent flex justify-between items-center p-4 gap-2">
+                <div className=" flex justify-start items-center gap-2 ">
                   <LanguageSelector
                     language={language}
                     onSelect={onSelect}
@@ -382,31 +351,31 @@ const Game = () => {
                   <Timer timer_time={timertime} />
 
                   <Button
-                    type='button'
-                    size='medium_big_radius'
-                    color='secondary'
-                    textColor='primary_font'
-                    name='테스트 케이스'
+                    type="button"
+                    size="medium_big_radius"
+                    color="secondary"
+                    textColor="primary_font"
+                    name="테스트 케이스"
                     onClick={() => setModalOpen(true)}
                   />
                 </div>
-                <div className='flex justify-start items-center gap-4'>
+                <div className="flex justify-start items-center gap-4">
                   <Button
-                    type='button'
+                    type="button"
                     size={"small_radius"}
                     onClick={runCode}
-                    color='primary'
-                    textColor='secondary_color_font'
+                    color="primary"
+                    textColor="secondary_color_font"
                     name={"Run Code"}
                     isLoading={false}
                     icon={<PlayArrowIcon />}
                   />
                   <Button
-                    type='button'
+                    type="button"
                     size={"small_radius"}
                     onClick={handleSubmit}
-                    color='primary'
-                    textColor='secondary_color_font'
+                    color="primary"
+                    textColor="secondary_color_font"
                     name={"SUBMIT"}
                     isLoading={false}
                   />
@@ -420,13 +389,13 @@ const Game = () => {
               />
             </section>
             <div
-              className='flex flex-col justify-center items-center w-full h-3
+              className="flex flex-col justify-center items-center w-full h-3
            bg-black/20  hover:bg-black/50
-            cursor-row-resize '
+            cursor-row-resize "
               onMouseDown={onMouseDownY}
             />
 
-            <section className='w-full flex-1 flex overflow-hidden p-2'>
+            <section className="w-full flex-1 flex overflow-hidden p-2">
               <Output
                 isError={isError}
                 output={output}
@@ -435,7 +404,7 @@ const Game = () => {
             </section>
           </div>
         </div>
-        <div className='w-1/4 h-full bg-transparent p-4 '>
+        <div className="w-1/4 h-full bg-transparent p-4 ">
           <Chat roomId={chatRoomId} />
         </div>
       </div>
