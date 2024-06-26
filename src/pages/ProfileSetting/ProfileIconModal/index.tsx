@@ -5,7 +5,6 @@ import {
   AngelIcon,
   AssasinIcon,
   CircusIcon,
-  DefaultIcon,
   DevilIcon,
   FairyIcon,
   GhostIcon,
