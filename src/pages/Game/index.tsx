@@ -73,11 +73,12 @@ const Game = () => {
   const [timeOutModal, setTimeOutModal] = useState<boolean>(false);
   const location = useLocation();
 
+  const [chatRoomId, setChatRoomId] = useState("");
   //STOMP
   useMount(() => {
     //게임시작 => 게임대기에서 받을 예정
     const data = { ...location.state };
-
+    setChatRoomId(data.roomInfo.chatroomd_id);
     if (data.roomInfo && data.algorithm_problem && data.timer_time) {
       setProblemData(data.algorithm_problem.content);
       setProblemTitle(data.algorithm_problem.title);
@@ -434,7 +435,7 @@ const Game = () => {
           </div>
         </div>
         <div className="w-1/4 h-full bg-transparent p-4 ">
-          <Chat roomId="global" />
+          <Chat roomId={chatRoomId} />
         </div>
       </div>
       {modalOpen && (

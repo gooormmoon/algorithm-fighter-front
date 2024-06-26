@@ -193,7 +193,10 @@ const Row = ({
           {myResult?.type}
         </div>
         <div className="w-2/5  flex  justify-center items-start gap-2 border-r">
-          <ProfileIcon size="mediumLarge" src={myResult?.profile_image_url} />
+          <ProfileIcon
+            size="mediumLarge"
+            src={myResult?.profile_image_url || "DefaultIcon"}
+          />
           <div className="flex flex-col justify-start items-start">
             <p>{`${myResult?.id}`}</p>
             {/* <p>{`언어: ${myResult?.code_language}`}</p> */}
@@ -208,7 +211,7 @@ const Row = ({
         <div className="w-2/5 flex justify-center items-center gap-2">
           <ProfileIcon
             size="mediumLarge"
-            src={competitorResult?.profile_image_url}
+            src={competitorResult?.profile_image_url || "DefaultIcon"}
           />
           <div className="flex flex-col justify-start items-start ">
             <p>{`${competitorResult?.id}`}</p>
