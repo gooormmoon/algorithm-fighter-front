@@ -30,7 +30,7 @@ interface ResizeState {
 export const useTheme = create(
   persist<ThemeType>(
     (set) => ({
-      theme: "light",
+      theme: "dark",
       changeTheme: () => {
         set((prevState) => {
           return {

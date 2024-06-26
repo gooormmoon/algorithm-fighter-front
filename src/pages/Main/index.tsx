@@ -5,12 +5,19 @@ import cx from "classnames";
 import Chat from "../../components/Chat";
 import RoomList from "./RoomList";
 import { CreateModal } from "../Game/GameModal";
-import { useMe, useRooms, useStomp, useTheme } from "../../store/store";
+import {
+  useGlobalChat,
+  useMe,
+  useRooms,
+  useStomp,
+  useTheme,
+} from "../../store/store";
 import { useMount } from "react-use";
 import { createGame, createGameClient, sendGetRooms } from "../../api/Game";
 import * as StompJs from "@stomp/stompjs";
 import { toast } from "react-toastify";
 import Timer from "../Game/Timer/timer";
+import { createChatClient } from "../../api/Chat";
 
 const Main: React.FC = () => {
   const { me, loggedIn } = useMe();
@@ -18,8 +25,9 @@ const Main: React.FC = () => {
   const navigate = useNavigate();
   const [createGameModal, setCreateGameModal] = useState(false);
   const [enterGame, setEnterGame] = useState(false);
-  const { gameClient, chatClient, setGameClient } = useStomp();
+  const { gameClient, chatClient, setGameClient, setChatClient } = useStomp();
   const { theme } = useTheme();
+  const { messages, setMessages, resetMessages } = useGlobalChat();
 
   useMount(() => {
     if (!loggedIn) {
@@ -85,25 +93,31 @@ const Main: React.FC = () => {
       } else {
         console.log("연결됨? ", gameClient.connected);
       }
+
+      if (chatClient === null || !chatClient?.connected) {
+        const newChatClient = createChatClient();
+        newChatClient.activate();
+        newChatClient.onConnect = (frame: any) => {
+          newChatClient.unsubscribe("globalChat");
+          newChatClient.subscribe(
+            "/topic/room/global",
+            (message) => {
+              const receivedMessage = JSON.parse(message.body);
+              setMessages({
+                ...receivedMessage,
+                nickname: me.nickname, // nickname 추가
+              });
+            },
+            {
+              id: "globalChat",
+            }
+          );
+          setChatClient(newChatClient);
+          resetMessages();
+        };
+      }
     }
   });
-  // useEffect(() => {
-  //   if (!loggedIn) {
-  //     navigate("/login");
-  //   } else {
-  //     if (gameClient === null) {
-  //       console.log("null");
-  //     } else {
-  //       console.log("연결됨? ", gameClient.connected);
-  //     }
-  //   }
-  //   // if (gameClient?.connected) {
-  //   //   // sendGetRooms(gameClient, {
-  //   //   //   message: "give me room list",
-  //   //   // });
-
-  //   // }
-  // }, []);
 
   const toggleModal = (
     modalSetter: React.Dispatch<React.SetStateAction<boolean>>,
@@ -111,13 +125,6 @@ const Main: React.FC = () => {
   ) => {
     modalSetter(isOpen);
   };
-
-  // useEffect(() => {
-  //   toggleModal(setCreateGameModal, false);
-  //   if (gameClient?.connected && gameSettings.title !== "") {
-  //     createGame(gameClient, gameSettings);
-  //   }
-  // }, [gameSettings]);
 
   return (
     <main className={styles.mainLayout}>
@@ -141,7 +148,7 @@ const Main: React.FC = () => {
             `${theme === "light" && "border border-gray-300"}`
           )}
         >
-          <Chat roomId='global' />
+          <Chat roomId="global" />
         </div>
         <div
           className={cx(
@@ -151,12 +158,12 @@ const Main: React.FC = () => {
           )}
         >
           <button
-            className='w-1/2 h-full bg-primary text-[36px] text-white font-semibold rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out'
+            className="w-1/2 h-full bg-primary text-[36px] text-white font-semibold rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out"
             onClick={() => toggleModal(setCreateGameModal, true)}
           >
             게임 생성
           </button>
-          <button className='w-1/2 h-full bg-tertiary text-[36px] text-white font-semibold  rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out'>
+          <button className="w-1/2 h-full bg-tertiary text-[36px] text-white font-semibold  rounded-lg shadow-lg drop-shadow-lg hover:-translate-y-2 transition-all ease-in-out">
             게임 시작
           </button>
         </div>
