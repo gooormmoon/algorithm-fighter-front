@@ -16,7 +16,7 @@ import {
   TimeoutModal,
 } from "./GameModal";
 import { useStomp } from "../../store/store";
-import { autoUserSubmitCode, submitCode, gradeCode } from "../../api/Game/";
+import { gradeCode } from "../../api/Game/";
 import { v4 as uuidv4 } from "uuid";
 import { useLocation } from "react-router-dom";
 import { useMount } from "react-use";
@@ -107,13 +107,10 @@ const Game = () => {
             }
             if (data.game_over_type === "TIME_OVER") {
               //게임 타임오버 모달
-              // toast.info("시간이 초과되었습니다.");
               setTimeOutModal(true);
             }
           }
 
-          // 게임 끝났음요
-          console.log(data.game_over_type);
           setGaming(false);
 
           //게임 종료 후 코드 송신
@@ -236,26 +233,6 @@ const Game = () => {
       setIsLoading(false);
     }
   };
-  // 기존 api
-  // const runCode = async () => {
-  //   const sourceCode = editorRef.current?.getValue();
-  //   console.log(typeof sourceCode);
-  //   if (!sourceCode) return;
-  //   try {
-  //     setIsLoading(true);
-  //     const { run: result } = await executeCode(language, sourceCode);
-  //     if (result.stderr) {
-  //       throw new Error(result.stderr);
-  //     }
-  //     setOutput(result.output.split("\n"));
-  //     setIsError(false);
-  //     console.log(result);
-  //   } catch (error) {
-  //     setIsError(true);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   //에디터 마운트 시 focus
   const onMount: OnMount = (editor) => {
@@ -431,7 +408,6 @@ const Game = () => {
       {timeOutModal && (
         <TimeoutModal isOpen={true} onClose={() => setTimeOutModal(false)} />
       )}
-      {/* <Footer runCode={runCode} isLoading={isLoading} /> */}
     </main>
   );
 };

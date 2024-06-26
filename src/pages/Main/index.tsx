@@ -46,7 +46,6 @@ const Main: React.FC = () => {
               console.log(data);
               if (data.rooms) {
                 setRooms(data.rooms);
-                // gameClient.unsubscribe("/user/queue/game/sessions");
               }
             },
             { id: "rooms" }
@@ -59,7 +58,6 @@ const Main: React.FC = () => {
             body: message,
           });
 
-          // newGameClient?.unsubscribe("joinGame");
           newGameClient?.subscribe(
             "/user/queue/game/join",
             (message) => {
@@ -80,6 +78,7 @@ const Main: React.FC = () => {
                     chatroom_id: data.chatroom_id,
                   },
                 });
+                toast.success("게임방 생성 완료!");
               } else {
                 alert(data.msg);
               }

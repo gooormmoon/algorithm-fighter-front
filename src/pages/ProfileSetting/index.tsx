@@ -12,7 +12,7 @@ import { modifyPassword, modifyUser, getMe } from "../../api/Users";
 import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { AngelIcon, DefaultIcon } from "../../assets/profileIcons";
+import { DefaultIcon } from "../../assets/profileIcons";
 import ProfileIconModal from "./ProfileIconModal";
 import SettingsIcon from "@mui/icons-material/Settings";
 import styles from "./profileSetting.module.scss";
@@ -25,15 +25,12 @@ const MyPageRead: React.FC = () => {
   const { me, setMe } = useMe();
   const navigate = useNavigate();
   const { theme } = useTheme();
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [nickname, handleNicknameChange] = useInputChange(me.nickname);
   const [description, handleDescriptionChange] = useInputChange(me.description);
   const [password, handlePasswordChange, setPassword] = useInputChange("");
   const [profileImage, setProfileImage] = useState<string | null>(
     me.profile_image_url
   );
-  const [blobUrl, setBlobUrl] = useState<string>("");
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [passwordCheck, handlePasswordCheckChange, setPasswordCheck] =
     useInputChange("");
   const [errorMessages, setErrorMessages] = useState({
@@ -143,14 +140,12 @@ const MyPageRead: React.FC = () => {
           const data = updatedUser.data;
           console.log(data);
           setMe({ ...data });
-          // toast.success("사용자 정보가 성공적으로 변경되었습니다!");
-          // URL.revokeObjectURL(blobUrl);
+          toast.success("사용자 정보가 성공적으로 변경되었습니다!");
         }
       }
       if (passwordChanged) {
         if (!errorMessages.password && !errorMessages.passwordCheck) {
           await modifyPassword(password);
-          // toast.success("비밀번호가 성공적으로 변경되었습니다!");
         } else {
           toast.error("입력한 비밀번호를 확인하세요");
           return;

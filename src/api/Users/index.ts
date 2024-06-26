@@ -19,6 +19,6 @@ export const modifyPassword = (password: string) => {
   return apiClient.put("/api/member/change-password", { password });
 };
 //MEMO : body => {id,password }
-export const deleteUser = (body: {}) => {
-  return apiClient.delete(`/api/member`);
+export const deleteUser = (body: { id: string; password: string }) => {
+  return apiClient.delete(`/api/member`, { data: body });
 };

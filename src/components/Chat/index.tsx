@@ -16,7 +16,6 @@ export interface GameMessage {
 
 const Chat = ({ roomId }: { roomId: string }) => {
   const { theme } = useTheme();
-  const { me } = useMe();
   const { chatClient } = useStomp();
   const { messages } = useGlobalChat();
   const [gameMessage, setGameMessage] = useState<GameMessage[]>([]);

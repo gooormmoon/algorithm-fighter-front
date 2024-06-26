@@ -11,8 +11,6 @@ export type ResultListType = {
   running_time: number;
   gameresult_id: number;
 };
-const dummy: { title: string; running_time: number; gameresult_id: number }[] =
-  [{ title: "엄청어려운문제", running_time: 300, gameresult_id: 12314 }];
 
 const MyPage = () => {
   const { theme } = useTheme();
