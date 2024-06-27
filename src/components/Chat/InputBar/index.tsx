@@ -29,12 +29,13 @@ const InputBar = ({ roomId }: { roomId: string }) => {
       }
     } else {
       console.log("Chat client is not connected");
-
-      const chatClient: StompJs.Client = createChatClient();
-      chatClient.activate();
-      chatClient.onConnect = (frame: any) => {
-        chatClient.unsubscribe("globalChat");
-        chatClient.subscribe(
+      chatClient?.deactivate();
+      chatClient?.unsubscribe("globalChat");
+      const newChatClient: StompJs.Client = createChatClient();
+      newChatClient.activate();
+      newChatClient.onConnect = (frame: any) => {
+        newChatClient.unsubscribe("globalChat");
+        newChatClient.subscribe(
           `/topic/room/global`,
           (message) => {
             const receivedMessage = JSON.parse(message.body);
@@ -47,7 +48,7 @@ const InputBar = ({ roomId }: { roomId: string }) => {
             id: "globalChat",
           }
         );
-        setChatClient(chatClient);
+        setChatClient(newChatClient);
       };
     }
   };
