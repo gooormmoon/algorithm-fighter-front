@@ -146,7 +146,7 @@ const Login = () => {
       //로그인 실패시 toast 알람을 추가할지 아니면 그냥 에러메세지만 태그로 넣어줄지 고민해봐야할듯!
     } catch (err) {
       console.error(err);
-      toast.error("로그인 실패!");
+      // toast.error("로그인 실패!");
 
       // alert("로그인 실패");
       //임시로 alert로 해놓음
